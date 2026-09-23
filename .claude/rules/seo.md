@@ -8,11 +8,11 @@ Quando uma regra daqui entrar em conflito com o `CLAUDE.md` do projeto, vale o d
 
 Meça no PageSpeed Insights, versão **celular**. As três métricas precisam ficar em "bom".
 
-| Métrica | O que mede | Meta | Como atingir no Astro |
-|---|---|---|---|
-| LCP | Tempo até o maior elemento aparecer | ≤ 2,5 s | Imagem principal otimizada com `<Image />`, `loading="eager"` e `fetchpriority="high"` só nela; fontes com `font-display: swap`; hospedagem com CDN |
-| INP | Rapidez de resposta a cliques | ≤ 200 ms | Zero JS por padrão; ilhas só onde precisa, com `client:visible` ou `client:idle` |
-| CLS | Quanto a tela "pula" ao carregar | ≤ 0,1 | `width` e `height` em toda imagem, vídeo e iframe; reservar espaço para banners, embeds e conteúdo dinâmico |
+| Métrica | O que mede                          | Meta     | Como atingir no Astro                                                                                                                               |
+| ------- | ----------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| LCP     | Tempo até o maior elemento aparecer | ≤ 2,5 s  | Imagem principal otimizada com `<Image />`, `loading="eager"` e `fetchpriority="high"` só nela; fontes com `font-display: swap`; hospedagem com CDN |
+| INP     | Rapidez de resposta a cliques       | ≤ 200 ms | Zero JS por padrão; ilhas só onde precisa, com `client:visible` ou `client:idle`                                                                    |
+| CLS     | Quanto a tela "pula" ao carregar    | ≤ 0,1    | `width` e `height` em toda imagem, vídeo e iframe; reservar espaço para banners, embeds e conteúdo dinâmico                                         |
 
 - Imagens abaixo da dobra ficam com o `loading="lazy"` padrão. Nunca marque mais de uma imagem por página como prioritária.
 - Fontes: hospede em `public/fonts/` (ou via pacote), use `woff2`, carregue só os pesos usados e faça `preload` apenas da fonte do texto principal.
@@ -64,13 +64,13 @@ Blocos JSON-LD no `<head>` dizem ao Google, em linguagem de máquina, quem é o 
 - Monte os schemas em funções de `src/lib/` (ex.: `schema.ts`) e deixe o layout ou a página só chamar.
 - Escolha o tipo que descreve o negócio:
 
-| Situação | Tipo |
-|---|---|
-| Negócio local de serviço | Subtipo de `LocalBusiness` (ex.: `LegalService`, `Dentist`, `AccountingService`) ou `ProfessionalService` |
-| Empresa sem atendimento local | `Organization`, com CNPJ em `taxID` |
-| Artigo de blog | `Article` (com `author`, `datePublished`, `dateModified`, `image`) |
-| Perguntas frequentes | `FAQPage` |
-| Páginas internas | `BreadcrumbList` |
+| Situação                      | Tipo                                                                                                      |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Negócio local de serviço      | Subtipo de `LocalBusiness` (ex.: `LegalService`, `Dentist`, `AccountingService`) ou `ProfessionalService` |
+| Empresa sem atendimento local | `Organization`, com CNPJ em `taxID`                                                                       |
+| Artigo de blog                | `Article` (com `author`, `datePublished`, `dateModified`, `image`)                                        |
+| Perguntas frequentes          | `FAQPage`                                                                                                 |
+| Páginas internas              | `BreadcrumbList`                                                                                          |
 
 - Campos esperados no negócio: `name`, `url`, `telephone`, `address` ou `areaServed`, `openingHoursSpecification`, `image`/`logo` e `sameAs` com o link do Perfil da Empresa no Google e das redes.
 - Só marque o que está visível na página. FAQ no Schema tem que existir no texto da página.

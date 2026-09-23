@@ -42,21 +42,22 @@ O Tailwind só gera classes que aparecem **inteiras** no código. Nunca monte no
 ---
 // src/components/common/Button.astro
 interface Props {
-  href: string;
-  variant?: 'primary' | 'secondary';
+  href: string
+  variant?: "primary" | "secondary"
 }
-const { href, variant = 'primary' } = Astro.props;
+const { href, variant = "primary" } = Astro.props
 
 const variants = {
-  primary: 'bg-primary text-white hover:bg-primary/90',
-  secondary: 'border-2 border-primary text-primary hover:bg-primary/10',
-} as const;
+  primary: "bg-primary text-white hover:bg-primary/90",
+  secondary: "border-2 border-primary text-primary hover:bg-primary/10",
+} as const
 ---
+
 <a
   href={href}
   class:list={[
-    'inline-flex items-center justify-center rounded-lg px-6 py-3 font-semibold transition',
-    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+    "inline-flex items-center justify-center rounded-lg px-6 py-3 font-semibold transition",
+    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
     variants[variant],
   ]}
 >
@@ -64,7 +65,7 @@ const variants = {
 </a>
 ```
 
-- Errado: `` class={`bg-${color}`} ``. Certo: um objeto com as classes completas, como acima.
+- Errado: ``class={`bg-${color}`}``. Certo: um objeto com as classes completas, como acima.
 - Use `class:list` do Astro para classes condicionais.
 - Componentes que aceitam classes extras recebem `class?: string` nas props e repassam no `class:list`.
 

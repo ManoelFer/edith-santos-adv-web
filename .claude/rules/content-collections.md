@@ -9,38 +9,41 @@ Vale ao criar ou alterar blog, artigos, cases ou qualquer conteúdo em Markdown/
 
 ```ts
 // src/content.config.ts
-import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { glob } from "astro/loaders"
+import { defineCollection, z } from "astro:content"
 
 const blog = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
-  schema: ({ image }) => z.object({
-    title: z.string(),
-    description: z.string(),
-    date: z.coerce.date(),
-    updated: z.coerce.date().optional(),
-    cover: image().optional(),
-    draft: z.boolean().default(false),
-  }),
-});
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      date: z.coerce.date(),
+      updated: z.coerce.date().optional(),
+      cover: image().optional(),
+      draft: z.boolean().default(false),
+    }),
+})
 
-export const collections = { blog };
+export const collections = { blog }
 ```
 
 ```astro
 ---
 // src/pages/blog/[slug].astro
-import { getCollection, render } from 'astro:content';
-import BaseLayout from '@layouts/BaseLayout.astro';
+import { getCollection, render } from "astro:content"
+
+import BaseLayout from "@layouts/BaseLayout.astro"
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
-  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+  const posts = await getCollection("blog", ({ data }) => !data.draft)
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }))
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { post } = Astro.props
+const { Content } = await render(post)
 ---
+
 <BaseLayout title={post.data.title} description={post.data.description}>
   <article>
     <h1>{post.data.title}</h1>

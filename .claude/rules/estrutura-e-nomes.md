@@ -32,19 +32,19 @@ Não crie pastas fora dessa estrutura sem pedir antes.
 
 ## Onde colocar cada coisa
 
-| Preciso criar... | Vai em |
-|---|---|
-| Uma nova página/URL | `src/pages/` |
-| Um bloco grande de página (hero, FAQ, contato) | `src/components/sections/` |
-| Um elemento pequeno reutilizável (botão, card) | `src/components/common/` |
-| Header, footer, menu | `src/components/layout/` |
-| A estrutura HTML (`<html>`, `<head>`, `<body>`) | `src/layouts/` |
-| Imagem usada em componente | `src/assets/` |
-| Favicon, robots.txt, arquivos para download | `public/` |
-| Posts, artigos, cases | `src/content/<colecao>/` |
-| Telefone, e-mail, links, menu, depoimentos | `src/data/` |
-| Função auxiliar | `src/lib/` |
-| Tipo/interface usado em mais de um arquivo | `src/types/` |
+| Preciso criar...                                | Vai em                     |
+| ----------------------------------------------- | -------------------------- |
+| Uma nova página/URL                             | `src/pages/`               |
+| Um bloco grande de página (hero, FAQ, contato)  | `src/components/sections/` |
+| Um elemento pequeno reutilizável (botão, card)  | `src/components/common/`   |
+| Header, footer, menu                            | `src/components/layout/`   |
+| A estrutura HTML (`<html>`, `<head>`, `<body>`) | `src/layouts/`             |
+| Imagem usada em componente                      | `src/assets/`              |
+| Favicon, robots.txt, arquivos para download     | `public/`                  |
+| Posts, artigos, cases                           | `src/content/<colecao>/`   |
+| Telefone, e-mail, links, menu, depoimentos      | `src/data/`                |
+| Função auxiliar                                 | `src/lib/`                 |
+| Tipo/interface usado em mais de um arquivo      | `src/types/`               |
 
 - Não coloque componentes dentro de `src/pages/`: tudo ali vira rota.
 - Não use `public/` para imagens que podem ser otimizadas.
@@ -61,6 +61,8 @@ Não crie pastas fora dessa estrutura sem pedir antes.
 
 ## Imports
 
+A ordem dos imports e o estilo do código (aspas, ponto e vírgula, quebras de linha) vêm do ESLint e do Prettier do projeto. Não ajuste à mão: rode `lint:fix` e `format`, e siga o mesmo estilo nos exemplos destas regras.
+
 Use sempre os aliases abaixo, nunca caminhos relativos longos (`../../../`):
 
 ```json
@@ -70,15 +72,14 @@ Use sempre os aliases abaixo, nunca caminhos relativos longos (`../../../`):
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"],
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@assets/*": ["src/assets/*"],
-      "@data/*": ["src/data/*"],
-      "@lib/*": ["src/lib/*"],
-      "@styles/*": ["src/styles/*"],
-      "@types/*": ["src/types/*"]
+      "@components/*": ["./src/components/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@data/*": ["./src/data/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@types/*": ["./src/types/*"]
     }
   }
 }

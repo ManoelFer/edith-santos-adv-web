@@ -17,17 +17,19 @@ Toda página usa um layout de `src/layouts/`. O `BaseLayout` cuida de `<head>`, 
 ```astro
 ---
 // src/layouts/BaseLayout.astro
-import Header from '@components/layout/Header.astro';
-import Footer from '@components/layout/Footer.astro';
-import { site } from '@data/site';
-import '@styles/global.css';
+import Footer from "@components/layout/Footer.astro"
+import Header from "@components/layout/Header.astro"
+import { site } from "@data/site"
+
+import "@styles/global.css"
 
 interface Props {
-  title: string;
-  description?: string;
+  title: string
+  description?: string
 }
-const { title, description = site.description } = Astro.props;
+const { title, description = site.description } = Astro.props
 ---
+
 <!doctype html>
 <html lang="pt-BR">
   <head>
@@ -39,7 +41,9 @@ const { title, description = site.description } = Astro.props;
   </head>
   <body>
     <Header />
-    <main><slot /></main>
+    <main>
+      <slot />
+    </main>
     <Footer />
   </body>
 </html>
@@ -52,11 +56,12 @@ As páginas só montam a página: importam o layout e as seções. A lógica e o
 ```astro
 ---
 // src/pages/index.astro
-import BaseLayout from '@layouts/BaseLayout.astro';
-import Hero from '@components/sections/Hero.astro';
-import Servicos from '@components/sections/Servicos.astro';
-import Contato from '@components/sections/Contato.astro';
+import Contato from "@components/sections/Contato.astro"
+import Hero from "@components/sections/Hero.astro"
+import Servicos from "@components/sections/Servicos.astro"
+import BaseLayout from "@layouts/BaseLayout.astro"
 ---
+
 <BaseLayout title="Início">
   <Hero />
   <Servicos />
@@ -71,17 +76,17 @@ Textos e informações que se repetem (nome, telefone, WhatsApp, redes sociais, 
 ```ts
 // src/data/site.ts
 export const site = {
-  name: 'Nome do Cliente',
-  description: 'Descrição curta para SEO.',
-  phone: '(00) 00000-0000',
-  whatsapp: 'https://wa.me/5500000000000',
-  email: 'contato@exemplo.com.br',
+  name: "Nome do Cliente",
+  description: "Descrição curta para SEO.",
+  phone: "(00) 00000-0000",
+  whatsapp: "https://wa.me/5500000000000",
+  email: "contato@exemplo.com.br",
   nav: [
-    { label: 'Início', href: '/' },
-    { label: 'Sobre', href: '/sobre' },
-    { label: 'Contato', href: '/#contato' },
+    { label: "Início", href: "/" },
+    { label: "Sobre", href: "/sobre" },
+    { label: "Contato", href: "/#contato" },
   ],
-} as const;
+} as const
 ```
 
 ## Imagens
@@ -92,9 +97,11 @@ export const site = {
 
 ```astro
 ---
-import { Image } from 'astro:assets';
-import foto from '@assets/foto-perfil.jpg';
+import { Image } from "astro:assets"
+
+import foto from "@assets/foto-perfil.jpg"
 ---
+
 <Image src={foto} alt="Foto de perfil do cliente" width={400} />
 ```
 
