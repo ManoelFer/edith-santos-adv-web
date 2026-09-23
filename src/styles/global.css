@@ -27,6 +27,9 @@
   --color-success: #8fd3a8;
   --color-success-bg: #0f1a14;
 
+  /* Assinatura do estúdio que criou o site (crédito do rodapé) */
+  --color-studio: #6ee7a0;
+
   /* Fontes: as variáveis vêm da Fonts API do Astro (astro.config.mjs) */
   --font-sans: var(--font-public-sans);
   --font-serif: var(--font-instrument-serif);

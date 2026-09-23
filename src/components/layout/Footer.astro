@@ -1,5 +1,6 @@
 ---
 import Container from "@components/common/Container.astro"
+import CreditoEstudio from "@components/common/CreditoEstudio.astro"
 import Eyebrow from "@components/common/Eyebrow.astro"
 import Logo from "@components/common/Logo.astro"
 import { site } from "@data/site"
@@ -23,7 +24,8 @@ const ano = new Date().getFullYear()
 ---
 
 <footer class="bg-page-alt">
-  <Container class="pt-12 pb-32 md:pb-10 lg:pt-20">
+  <!-- Respiro no fim para a barra fixa (celular) e o botão flutuante (md+) não cobrirem a última linha -->
+  <Container class="pt-12 pb-32 md:pb-28 lg:pt-20">
     <div class="grid gap-10 border-b border-ink/10 pb-10 sm:grid-cols-2 lg:grid-cols-4">
       <div>
         <Logo width={152} class="w-31 lg:w-38" />
@@ -88,8 +90,11 @@ const ano = new Date().getFullYear()
       Provimento 205/2021 do CFOAB, e não constitui oferta de serviços nem
       promessa de resultado.
     </p>
-    <p class="mt-2.5 text-sm text-subtle">
-      © {ano} {site.nomeCompleto}.
-    </p>
+    <div class="mt-2.5 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+      <p class="text-sm text-subtle">
+        © {ano} {site.nomeCompleto}.
+      </p>
+      <CreditoEstudio class="-my-2 sm:my-0" />
+    </div>
   </Container>
 </footer>

@@ -1,0 +1,40 @@
+---
+import { estudio } from "@data/estudio"
+import { site } from "@data/site"
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+// UTM porque o link sai com noreferrer: é assim que o estúdio sabe de qual site veio a visita
+const href = new URL(estudio.url)
+href.searchParams.set("utm_source", new URL(site.url).hostname)
+href.searchParams.set("utm_medium", "referral")
+href.searchParams.set("utm_campaign", "credito-rodape")
+---
+
+<a
+  href={href.toString()}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={`Site desenvolvido por ${estudio.nome}, ${estudio.descricao} (abre em nova aba)`}
+  class:list={[
+    "group inline-flex min-h-11 items-center gap-2 text-sm text-subtle",
+    "transition-colors hover:text-ink",
+    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+    className,
+  ]}
+>
+  Site criado por
+  <span class="inline-flex items-center gap-1.5 font-mono text-ink-soft">
+    <span
+      class="rounded-sm border border-ink/15 px-1 leading-5 transition-colors group-hover:border-studio/60 group-hover:text-studio"
+      aria-hidden="true"
+    >
+      &gt;_
+    </span>
+    hello.world
+  </span>
+</a>

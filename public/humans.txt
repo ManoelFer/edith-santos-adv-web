@@ -1,0 +1,9 @@
+/* SITE */
+Cliente: Edith Silva de Almeida Santos, Advogada (OAB/GO nº 73.463)
+Site: https://edithsantos.adv.br
+Idioma: Português (Brasil)
+Tecnologia: Astro, TypeScript, Tailwind CSS
+
+/* DESENVOLVIMENTO */
+Estúdio: Hello World, estúdio de software
+Site: https://helloworldestudio.com.br/
