@@ -1,0 +1,30 @@
+name: Qualidade
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: qualidade-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qualidade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn lint
+      - run: yarn format:check
+      - run: yarn typecheck
+      - run: yarn knip
+      - run: yarn secretlint
+      - run: yarn build
