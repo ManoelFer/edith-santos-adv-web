@@ -1,0 +1,70 @@
+---
+import Button from "@components/common/Button.astro"
+import Eyebrow from "@components/common/Eyebrow.astro"
+import InfoList from "@components/common/InfoList.astro"
+import Section from "@components/common/Section.astro"
+import { site } from "@data/site"
+import { whatsappUrl } from "@lib/whatsapp"
+
+const passos = [
+  "Eu leio a sua mensagem e vejo quais documentos serão necessários.",
+  "Respondo pelo WhatsApp que você informou, em dias úteis.",
+  "Combinamos uma conversa por videochamada, se o caso pedir.",
+]
+
+const canais = [
+  { rotulo: "E-mail", valor: site.email, href: `mailto:${site.email}` },
+  {
+    rotulo: "Telefone",
+    valor: site.telefone,
+    href: `tel:${site.telefoneE164}`,
+    evento: "phone_click" as const,
+  },
+]
+---
+
+<Section
+  reveal={false}
+  glow="contato"
+  class="grid gap-10 lg:grid-cols-12 lg:gap-16"
+>
+  <div class="lg:col-span-7">
+    <Eyebrow class="mb-5">Mensagem pronta</Eyebrow>
+    <h1 class="font-serif text-4xl leading-display font-normal tracking-tight text-balance text-ink-strong md:text-5xl">
+      Obrigada pelo contato.
+    </h1>
+    <p class="mt-6 max-w-xl text-lg text-muted">
+      Se o WhatsApp abriu com a sua mensagem, é só tocar em enviar. Vou ler com
+      atenção o que você escreveu antes de responder.
+    </p>
+    <ol class="mt-9 border-t border-ink/10">
+      {passos.map((passo, i) => (
+        <li class="flex gap-4 border-b border-ink/6 py-4.5 text-ink-soft">
+          <span class="w-9.5 flex-none font-serif text-2xl text-primary">
+            {String(i + 1).padStart(2, "0")}
+          </span>
+          <span>{passo}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <div class="lg:col-span-5">
+    <div class="rounded-md border border-ink/10 bg-surface-2 p-6 sm:p-7">
+      <h2 class="mb-4 font-serif text-2xl font-normal text-ink-strong">
+        Se o WhatsApp não abriu
+      </h2>
+      <Button href={whatsappUrl()} size="lg" block event="whatsapp_click">
+        Abrir o WhatsApp
+      </Button>
+      <InfoList itens={canais} class="mt-6" />
+      <p class="mt-5 text-sm text-subtle">
+        Estes são os únicos canais oficiais. Eu nunca peço senhas nem códigos do
+        Meu INSS.
+      </p>
+    </div>
+    <a href="/" class="mt-5 inline-flex min-h-11 items-center text-base">
+      Voltar ao início
+    </a>
+  </div>
+</Section>

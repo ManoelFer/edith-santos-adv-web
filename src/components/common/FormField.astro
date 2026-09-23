@@ -1,0 +1,102 @@
+---
+import Icon from "@components/common/Icon.astro"
+import type { Opcao } from "@typings/conteudo"
+
+interface Props {
+  id: string
+  name: string
+  label: string
+  as?: "input" | "select" | "textarea"
+  type?: "text" | "tel" | "email"
+  hint?: string
+  /** Opções do select; a primeira, vazia, usa `placeholder`. */
+  options?: Opcao[]
+  placeholder?: string
+  autocomplete?: string
+  inputmode?: "text" | "tel" | "email" | "numeric"
+  maxlength?: number
+  rows?: number
+  class?: string
+}
+
+const {
+  id,
+  name,
+  label,
+  as = "input",
+  type = "text",
+  hint,
+  options = [],
+  placeholder,
+  autocomplete,
+  inputmode,
+  maxlength,
+  rows = 4,
+  class: className,
+} = Astro.props
+
+const hintId = hint ? `${id}-dica` : undefined
+const erroId = `${id}-erro`
+
+const controle = [
+  "block w-full min-h-13 rounded-sm border border-ink/22 bg-field px-3.5 py-3 text-body text-ink",
+  "transition-[border-color,box-shadow] duration-150 outline-none",
+  "focus:border-primary focus:ring-3 focus:ring-primary/22",
+  "aria-invalid:border-danger-line",
+]
+
+// O script do formulário mostra o erro, liga `aria-invalid` e acrescenta o id
+// do erro em `aria-describedby`.
+const comum = {
+  id,
+  name,
+  "aria-describedby": hintId,
+  "data-campo": name,
+  "data-erro-id": erroId,
+}
+---
+
+<div class={className}>
+  <label for={id} class="mb-2 block text-base font-medium text-ink-soft">
+    {label}
+  </label>
+
+  {as === "select" ? (
+    <div class="relative">
+      <select {...comum} class:list={[controle, "appearance-none pr-11"]}>
+        <option value="">{placeholder}</option>
+        {options.map(({ valor, rotulo }) => (
+          <option value={valor}>{rotulo}</option>
+        ))}
+      </select>
+      <Icon
+        name="chevron"
+        class="pointer-events-none absolute top-1/2 right-3.5 size-5 -translate-y-1/2 text-primary"
+      />
+    </div>
+  ) : as === "textarea" ? (
+    <textarea
+      {...comum}
+      rows={rows}
+      maxlength={maxlength}
+      placeholder={placeholder}
+      class:list={[controle, "min-h-36 resize-y leading-relaxed"]}
+    ></textarea>
+  ) : (
+    <input
+      {...comum}
+      type={type}
+      placeholder={placeholder}
+      autocomplete={autocomplete}
+      inputmode={inputmode}
+      class:list={controle}
+    />
+  )}
+
+  {hint && (
+    <p id={hintId} class="mt-2 text-base text-subtle">
+      {hint}
+    </p>
+  )}
+  <p id={erroId} class="mt-2 text-base text-danger" hidden></p>
+</div>

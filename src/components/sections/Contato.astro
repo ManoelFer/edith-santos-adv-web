@@ -1,0 +1,36 @@
+---
+import InfoList from "@components/common/InfoList.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import FormularioContato from "@components/sections/FormularioContato.astro"
+import { site } from "@data/site"
+import { whatsappUrl } from "@lib/whatsapp"
+
+const canais = [
+  {
+    rotulo: "WhatsApp",
+    valor: site.telefone,
+    href: whatsappUrl(),
+    evento: "whatsapp_click" as const,
+  },
+  { rotulo: "E-mail", valor: site.email, href: `mailto:${site.email}` },
+  { rotulo: "Atendimento", valor: site.horario.texto },
+]
+---
+
+<Section
+  id="contato"
+  glow="contato"
+  class="grid items-start gap-10 lg:grid-cols-12 lg:gap-18"
+>
+  <div class="lg:col-span-5">
+    <SectionHeading
+      eyebrow="Contato"
+      title="Conte o que aconteceu. Eu respondo explicando."
+      lead="Você pode escrever pelo formulário ou falar direto pelo WhatsApp. Se tiver a carta de indeferimento ou o extrato do CNIS em mãos, já ajuda. Se não tiver, eu explico como conseguir."
+    />
+    <InfoList itens={canais} size="lg" class="mt-8" />
+  </div>
+
+  <FormularioContato class="lg:col-span-7" />
+</Section>

@@ -1,0 +1,185 @@
+---
+import Button from "@components/common/Button.astro"
+import FormField from "@components/common/FormField.astro"
+import { beneficios } from "@data/beneficios"
+import { limiteMensagem } from "@lib/contato"
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<form
+  novalidate
+  data-form-contato
+  class:list={[
+    "grid gap-5.5 rounded-md border border-ink/10 bg-surface-2 p-5 sm:p-8 lg:p-10",
+    className,
+  ]}
+>
+  <FormField id="f-nome" name="nome" label="Seu nome" autocomplete="name" />
+
+  <div class="grid gap-5.5 sm:grid-cols-2">
+    <FormField
+      id="f-whatsapp"
+      name="whatsapp"
+      label="WhatsApp com DDD"
+      type="tel"
+      inputmode="tel"
+      autocomplete="tel"
+      placeholder="(00) 90000-0000"
+      hint="É por aqui que eu respondo."
+    />
+    <FormField
+      id="f-cidade"
+      name="cidade"
+      label="Cidade e estado"
+      autocomplete="address-level2"
+      placeholder="Iporá / GO"
+    />
+  </div>
+
+  <FormField
+    id="f-beneficio"
+    name="beneficio"
+    label="Sobre qual benefício você quer falar"
+    as="select"
+    options={beneficios}
+    placeholder="Escolha uma opção"
+  />
+
+  <FormField
+    id="f-mensagem"
+    name="mensagem"
+    label="Mensagem (opcional)"
+    as="textarea"
+    maxlength={limiteMensagem}
+    placeholder="Conte em poucas palavras o que aconteceu."
+    hint="Não envie laudos, CPF nem informações de saúde. Isso fica para o atendimento."
+  />
+
+  <div class="border-t border-ink/8 pt-5">
+    <label
+      for="f-lgpd"
+      class="flex cursor-pointer items-start gap-3.5 text-base text-ink-soft"
+    >
+      <input
+        id="f-lgpd"
+        name="lgpd"
+        type="checkbox"
+        data-campo="lgpd"
+        data-erro-id="f-lgpd-erro"
+        class="mt-0.5 size-6 flex-none accent-primary"
+      />
+      <span>
+        Autorizo o contato e o tratamento dos meus dados para análise do meu
+        caso, conforme a{" "}
+        <a href="/politica-de-privacidade/">Política de Privacidade</a> e a
+        LGPD.
+      </span>
+    </label>
+    <p id="f-lgpd-erro" class="mt-2.5 text-base text-danger" hidden></p>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-4">
+    <Button type="submit" size="lg" class="w-full sm:w-auto">
+      Enviar pelo WhatsApp
+    </Button>
+    <p class="text-base text-subtle">
+      O WhatsApp abre com a sua mensagem pronta. Resposta em dias úteis.
+    </p>
+  </div>
+  <p
+    data-resumo
+    aria-live="polite"
+    class="text-base text-danger empty:hidden"
+  ></p>
+</form>
+
+<script>
+  import { track } from "@lib/analytics"
+  import type { CampoObrigatorio, CamposContato } from "@lib/contato"
+  import { montarMensagem, resumoErros, validarContato } from "@lib/contato"
+  import { whatsappUrl } from "@lib/whatsapp"
+
+  const ordem: CampoObrigatorio[] = ["nome", "whatsapp", "lgpd"]
+
+  document
+    .querySelectorAll<HTMLFormElement>("form[data-form-contato]")
+    .forEach((form) => {
+      const resumo = form.querySelector<HTMLElement>("[data-resumo]")
+      const campo = (nome: string) =>
+        form.querySelector<
+          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        >(`[data-campo="${nome}"]`)
+
+      const mostrarErro = (nome: CampoObrigatorio, texto?: string) => {
+        const controle = campo(nome)
+        const erroId = controle?.dataset.erroId
+        const erro = erroId ? document.getElementById(erroId) : null
+        if (!controle || !erro || !erroId) return
+
+        const descricao = (controle.getAttribute("aria-describedby") ?? "")
+          .split(" ")
+          .filter((id) => id && id !== erroId)
+        if (texto) descricao.unshift(erroId)
+
+        erro.textContent = texto ?? ""
+        erro.hidden = !texto
+        if (texto) controle.setAttribute("aria-invalid", "true")
+        else controle.removeAttribute("aria-invalid")
+        if (descricao.length > 0) {
+          controle.setAttribute("aria-describedby", descricao.join(" "))
+        } else {
+          controle.removeAttribute("aria-describedby")
+        }
+      }
+
+      // Some com o erro assim que a pessoa corrige o campo
+      for (const nome of ordem) {
+        const controle = campo(nome)
+        const limpar = () => {
+          mostrarErro(nome)
+          if (resumo) resumo.textContent = ""
+        }
+        controle?.addEventListener("input", limpar)
+        controle?.addEventListener("change", limpar)
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault()
+        const dados = new FormData(form)
+        const texto = (nome: string) => String(dados.get(nome) ?? "")
+        const beneficio = campo("beneficio")
+
+        const campos: CamposContato = {
+          nome: texto("nome"),
+          whatsapp: texto("whatsapp"),
+          cidade: texto("cidade"),
+          beneficio:
+            beneficio instanceof HTMLSelectElement && beneficio.value
+              ? (beneficio.selectedOptions[0]?.text ?? "")
+              : "",
+          mensagem: texto("mensagem"),
+          lgpd: dados.get("lgpd") !== null,
+        }
+
+        const erros = validarContato(campos)
+        const invalidos = ordem.filter((nome) => erros[nome])
+        ordem.forEach((nome) => mostrarErro(nome, erros[nome]))
+        if (resumo) resumo.textContent = resumoErros(invalidos.length)
+
+        if (invalidos.length > 0) {
+          campo(invalidos[0])?.focus()
+          return
+        }
+
+        track("form_submit")
+        const url = whatsappUrl(montarMensagem(campos))
+        const aba = window.open(url, "_blank", "noopener")
+        window.location.assign(aba ? "/obrigado/" : url)
+      })
+    })
+</script>
