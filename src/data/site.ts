@@ -30,7 +30,7 @@ export const site = {
   telefoneE164: "+5564984474053",
   whatsappNumero,
   whatsapp: `https://wa.me/${whatsappNumero}`,
-  email: "edith2016if@gmail.com",
+  email: "edith.advocacia24@gmail.com",
   base: "Goiás",
   areaAtendida: "Brasil",
   abrangencia,
