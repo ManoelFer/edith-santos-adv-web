@@ -178,7 +178,9 @@ const { class: className } = Astro.props
 
         track("form_submit")
         const url = whatsappUrl(montarMensagem(campos))
-        const aba = window.open(url, "_blank", "noopener")
+        // Com "noopener" o window.open sempre devolve null; corta o opener à mão
+        const aba = window.open(url, "_blank")
+        if (aba) aba.opener = null
         window.location.assign(aba ? "/obrigado/" : url)
       })
     })

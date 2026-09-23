@@ -3,10 +3,18 @@ import { site } from "@data/site"
 
 const { provedor, id, script } = site.analytics
 const ativo = provedor !== null && id !== "" && script !== ""
+// Só conta visitas do domínio real (fica de fora localhost, preview e CI)
+const dominio = new URL(site.url).hostname
 ---
 
 {ativo && provedor === "umami" && (
-  <script is:inline defer src={script} data-website-id={id}></script>
+  <script
+    is:inline
+    defer
+    src={script}
+    data-website-id={id}
+    data-domains={dominio}
+  ></script>
 )}
 {ativo && provedor === "plausible" && (
   <script is:inline defer src={script} data-domain={id}></script>

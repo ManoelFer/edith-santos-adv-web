@@ -28,3 +28,12 @@ jobs:
       - run: yarn knip
       - run: yarn secretlint
       - run: yarn build
+
+      # Regras de .claude/rules/seo.md no HTML gerado
+      - run: yarn seo
+
+      # Lighthouse no perfil celular: notas mínimas e Core Web Vitals (lighthouserc.json)
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true

@@ -137,6 +137,11 @@ Claude não executa estes itens, mas deve lembrar o usuário deles no lançament
 - Perfil da Empresa no Google com o mesmo nome (sem palavras-chave extras), mesma categoria e link para o site.
 - Hospedagem com HTTPS e CDN (Vercel, Netlify, Cloudflare Pages). Não trocar de domínio depois do lançamento.
 
+## Verificação automática
+
+- O CI roda, depois do build, um verificador das regras deste arquivo no HTML gerado (title, description, canonical, sitemap, noindex, Open Graph, h1 e ordem de títulos, `alt` e dimensões de imagens, links internos e âncoras, páginas órfãs, texto de link genérico, JSON-LD válido) e o Lighthouse CI no perfil celular com notas mínimas e metas de Core Web Vitals. Os dois bloqueiam o merge.
+- Texto de link nunca é só "Saiba mais" ou "Clique aqui": complete com o tema, mesmo que em `sr-only` (`Saiba mais<span class="sr-only"> sobre o tema</span>`).
+
 ## Checklist de lançamento
 
 - [ ] `site` no config, HTTPS, canonical, sitemap e `robots.txt` funcionando

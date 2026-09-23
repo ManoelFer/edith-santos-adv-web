@@ -10,6 +10,25 @@ const foraDoSitemap = ["/obrigado/"]
 export default defineConfig({
   site: "https://edithsantos.adv.br",
   trailingSlash: "always",
+  // CSP em <meta> com hash de cada script e estilo inline.
+  // frame-ancestors não funciona em <meta>: fica no public/_headers.
+  security: {
+    csp: {
+      directives: [
+        "default-src 'self'",
+        "img-src 'self' data:",
+        "font-src 'self'",
+        "connect-src 'self' https://gateway.umami.is",
+        "object-src 'none'",
+        "base-uri 'self'",
+        "form-action 'self'",
+        "upgrade-insecure-requests",
+      ],
+      scriptDirective: {
+        resources: ["'self'", "https://cloud.umami.is"],
+      },
+    },
+  },
   integrations: [
     sitemap({
       filter: (page) =>

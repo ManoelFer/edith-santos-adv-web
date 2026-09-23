@@ -54,8 +54,11 @@ const jsonLd = [legalServiceSchema(ogUrl), ...schemas]
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{tituloCompleto}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {noindex ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <link rel="canonical" href={canonical} />
+    )}
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />

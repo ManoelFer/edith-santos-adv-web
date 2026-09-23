@@ -18,6 +18,7 @@
     "typecheck": "astro sync && tsc --noEmit",
     "knip": "knip",
     "secretlint": "secretlint \"**/*\"",
+    "seo": "node verificar-seo.mjs",
     "prepare": "husky"
   },
   "dependencies": {
