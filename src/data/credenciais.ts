@@ -29,7 +29,7 @@ export const credenciais: Credencial[] = [
   {
     titulo: "O que eu não peço",
     descricao:
-      "Não peço senha do Meu INSS, código que chega por SMS nem dados do banco por mensagem.",
+      "Não peço seus dados bancários: senha do banco, número ou senha do cartão. Se alguém pedir isso usando meu nome, é golpe.",
   },
   {
     titulo: "Sigilo",
