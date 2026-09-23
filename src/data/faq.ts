@@ -27,9 +27,9 @@ export const faq: FaqItem[] = [
       "É possível recorrer administrativamente ou discutir a decisão judicialmente, sempre a partir da análise do laudo, do motivo registrado no indeferimento e da documentação médica. Só depois de ler esses documentos é possível dizer qual caminho cabe.",
   },
   {
-    pergunta: "Vocês atendem quem mora fora de Goiás?",
+    pergunta: "Vocês atendem quem mora fora de Goiás ou fora do Brasil?",
     resposta:
-      "Sim. O atendimento é online para todo o Brasil, e os processos previdenciários tramitam de forma eletrônica.",
+      "Sim. O atendimento é online, para todo o Brasil e também para brasileiros que moram em outro país. A gente conversa por videochamada e WhatsApp, e os pedidos ao INSS e os processos correm de forma eletrônica.",
   },
   {
     pergunta: "Quem nunca contribuiu tem direito a algum benefício?",

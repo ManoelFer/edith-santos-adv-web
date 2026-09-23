@@ -12,13 +12,16 @@ interface ConfigAnalytics {
 
 const whatsappNumero = "5564984474053"
 
+/** Até onde o atendimento chega. Base dos textos de atendimento do site. */
+const abrangencia = "em todo o Brasil e para brasileiros no exterior"
+
 export const site = {
   name: "Edith Santos",
   nomeCompleto: "Edith Silva de Almeida Santos",
   profissao: "Advogada",
   url: "https://edithsantos.adv.br",
   description:
-    "Advogada previdenciária com atendimento online em todo o Brasil. Pedidos, recursos e revisões de aposentadoria, BPC/LOAS e auxílios do INSS.",
+    "Advogada previdenciária com atendimento online em todo o Brasil e para brasileiros no exterior. Pedidos, recursos e revisões de benefícios do INSS.",
   oab: "OAB/GO nº 73.463",
   area: "Direito Previdenciário",
 
@@ -30,7 +33,8 @@ export const site = {
   email: "edith2016if@gmail.com",
   base: "Goiás",
   areaAtendida: "Brasil",
-  atendimento: "Online, por videochamada, para todo o Brasil",
+  abrangencia,
+  atendimento: `Online, por videochamada, ${abrangencia}`,
   horario: {
     texto: "Segunda a sexta, por videochamada",
     dias: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],

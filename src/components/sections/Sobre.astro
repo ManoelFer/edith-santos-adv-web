@@ -12,7 +12,7 @@ const ficha = [
   },
   { rotulo: "Inscrição", valor: site.oab },
   { rotulo: "Atuação", valor: site.area },
-  { rotulo: "Atendimento", valor: "Online, em todo o Brasil" },
+  { rotulo: "Atendimento", valor: `Online, ${site.abrangencia}` },
   { rotulo: "Base", valor: site.base },
 ]
 ---
@@ -51,8 +51,9 @@ const ficha = [
     </p>
     <p class="mb-8 text-muted">
       Atendo por videochamada e por WhatsApp, o que permite acompanhar casos de
-      qualquer cidade do país sem que ninguém precise viajar. Todo documento que
-      você me envia fica sob sigilo profissional.
+      qualquer cidade do país, e também de brasileiros que moram fora, sem que
+      ninguém precise viajar. Todo documento que você me envia fica sob sigilo
+      profissional.
     </p>
     <InfoList itens={ficha} layout="split" />
   </div>

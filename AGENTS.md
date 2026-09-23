@@ -30,6 +30,7 @@ Passo a passo completo em [`organizacao-do-claude-md.md`](.claude/rules/organiza
 
 - **Cliente:** Edith Santos, advogada previdenciária (INSS, aposentadorias, BPC/LOAS, auxílio por incapacidade, pensão por morte).
 - **Domínio:** `edithsantos.adv.br`.
+- **Área atendida:** online, em todo o Brasil e para brasileiros que moram no exterior (`site.abrangencia`). Base em Goiás.
 - **Schema.org:** `LegalService` (ou `Attorney`) com nome, telefone, área atendida, horário e link do Perfil da Empresa no Google em `sameAs`.
 - **Público:** segurados do INSS. Use a linguagem deles ("como me aposentar pelo INSS"), não jargão ("benefício previdenciário").
 - **Dados sensíveis:** casos previdenciários envolvem dados de saúde. Formulários nunca pedem laudos, doenças ou CPF.
