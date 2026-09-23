@@ -1,0 +1,70 @@
+---
+import type { HTMLAttributes } from "astro/types"
+
+import type { EventoConversao } from "@typings/analytics"
+
+type Props = {
+  href?: string
+  type?: "button" | "submit"
+  variant?: "primary" | "outline"
+  size?: "md" | "lg"
+  /** Ocupa toda a largura do pai. */
+  block?: boolean
+  /** Evento de conversão disparado no clique (ver src/lib/analytics.ts). */
+  event?: EventoConversao
+  class?: string
+} & Omit<HTMLAttributes<"button">, "type" | "class">
+
+// Atributos extras (data-*, aria-*) valem para <a> e <button>
+
+const {
+  href,
+  type = "button",
+  variant = "primary",
+  size = "md",
+  block = false,
+  event,
+  class: className,
+  ...rest
+} = Astro.props
+
+const variants = {
+  primary:
+    "border-primary bg-primary font-semibold text-page hover:border-primary-hover hover:bg-primary-hover hover:text-page",
+  outline:
+    "border-ink/25 font-medium text-ink hover:border-ink/50 hover:bg-ink/5 hover:text-ink",
+} as const
+
+const sizes = {
+  md: "min-h-12 px-5 text-base",
+  lg: "min-h-14 px-7 text-body",
+} as const
+
+const classes = [
+  "inline-flex items-center justify-center gap-2.5 rounded-sm border text-center no-underline transition-colors duration-200",
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+  "disabled:cursor-progress disabled:border-ink/15 disabled:bg-ink/10 disabled:text-subtle",
+  variants[variant],
+  sizes[size],
+  block && "w-full",
+  className,
+]
+
+const externo = href?.startsWith("http")
+---
+
+{href ? (
+  <a
+    href={href}
+    class:list={classes}
+    data-event={event}
+    {...(externo && { target: "_blank", rel: "noopener noreferrer" })}
+    {...rest}
+  >
+    <slot />
+  </a>
+) : (
+  <button type={type} class:list={classes} data-event={event} {...rest}>
+    <slot />
+  </button>
+)}

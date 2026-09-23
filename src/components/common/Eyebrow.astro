@@ -1,0 +1,19 @@
+---
+interface Props {
+  /** Traço laranja antes do texto (usado nos títulos alinhados à esquerda). */
+  line?: boolean
+  class?: string
+}
+
+const { line = true, class: className } = Astro.props
+---
+
+<p
+  class:list={[
+    "inline-flex items-center gap-2.5 text-xs tracking-eyebrow text-primary uppercase",
+    className,
+  ]}
+>
+  {line && <span class="block h-px w-7 bg-primary" aria-hidden="true" />}
+  <slot />
+</p>

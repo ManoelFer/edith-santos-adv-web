@@ -79,8 +79,10 @@ Use sempre os aliases abaixo, nunca caminhos relativos longos (`../../../`):
       "@data/*": ["./src/data/*"],
       "@lib/*": ["./src/lib/*"],
       "@styles/*": ["./src/styles/*"],
-      "@types/*": ["./src/types/*"]
+      "@typings/*": ["./src/types/*"]
     }
   }
 }
 ```
+
+O alias de `src/types/` é `@typings/*`, e não `@types/*`: o TypeScript reserva o prefixo `@types/` para pacotes de declaração e recusa o import (erro TS6137).

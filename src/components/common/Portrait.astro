@@ -1,0 +1,37 @@
+---
+import { Picture } from "astro:assets"
+
+import retrato from "@assets/edith-santos-advogada.png"
+
+interface Props {
+  alt: string
+  /** Imagem principal da página (LCP): carrega antes das outras. */
+  priority?: boolean
+  sizes: string
+  class?: string
+}
+
+const { alt, priority = false, sizes, class: className } = Astro.props
+---
+
+<div class:list={["relative", className]}>
+  <div
+    class="pointer-events-none absolute bottom-0 left-1/2 h-3/4 w-[120%] -translate-x-1/2 bg-radial-[60%_60%_at_50%_72%] from-primary/30 to-transparent to-70% blur-sm"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="pointer-events-none absolute -bottom-[2%] left-1/2 h-[15%] w-[86%] -translate-x-1/2 bg-radial from-black/70 via-black/35 via-45% to-transparent to-78% blur-md"
+    aria-hidden="true"
+  ></div>
+  <Picture
+    src={retrato}
+    alt={alt}
+    formats={["avif"]}
+    fallbackFormat="webp"
+    widths={[320, 480, 640, 800, 1086]}
+    sizes={sizes}
+    loading={priority ? "eager" : "lazy"}
+    fetchpriority={priority ? "high" : "auto"}
+    class="relative block h-auto w-full brightness-95 contrast-[1.03] saturate-[.94] mask-b-from-85% mask-b-to-100% drop-shadow-2xl"
+  />
+</div>

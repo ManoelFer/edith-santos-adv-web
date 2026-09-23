@@ -1,0 +1,42 @@
+---
+import Container from "@components/common/Container.astro"
+import Glow, { type GlowVariant } from "@components/common/Glow.astro"
+
+interface Props {
+  id?: string
+  /** `alt` alterna o fundo, como no layout (seções intercaladas). */
+  tone?: "default" | "alt"
+  glow?: GlowVariant
+  /** Aparece com um leve deslize quando entra na tela. */
+  reveal?: boolean
+  class?: string
+  "aria-label"?: string
+}
+
+const {
+  id,
+  tone = "default",
+  glow,
+  reveal = true,
+  class: className,
+  "aria-label": ariaLabel,
+} = Astro.props
+---
+
+<section
+  id={id}
+  aria-label={ariaLabel}
+  data-reveal={reveal ? "" : undefined}
+  class:list={[
+    "relative border-b border-ink/8",
+    tone === "alt" && "bg-page-alt",
+    glow && "overflow-hidden",
+    reveal &&
+      "transition duration-300 ease-out data-pending:translate-y-3.5 data-pending:opacity-0",
+  ]}
+>
+  {glow && <Glow variant={glow} />}
+  <Container class:list={["relative py-12 md:py-20 lg:py-28", className]}>
+    <slot />
+  </Container>
+</section>

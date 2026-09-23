@@ -10,7 +10,7 @@
       "@data/*": ["./src/data/*"],
       "@lib/*": ["./src/lib/*"],
       "@styles/*": ["./src/styles/*"],
-      "@types/*": ["./src/types/*"]
+      "@typings/*": ["./src/types/*"]
     }
   }
 }

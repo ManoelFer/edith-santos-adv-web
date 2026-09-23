@@ -1,0 +1,61 @@
+---
+import type { EventoConversao } from "@typings/analytics"
+
+interface InfoItem {
+  rotulo: string
+  valor: string
+  href?: string
+  /** Evento de conversão do link (ver src/lib/analytics.ts). */
+  evento?: EventoConversao
+}
+
+interface Props {
+  itens: InfoItem[]
+  /** `split` põe rótulo e valor lado a lado a partir de `sm:`. */
+  layout?: "stacked" | "split"
+  size?: "md" | "lg"
+  class?: string
+}
+
+const { itens, layout = "stacked", size = "md", class: className } = Astro.props
+
+const valorSizes = { md: "text-base", lg: "text-lg" } as const
+---
+
+<dl class:list={["border-t border-ink/10", className]}>
+  {itens.map(({ rotulo, valor, href, evento }) => (
+    <div
+      class:list={[
+        "grid gap-0.5 border-b border-ink/6 py-3.5",
+        layout === "split" && "sm:flex sm:gap-4",
+      ]}
+    >
+      <dt
+        class:list={[
+          "text-sm tracking-wider text-subtle uppercase",
+          layout === "split" &&
+            "sm:w-36 sm:flex-none sm:text-base sm:tracking-normal sm:normal-case",
+        ]}
+      >
+        {rotulo}
+      </dt>
+      <dd class:list={["break-words", valorSizes[size]]}>
+        {href ? (
+          <a
+            href={href}
+            class="inline-flex min-h-11 items-center"
+            data-event={evento}
+            {...(href.startsWith("http") && {
+              target: "_blank",
+              rel: "noopener noreferrer",
+            })}
+          >
+            {valor}
+          </a>
+        ) : (
+          <span class="text-ink">{valor}</span>
+        )}
+      </dd>
+    </div>
+  ))}
+</dl>

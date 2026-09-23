@@ -1,0 +1,25 @@
+---
+interface Props {
+  numero: string
+  /** `outline`: círculo vazado com número em serifa. `tint`: fundo laranja suave. */
+  variant?: "outline" | "tint"
+  class?: string
+}
+
+const { numero, variant = "outline", class: className } = Astro.props
+
+const variants = {
+  outline: "size-10.5 border-primary/45 font-serif text-xl",
+  tint: "size-8.5 border-primary/45 bg-primary/12 text-sm font-semibold",
+} as const
+---
+
+<span
+  class:list={[
+    "inline-flex flex-none items-center justify-center rounded-full border text-primary",
+    variants[variant],
+    className,
+  ]}
+>
+  {numero}
+</span>

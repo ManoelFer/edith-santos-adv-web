@@ -1,0 +1,24 @@
+---
+import { Image } from "astro:assets"
+
+import logo from "@assets/logo-edith-santos.png"
+
+interface Props {
+  /** Maior largura exibida, em px (a altura segue a proporção do logo). */
+  width: number
+  /** Vazio quando o nome já aparece ao lado (ex.: menu). */
+  alt?: string
+  class?: string
+}
+
+const { width, alt = "Edith Santos Advogada", class: className } = Astro.props
+---
+
+<Image
+  src={logo}
+  alt={alt}
+  width={width}
+  densities={[1, 2]}
+  format="webp"
+  class:list={["block h-auto", className]}
+/>

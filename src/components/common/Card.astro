@@ -1,0 +1,43 @@
+---
+interface Props {
+  as?: "div" | "li" | "article"
+  variant?: "plain" | "gradient"
+  /** Filete laranja no topo ou à esquerda. */
+  accent?: "none" | "top" | "left"
+  /** Destaque da borda ao passar o mouse (só decorativo). */
+  hover?: boolean
+  class?: string
+}
+
+const {
+  as: Tag = "div",
+  variant = "plain",
+  accent = "none",
+  hover = false,
+  class: className,
+} = Astro.props
+
+const variants = {
+  plain: "bg-surface",
+  gradient: "bg-linear-to-b from-surface to-page-alt",
+} as const
+
+const accents = {
+  none: "",
+  top: "border-t-primary/55",
+  left: "border-l-2 border-l-primary/60",
+} as const
+---
+
+<Tag
+  class:list={[
+    "rounded-sm border border-ink/8 p-5 md:p-6",
+    variants[variant],
+    accents[accent],
+    hover &&
+      "transition-colors duration-200 hover:border-primary/45 hover:bg-field",
+    className,
+  ]}
+>
+  <slot />
+</Tag>

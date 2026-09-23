@@ -1,1 +1,97 @@
 @import "tailwindcss";
+
+@theme {
+  /* Fundos, do mais escuro ao mais claro */
+  --color-page: #08090a;
+  --color-page-alt: #0b0c0e;
+  --color-topbar: #0e1012;
+  --color-surface-2: #0f1113;
+  --color-surface: #111316;
+  --color-field: #141619;
+
+  /* Marca */
+  --color-primary: #f5811f;
+  --color-primary-hover: #ffa351;
+
+  /* Texto, do mais forte ao mais apagado. `ink` também é a cor das bordas (com opacidade) */
+  --color-ink-strong: #ffffff;
+  --color-ink: #f4f1ec;
+  --color-ink-soft: #d7d2ca;
+  --color-ink-lead: #c6c0b7;
+  --color-muted: #ada69c;
+  --color-subtle: #9a938a;
+
+  /* Estados */
+  --color-danger: #f0918a;
+  --color-danger-line: #c2504a;
+  --color-success: #8fd3a8;
+  --color-success-bg: #0f1a14;
+
+  /* Fontes: as variáveis vêm da Fonts API do Astro (astro.config.mjs) */
+  --font-sans: var(--font-public-sans);
+  --font-serif: var(--font-instrument-serif);
+
+  /* Corpo de texto do site (17px) */
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.65;
+
+  /* Entrelinha dos títulos em serifa */
+  --leading-display: 1.08;
+
+  /* Espaçamento das letras nos "olhos" de seção (eyebrow) */
+  --tracking-eyebrow: 0.18em;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 1ms !important;
+      transition-duration: 1ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    text-wrap: pretty;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: var(--color-primary);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  a:hover {
+    color: var(--color-primary-hover);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-page);
+  }
+
+  ::placeholder {
+    color: var(--color-subtle);
+  }
+}

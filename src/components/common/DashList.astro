@@ -1,0 +1,20 @@
+---
+interface Props {
+  itens: readonly string[]
+  class?: string
+}
+
+const { itens, class: className } = Astro.props
+---
+
+<ul class:list={["text-base text-ink-lead", className]}>
+  {itens.map((item) => (
+    <li class="flex gap-3">
+      <span
+        class="mt-3 block h-px w-4 flex-none bg-primary"
+        aria-hidden="true"
+      />
+      {item}
+    </li>
+  ))}
+</ul>

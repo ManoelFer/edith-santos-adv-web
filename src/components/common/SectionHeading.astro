@@ -1,0 +1,50 @@
+---
+import Eyebrow from "@components/common/Eyebrow.astro"
+
+interface Props {
+  eyebrow: string
+  title: string
+  lead?: string
+  align?: "start" | "center"
+  size?: "lg" | "md"
+  /** h1 quando o título da seção é o título da página. */
+  as?: "h1" | "h2"
+  class?: string
+}
+
+const {
+  eyebrow,
+  title,
+  lead,
+  align = "start",
+  size = "lg",
+  as: Titulo = "h2",
+  class: className,
+} = Astro.props
+
+const sizes = {
+  lg: "text-3xl md:text-4xl lg:text-5xl",
+  md: "text-3xl lg:text-4xl",
+} as const
+---
+
+<div
+  class:list={[
+    align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl",
+    className,
+  ]}
+>
+  <Eyebrow line={align === "start"} class="mb-4 md:mb-5">
+    {eyebrow}
+  </Eyebrow>
+  <Titulo
+    class:list={[
+      "font-serif leading-display font-normal tracking-tight text-balance text-ink-strong",
+      sizes[size],
+    ]}
+  >
+    {title}
+  </Titulo>
+  {lead && <p class="mt-4 text-muted md:mt-5">{lead}</p>}
+  <slot />
+</div>

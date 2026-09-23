@@ -1,0 +1,37 @@
+---
+/**
+ * Brilho laranja decorativo atrás das seções. Os tamanhos e posições do
+ * gradiente são únicos de cada seção do layout, por isso ficam concentrados
+ * aqui como valores arbitrários, e não espalhados pelas seções.
+ */
+export type GlowVariant = "hero" | "atendimento" | "sobre" | "contato"
+
+interface Props {
+  variant: GlowVariant
+}
+
+const { variant } = Astro.props
+
+const camadas: Record<GlowVariant, string[]> = {
+  hero: [
+    "bg-radial-[1100px_620px_at_78%_28%] from-primary/16 to-transparent to-62%",
+    "bg-radial-[760px_520px_at_8%_4%] from-primary/6 to-transparent to-68%",
+  ],
+  atendimento: [
+    "bg-radial-[760px_420px_at_12%_0%] from-primary/10 to-transparent to-64%",
+  ],
+  sobre: [
+    "bg-radial-[820px_520px_at_84%_18%] from-primary/12 to-transparent to-64%",
+  ],
+  contato: [
+    "bg-radial-[900px_520px_at_20%_10%] from-primary/14 to-transparent to-62%",
+  ],
+}
+---
+
+{camadas[variant].map((camada) => (
+  <div
+    class:list={["pointer-events-none absolute inset-0", camada]}
+    aria-hidden="true"
+  />
+))}

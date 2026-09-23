@@ -21,6 +21,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "@tailwindcss/vite": "^4.3.3",
     "@typescript/native": "npm:typescript@^7.0.2",
     "astro": "^7.3.4",

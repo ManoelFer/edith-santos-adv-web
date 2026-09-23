@@ -43,7 +43,7 @@ export default defineConfig([
             ["^\\u0000"], // side effects: import "x"
             ["^node:"], // módulos do Node
             ["^@?\\w"], // pacotes
-            ["^@(components|layouts|assets|data|lib|styles|types)(/.*|$)"], // aliases do projeto
+            ["^@(components|layouts|assets|data|lib|styles|typings)(/.*|$)"], // aliases do projeto
             ["^\\."], // relativos
             ["\\.css$"], // estilos
           ],
