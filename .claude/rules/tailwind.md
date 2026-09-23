@@ -24,7 +24,7 @@ Vale ao estilizar componentes, layouts e páginas em projetos Astro com Tailwind
 
 - Estilize com utilitários direto no `class` do HTML. Evite `<style>` no componente.
 - **Só tokens do tema.** Não use valores arbitrários (`bg-[#1a3d6d]`, `p-[13px]`). Se um valor se repete ou é de marca, crie o token no `@theme`. Arbitrário só para caso único e justificado.
-- **Mobile-first:** classes sem prefixo são para celular; `sm:`, `md:`, `lg:` para telas maiores. Ex.: `grid gap-6 md:grid-cols-3`.
+- **Mobile-first (obrigatório):** classes sem prefixo são para celular; `sm:`, `md:`, `lg:` para telas maiores. Ex.: `grid gap-6 md:grid-cols-3`. Regras completas de responsividade em [`responsividade.md`](responsividade.md).
 - Contêiner da página: `mx-auto max-w-6xl px-4` (ou o token de largura do projeto), repetido via componente, não copiado à mão.
 - Estados e acessibilidade: sempre `hover:` e `focus-visible:` em elementos clicáveis (ex.: `focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary`).
 

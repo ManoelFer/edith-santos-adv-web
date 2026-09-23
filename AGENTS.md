@@ -21,6 +21,7 @@ Passo a passo completo em [`organizacao-do-claude-md.md`](.claude/rules/organiza
 | [`componentes-astro.md`](.claude/rules/componentes-astro.md)               | Componentes, layouts, páginas, `src/data/`, imagens, JS no cliente                        |
 | [`content-collections.md`](.claude/rules/content-collections.md)           | Blog, artigos e conteúdo em Markdown                                                      |
 | [`tailwind.md`](.claude/rules/tailwind.md)                                 | Estilos: utilitários, tokens no `@theme`, classes dinâmicas                               |
+| [`responsividade.md`](.claude/rules/responsividade.md)                     | Qualquer layout, página ou componente: mobile first e responsivo, sempre                  |
 | [`acessibilidade.md`](.claude/rules/acessibilidade.md)                     | Qualquer HTML                                                                             |
 | [`seo.md`](.claude/rules/seo.md)                                           | `<head>`, conteúdo, imagens, dados estruturados, sitemap, performance, análise de acessos |
 | [`publicidade-advocacia.md`](.claude/rules/publicidade-advocacia.md)       | Todo texto do site, por ser site de advocacia (regras da OAB)                             |
