@@ -35,7 +35,7 @@ Passo a passo completo em [`organizacao-do-claude-md.md`](.claude/rules/organiza
 - **Público:** segurados do INSS. Use a linguagem deles ("como me aposentar pelo INSS"), não jargão ("benefício previdenciário").
 - **Dados sensíveis:** casos previdenciários envolvem dados de saúde. Formulários nunca pedem laudos, doenças ou CPF.
 - **Layout de referência:** `docs/Landing Edith Santos.html` (desktop) e `docs/Landing Edith Santos Mobile.html`, exportados do Claude Design (bundles com assets em base64). O site é uma implementação única e mobile first dos dois.
-- **Identidade visual:** fundo escuro (`page` #08090A) com laranja da marca (`primary` #F5811F). Fontes Public Sans (texto) e Instrument Serif (títulos). Tokens em `src/styles/global.css`.
+- **Identidade visual:** fundo escuro (`page` #08090A) com dourado da marca (`primary` #C69C5D, o tom da parte mais escura do dourado da logo, clareado). Fontes Public Sans (texto) e Instrument Serif (títulos). Tokens em `src/styles/global.css`.
 - **Fontes (exceção à regra de `public/fonts/`):** ficam em `src/assets/fonts/` e são servidas pela Fonts API do Astro (`fonts` no `astro.config.mjs`, provedor `local`), que faz o preload e gera fallbacks otimizados.
 - **Formulário de contato:** não há servidor. O formulário valida no navegador, monta a mensagem e abre o WhatsApp da advogada; depois leva a `/obrigado/`. Campo "Mensagem" opcional, com até 500 caracteres e aviso para não enviar laudos, CPF nem dados de saúde.
 - **Depoimentos:** desligados (`site.features.depoimentos = false`) até a confirmação da OAB/GO. Avaliações do Google só depois que houver avaliações reais no perfil.

@@ -10,8 +10,8 @@
   --color-field: #141619;
 
   /* Marca */
-  --color-primary: #f5811f;
-  --color-primary-hover: #ffa351;
+  --color-primary: #c69c5d;
+  --color-primary-hover: #d6b585;
 
   /* Texto, do mais forte ao mais apagado. `ink` também é a cor das bordas (com opacidade) */
   --color-ink-strong: #ffffff;
