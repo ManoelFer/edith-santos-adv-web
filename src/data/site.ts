@@ -49,11 +49,10 @@ export const site = {
     perfilGoogle: "",
   },
 
-  // TODO(cliente): escolher entre Umami e Plausible e preencher o ID
   analytics: {
-    provedor: null,
-    id: "",
-    script: "",
+    provedor: "umami",
+    id: "008ea546-8bd2-4184-9d93-da952cf68088",
+    script: "https://cloud.umami.is/script.js",
   } as ConfigAnalytics,
 
   features: {

@@ -40,8 +40,9 @@ Passo a passo completo em [`organizacao-do-claude-md.md`](.claude/rules/organiza
 - **Formulário de contato:** não há servidor. O formulário valida no navegador, monta a mensagem e abre o WhatsApp da advogada; depois leva a `/obrigado/`. Campo "Mensagem" opcional, com até 500 caracteres e aviso para não enviar laudos, CPF nem dados de saúde.
 - **Depoimentos:** desligados (`site.features.depoimentos = false`) até a confirmação da OAB/GO. Avaliações do Google só depois que houver avaliações reais no perfil.
 - **Orientações (blog):** collection `orientacoes`. A seção da Home e a página `/orientacoes/` só aparecem quando existe post publicado.
-- **Análise de acessos:** Umami ou Plausible (sem cookies), a escolher. Configure em `site.analytics`; os eventos `whatsapp_click`, `phone_click` e `form_submit` já estão ligados via `data-event`.
-- **Pendências do cliente** (marcadas com `TODO(cliente)` no código): links do Instagram e do Perfil da Empresa no Google, horário de atendimento, ferramenta de análise e revisão jurídica da Política de Privacidade e dos Termos.
+- **Hospedagem:** Cloudflare (plano gratuito), com deploy automático a cada push na `main` e DNS da zona na Cloudflare. Node fixado no `.nvmrc`; cabeçalhos de segurança e cache em `public/_headers`.
+- **Análise de acessos:** Umami Cloud (plano Hobby, sem cookies), configurado em `site.analytics`. Os eventos `whatsapp_click`, `phone_click` e `form_submit` são metas no painel do Umami e disparam via `data-event`.
+- **Pendências do cliente** (marcadas com `TODO(cliente)` no código): links do Instagram e do Perfil da Empresa no Google, horário de atendimento e revisão jurídica da Política de Privacidade e dos Termos.
 
 ## Stack
 
