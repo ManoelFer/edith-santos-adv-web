@@ -1,0 +1,36 @@
+---
+import Button from "@components/common/Button.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import { site } from "@data/site"
+import BaseLayout from "@layouts/BaseLayout.astro"
+---
+
+<BaseLayout
+  title="Página não encontrada"
+  description="O endereço que você acessou não existe ou mudou. Veja as áreas de atuação, como funciona o atendimento e os canais oficiais da advogada Edith Santos."
+  noindex
+>
+  <Section reveal={false}>
+    <SectionHeading
+      as="h1"
+      eyebrow="Erro 404"
+      title="Esta página não foi encontrada"
+      lead="O endereço pode ter mudado ou estar incompleto. Estes caminhos levam ao que você provavelmente procurava:"
+    />
+    <ul class="mt-8 grid max-w-md border-t border-ink/10">
+      {[{ label: "Página inicial", href: "/" }, ...site.nav].map(
+        ({ label, href }) => (
+          <li class="border-b border-ink/6">
+            <a href={href} class="flex min-h-12 items-center text-base">
+              {label}
+            </a>
+          </li>
+        ),
+      )}
+    </ul>
+    <Button href="/#contato" class="mt-8">
+      Entre em contato para agendar uma análise
+    </Button>
+  </Section>
+</BaseLayout>

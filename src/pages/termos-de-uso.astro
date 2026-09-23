@@ -1,0 +1,53 @@
+---
+import { site } from "@data/site"
+import TextoLayout from "@layouts/TextoLayout.astro"
+
+// TODO(cliente): texto rascunhado para revisão jurídica antes do lançamento.
+const atualizado = new Date("2026-09-23")
+---
+
+<TextoLayout
+  title="Termos de uso"
+  description="Condições de uso do site da advogada previdenciária Edith Santos: caráter informativo, limites do conteúdo e canais oficiais de contato."
+  eyebrow="Institucional"
+  atualizado={atualizado}
+>
+  <h2>Caráter informativo</h2>
+  <p>
+    Este site tem caráter meramente informativo, em conformidade com o
+    Provimento 205/2021 do Conselho Federal da OAB. O conteúdo não constitui
+    consulta jurídica, oferta de serviços nem promessa de resultado.
+  </p>
+  <p>
+    Cada caso previdenciário depende do histórico de contribuições, dos
+    documentos e da situação de quem procura. Só a análise individual permite
+    dizer quais caminhos existem.
+  </p>
+
+  <h2>Relação com a advogada</h2>
+  <p>
+    Usar o site ou enviar uma mensagem não cria relação de advogada e cliente. A
+    prestação de serviço só começa com contrato escrito, assinado pelas duas
+    partes.
+  </p>
+
+  <h2>Canais oficiais</h2>
+  <p>
+    Os únicos canais oficiais são o WhatsApp {site.telefone} e o e-mail
+    {site.email}. Nunca são pedidos senhas, códigos do Meu INSS ou dados
+    bancários por mensagem.
+  </p>
+
+  <h2>Conteúdo e direitos</h2>
+  <p>
+    Textos, imagens e marca deste site pertencem a {site.nomeCompleto}. A
+    reprodução depende de autorização, exceto trechos curtos com citação da
+    fonte.
+  </p>
+
+  <h2>Alterações</h2>
+  <p>
+    Estes termos podem ser atualizados. A data da última atualização aparece no
+    topo desta página.
+  </p>
+</TextoLayout>

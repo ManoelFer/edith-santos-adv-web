@@ -1,0 +1,48 @@
+---
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import { depoimentos } from "@data/depoimentos"
+
+// Faixa listrada que mascara foto e nome, como no layout
+const mascara =
+  "bg-[repeating-linear-gradient(135deg,var(--color-ink)_0_3px,transparent_3px_6px)] opacity-20"
+---
+
+{depoimentos.length > 0 && (
+  <Section>
+    <SectionHeading
+      align="center"
+      eyebrow="Manifestações espontâneas"
+      title="O que dizem quem foi atendido"
+      lead="Mensagens recebidas no WhatsApp, publicadas com autorização e com nome, foto e telefone mascarados."
+    />
+    <ul class="mt-10 grid gap-5 md:grid-cols-2 lg:mt-18 lg:gap-8">
+      {depoimentos.map(({ texto, hora, origem }) => (
+        <li>
+          <figure class="rounded-md border border-ink/10 bg-surface-2 p-3.5 pb-4.5">
+            <div class="flex gap-3 rounded-sm bg-field p-4">
+              <span
+                class:list={["size-8.5 flex-none rounded-full", mascara]}
+                aria-hidden="true"
+              />
+              <div class="min-w-0 flex-1">
+                <span
+                  class:list={["mb-2 block h-3 w-24 rounded-xs", mascara]}
+                  aria-hidden="true"
+                />
+                <blockquote class="text-base text-ink-soft">{texto}</blockquote>
+                <p class="mt-2.5 text-right text-xs text-subtle">{hora}</p>
+              </div>
+            </div>
+            <figcaption class="mt-3 text-sm text-subtle">{origem}</figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-6 max-w-4xl text-sm text-subtle">
+      Manifestações espontâneas de pessoas atendidas, publicadas com
+      autorização, sem menção a resultados, valores ou casos concretos, nos
+      termos do Provimento 205/2021 do CFOAB.
+    </p>
+  </Section>
+)}

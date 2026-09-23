@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from "astro:content"
+
+import Card from "@components/common/Card.astro"
+import { formatarData } from "@lib/formatarData"
+
+interface Props {
+  post: CollectionEntry<"orientacoes">
+  /** Nível do título conforme a página (h2 na listagem, h3 na Home). */
+  nivel?: "h2" | "h3"
+}
+
+const { post, nivel: Titulo = "h3" } = Astro.props
+const { title, description, date } = post.data
+---
+
+<Card as="article" hover class="flex flex-col lg:p-7">
+  <p class="mb-3.5 text-sm tracking-wider text-primary uppercase">
+    <time datetime={date.toISOString()}>{formatarData(date)}</time>
+  </p>
+  <Titulo class="mb-3 font-serif text-2xl leading-tight font-normal text-ink-strong">
+    {title}
+  </Titulo>
+  <p class="mb-4.5 text-base text-muted">{description}</p>
+  <a
+    href={`/orientacoes/${post.id}/`}
+    class="mt-auto inline-flex min-h-11 items-center text-base"
+  >
+    Ler a orientação<span class="sr-only">: {title}</span>
+  </a>
+</Card>

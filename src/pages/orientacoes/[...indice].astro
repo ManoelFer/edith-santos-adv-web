@@ -1,0 +1,37 @@
+---
+import ArticleCard from "@components/common/ArticleCard.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import { orientacoesPublicadas } from "@lib/orientacoes"
+
+// Rota de resto em vez de index.astro: assim /orientacoes/ só é gerada quando
+// existe pelo menos uma orientação publicada (evita página vazia no Google).
+export async function getStaticPaths() {
+  const posts = await orientacoesPublicadas()
+  return posts.length > 0
+    ? [{ params: { indice: undefined }, props: { posts } }]
+    : []
+}
+
+const { posts } = Astro.props
+---
+
+<BaseLayout
+  title="Orientações sobre INSS e aposentadoria"
+  description="Textos em linguagem simples sobre CNIS, perícia médica, recursos e aposentadoria no INSS, escritos pela advogada previdenciária Edith Santos."
+>
+  <Section reveal={false}>
+    <SectionHeading
+      as="h1"
+      eyebrow="Orientações"
+      title="Entenda o seu benefício antes de decidir"
+      lead="Conteúdo informativo. Cada caso depende da análise individual dos documentos."
+    />
+    <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post) => (
+        <ArticleCard post={post} nivel="h2" />
+      ))}
+    </div>
+  </Section>
+</BaseLayout>

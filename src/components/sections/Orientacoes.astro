@@ -1,0 +1,29 @@
+---
+import ArticleCard from "@components/common/ArticleCard.astro"
+import Section from "@components/common/Section.astro"
+import { orientacoesPublicadas } from "@lib/orientacoes"
+
+// A seção só aparece quando há orientação publicada
+const posts = (await orientacoesPublicadas()).slice(0, 3)
+---
+
+{posts.length > 0 && (
+  <Section tone="alt">
+    <div class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 border-b border-ink/10 pb-6">
+      <h2 class="font-serif text-3xl leading-display font-normal tracking-tight text-ink-strong lg:text-4xl">
+        Orientações
+      </h2>
+      <a
+        href="/orientacoes/"
+        class="inline-flex min-h-11 items-center text-base"
+      >
+        Ver todas as orientações
+      </a>
+    </div>
+    <div class="mt-9 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post) => (
+        <ArticleCard post={post} />
+      ))}
+    </div>
+  </Section>
+)}

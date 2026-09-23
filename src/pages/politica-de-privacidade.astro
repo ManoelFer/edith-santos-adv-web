@@ -1,0 +1,73 @@
+---
+import { site } from "@data/site"
+import TextoLayout from "@layouts/TextoLayout.astro"
+
+// TODO(cliente): texto rascunhado para revisão jurídica antes do lançamento.
+// Confirmar o prazo de guarda dos dados e a ferramenta de análise de acessos.
+const atualizado = new Date("2026-09-23")
+---
+
+<TextoLayout
+  title="Política de Privacidade"
+  description="Como o site da advogada Edith Santos trata os seus dados: o que é coletado, para que serve, por quanto tempo fica guardado e como pedir a exclusão."
+  eyebrow="LGPD"
+  atualizado={atualizado}
+>
+  <p>
+    Esta política explica como são tratados os dados pessoais de quem visita
+    este site ou entra em contato com a advogada {site.nomeCompleto}({site.oab}
+    ), responsável pelo tratamento, conforme a Lei Geral de Proteção de Dados
+    (Lei nº 13.709/2018).
+  </p>
+
+  <h2>Quais dados são coletados</h2>
+  <p>
+    O site não tem cadastro nem guarda dados em servidor. O formulário de
+    contato apenas monta uma mensagem com o que você preencher (nome, WhatsApp,
+    cidade, benefício de interesse e uma mensagem curta opcional) e abre o seu
+    próprio WhatsApp para você enviar, se quiser.
+  </p>
+  <p>
+    Os dados só chegam até mim quando você envia a mensagem pelo WhatsApp ou
+    escreve para o e-mail {site.email}. Não peça nem envie pelo site laudos, CPF
+    ou informações de saúde: esses documentos são tratados apenas durante o
+    atendimento, sob sigilo profissional.
+  </p>
+
+  <h2>Para que os dados são usados</h2>
+  <ul>
+    <li>Responder o seu contato e agendar a conversa inicial.</li>
+    <li>Analisar a sua situação e acompanhar o caso, se houver contratação.</li>
+    <li>Cumprir obrigações legais e éticas da advocacia.</li>
+  </ul>
+  <p>Os dados não são vendidos nem usados para publicidade.</p>
+
+  <h2>Análise de acessos</h2>
+  <p>
+    Para saber quantas pessoas visitam o site e quantas entram em contato, pode
+    ser usada uma ferramenta de estatísticas que não usa cookies e não
+    identifica o visitante. Por isso o site não exibe aviso de cookies.
+  </p>
+
+  <h2>Compartilhamento</h2>
+  <p>
+    As conversas acontecem pelo WhatsApp e pelo e-mail, serviços de terceiros
+    com políticas de privacidade próprias. Fora isso, os dados só são
+    compartilhados quando necessário para a condução do seu caso (por exemplo,
+    em um pedido ao INSS ou em processo judicial) ou por obrigação legal.
+  </p>
+
+  <h2>Por quanto tempo os dados ficam guardados</h2>
+  <p>
+    Pelo tempo necessário para o atendimento e, depois dele, pelo prazo exigido
+    pelas regras legais e éticas da advocacia. Contatos que não viram
+    atendimento são apagados quando deixam de ser necessários.
+  </p>
+
+  <h2>Seus direitos</h2>
+  <p>
+    Você pode pedir, a qualquer momento, a confirmação do tratamento, o acesso,
+    a correção ou a exclusão dos seus dados, além de revogar o consentimento.
+    Basta escrever para <a href={`mailto:${site.email}`}>{site.email}</a>.
+  </p>
+</TextoLayout>

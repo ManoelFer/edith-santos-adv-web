@@ -1,0 +1,60 @@
+---
+import { getImage } from "astro:assets"
+import { render } from "astro:content"
+
+import ogPadrao from "@assets/og-edith-santos.jpg"
+import AuthorCard from "@components/common/AuthorCard.astro"
+import Button from "@components/common/Button.astro"
+import TextoLayout from "@layouts/TextoLayout.astro"
+import { formatarData } from "@lib/formatarData"
+import { orientacoesPublicadas } from "@lib/orientacoes"
+import { articleSchema } from "@lib/schema"
+
+export async function getStaticPaths() {
+  const posts = await orientacoesPublicadas()
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }))
+}
+
+const { post } = Astro.props
+const { Content } = await render(post)
+const { title, description, date, updated, cover } = post.data
+
+const imagem = await getImage({ src: cover ?? ogPadrao, width: 1200 })
+const schema = articleSchema({
+  titulo: title,
+  descricao: description,
+  url: new URL(Astro.url.pathname, Astro.site).toString(),
+  imagem: new URL(imagem.src, Astro.site).toString(),
+  publicado: date,
+  atualizado: updated,
+})
+---
+
+<TextoLayout
+  title={title}
+  description={description}
+  eyebrow="Orientações"
+  atualizado={updated}
+  image={cover}
+  schemas={[schema]}
+>
+  <p slot="cabecalho" class="mt-2 text-sm text-subtle">
+    Publicado em <time datetime={date.toISOString()}>{formatarData(date)}</time>
+  </p>
+
+  <Content />
+
+  <div slot="rodape">
+    <AuthorCard />
+    <p class="mt-8 max-w-3xl text-sm text-subtle">
+      Conteúdo informativo. Cada caso depende dos documentos e do histórico de
+      quem procura, e só pode ser avaliado com a análise individual.
+    </p>
+    <div class="mt-6 flex flex-wrap gap-3.5">
+      <Button href="/#contato">Entre em contato para uma análise</Button>
+      <Button href="/orientacoes/" variant="outline">
+        Ver todas as orientações
+      </Button>
+    </div>
+  </div>
+</TextoLayout>

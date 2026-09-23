@@ -1,0 +1,68 @@
+---
+/**
+ * Texto corrido vindo de Markdown ou de páginas de texto longo (política,
+ * termos). É o único lugar com <style>/@apply: o HTML do Markdown não recebe
+ * classes, e o projeto não usa o plugin de tipografia.
+ */
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<div class:list={["prose-site max-w-3xl", className]}>
+  <slot />
+</div>
+
+<style>
+  @reference "@styles/global.css";
+
+  .prose-site {
+    @apply text-muted;
+  }
+
+  .prose-site :global(:where(p, ul, ol)) {
+    @apply mb-5;
+  }
+
+  .prose-site :global(h2) {
+    @apply mt-12 mb-4 font-serif text-3xl leading-display font-normal text-ink-strong;
+  }
+
+  .prose-site :global(h3) {
+    @apply mt-8 mb-3 text-lg font-semibold text-ink;
+  }
+
+  .prose-site :global(:where(ul, ol)) {
+    @apply grid gap-2 pl-6;
+  }
+
+  .prose-site :global(ul) {
+    @apply list-disc marker:text-primary;
+  }
+
+  .prose-site :global(ol) {
+    @apply list-decimal marker:text-primary;
+  }
+
+  .prose-site :global(strong) {
+    @apply font-semibold text-ink;
+  }
+
+  .prose-site :global(a) {
+    @apply break-words;
+  }
+
+  .prose-site :global(blockquote) {
+    @apply my-8 border-l-2 border-primary pl-5 text-ink-soft;
+  }
+
+  .prose-site :global(img) {
+    @apply my-8 h-auto max-w-full rounded-md;
+  }
+
+  .prose-site :global(table) {
+    @apply block overflow-x-auto;
+  }
+</style>
