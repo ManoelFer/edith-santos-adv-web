@@ -1,34 +1,54 @@
 import { site } from "@data/site"
-import type { Topico } from "@typings/conteudo"
+import { whatsappUrl } from "@lib/whatsapp"
+import type { Credencial } from "@typings/conteudo"
 
-export const credenciais: Topico[] = [
+export const credenciais: Credencial[] = [
   {
-    titulo: "Inscrição na OAB",
-    descricao: `${site.oab}. Você pode conferir o registro no Cadastro Nacional dos Advogados, no site do Conselho Federal.`,
+    titulo: "Meus únicos contatos",
+    descricao:
+      "Eu só mando mensagem deste WhatsApp e deste e-mail. Se alguém falar com você por outro número ou outro e-mail usando meu nome ou minha foto, não sou eu.",
+    links: [
+      {
+        label: `WhatsApp ${site.telefone}`,
+        href: whatsappUrl(),
+        evento: "whatsapp_click",
+      },
+      { label: site.email, href: `mailto:${site.email}` },
+    ],
   },
   {
-    titulo: "Sigilo profissional",
+    titulo: "Registro na OAB",
+    descricao: `Meu número de inscrição é ${site.oab}. Você mesmo pode conferir no Cadastro Nacional dos Advogados, no site da OAB.`,
+    links: [
+      {
+        label: "Conferir no Cadastro Nacional dos Advogados",
+        href: "https://cna.oab.org.br/",
+      },
+    ],
+  },
+  {
+    titulo: "O que eu não peço",
     descricao:
-      "Tudo o que você conta e envia está protegido por sigilo profissional, dever previsto no Estatuto da Advocacia.",
+      "Não peço senha do Meu INSS, código que chega por SMS nem dados do banco por mensagem.",
+  },
+  {
+    titulo: "Sigilo",
+    descricao:
+      "O que você me conta e os documentos que me envia ficam só entre nós. A lei obriga o advogado a guardar esse sigilo.",
   },
   {
     titulo: "Contrato por escrito",
     descricao:
-      "A prestação de serviço é formalizada em contrato escrito antes de qualquer providência no seu caso.",
+      "Antes de fazer qualquer coisa no seu caso, a gente assina um contrato. Fica tudo combinado por escrito.",
   },
   {
-    titulo: "Dados e LGPD",
+    titulo: "Seus dados",
     descricao:
-      "Seus dados são usados apenas para a análise e o acompanhamento do caso, conforme a Lei Geral de Proteção de Dados.",
+      "Uso seus dados só para cuidar do seu caso, como manda a Lei Geral de Proteção de Dados (LGPD).",
   },
   {
-    titulo: "Atendimento remoto",
+    titulo: "Atendimento a distância",
     descricao:
-      "Videochamada com horário marcado, para que você não precise se deslocar nem enfrentar fila.",
-  },
-  {
-    titulo: "Canais oficiais",
-    descricao:
-      "Confira sempre o número e o e-mail listados no rodapé deste site. Eu nunca peço senha, código do Meu INSS ou dados bancários por mensagem.",
+      "A gente conversa por videochamada, com horário marcado. Você não precisa sair de casa nem pegar fila.",
   },
 ]

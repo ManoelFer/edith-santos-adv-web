@@ -12,3 +12,4 @@ export type IconName =
   | "menu"
   | "fechar"
   | "chevron"
+  | "alerta"
