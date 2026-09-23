@@ -1,0 +1,57 @@
+---
+import Button from "@components/common/Button.astro"
+import Container from "@components/common/Container.astro"
+import DashList from "@components/common/DashList.astro"
+import Eyebrow from "@components/common/Eyebrow.astro"
+import Glow from "@components/common/Glow.astro"
+import Portrait from "@components/common/Portrait.astro"
+import { site } from "@data/site"
+import { whatsappUrl } from "@lib/whatsapp"
+
+const selos = [
+  "Inscrição ativa na OAB/GO",
+  "Atuação exclusiva em previdenciário",
+  "Atendimento 100% online, em todo o país",
+]
+---
+
+<section class="relative overflow-hidden border-b border-ink/8">
+  <Glow variant="hero" />
+  <Container class="relative pt-7 md:pt-12 lg:pt-22">
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-12">
+      <div class="lg:col-span-7 lg:pb-20">
+        <Eyebrow class="mb-5 lg:mb-6.5">{site.area}</Eyebrow>
+        <h1 class="font-serif text-4xl leading-display font-normal tracking-tight text-balance text-ink-strong sm:text-5xl lg:text-6xl xl:text-7xl">
+          Seu benefício do INSS foi negado?{" "}
+          <em class="text-primary">Entenda o que ainda pode ser feito.</em>
+        </h1>
+        <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-lead lg:mt-7 lg:text-xl">
+          Sou advogada e atuo exclusivamente com pedidos, recursos e revisões de
+          benefícios previdenciários. Analiso o seu caso, explico em linguagem
+          simples o que diz o seu histórico de contribuições e quais caminhos
+          existem.
+        </p>
+        <div class="mt-8 grid gap-2.5 sm:flex sm:flex-wrap sm:gap-3.5 lg:mt-10">
+          <Button href={whatsappUrl()} size="lg" event="whatsapp_click">
+            Conversar pelo WhatsApp
+          </Button>
+          <Button href="#contato" variant="outline" size="lg">
+            Descrever meu caso
+          </Button>
+        </div>
+      </div>
+
+      <Portrait
+        priority
+        alt="Edith Silva de Almeida Santos, advogada previdenciária"
+        sizes="(min-width: 1280px) 470px, (min-width: 1024px) 38vw, (min-width: 640px) 320px, 256px"
+        class="mx-auto w-full max-w-64 sm:max-w-80 lg:col-span-5 lg:max-w-none"
+      />
+    </div>
+
+    <DashList
+      itens={selos}
+      class="grid gap-3 border-t border-ink/10 pt-5.5 pb-8 md:grid-cols-3 md:gap-x-10 lg:pb-13"
+    />
+  </Container>
+</section>

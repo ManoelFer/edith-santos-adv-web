@@ -1,0 +1,25 @@
+---
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import { credenciais } from "@data/credenciais"
+---
+
+<Section tone="alt" class="grid gap-8 lg:grid-cols-12 lg:gap-14">
+  <SectionHeading
+    size="md"
+    eyebrow="Confiança"
+    title="Como você confere que está falando comigo"
+    lead="Golpes usando nome de advogado são comuns com quem espera um benefício. Estes são os pontos que você pode verificar."
+    class="lg:col-span-4"
+  />
+  <ul class="border-t border-ink/10 lg:col-span-8">
+    {credenciais.map(({ titulo, descricao }) => (
+      <li class="gap-7 border-b border-ink/6 py-5 sm:flex lg:py-5.5">
+        <h3 class="mb-1 text-base font-semibold text-ink sm:mb-0 sm:w-44 sm:flex-none">
+          {titulo}
+        </h3>
+        <p class="text-base text-muted">{descricao}</p>
+      </li>
+    ))}
+  </ul>
+</Section>

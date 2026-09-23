@@ -1,0 +1,37 @@
+---
+import NumberBadge from "@components/common/NumberBadge.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import { fases } from "@data/fases"
+---
+
+<Section id="fases">
+  <SectionHeading
+    align="center"
+    eyebrow="Conteúdo informativo"
+    title="Fases de um pedido no INSS"
+    lead="O caminho que um requerimento pode percorrer, da entrada até a via judicial. Nem todo caso passa por todas as fases."
+  />
+  <div class="mt-10 overflow-hidden rounded-md border border-ink/10 bg-linear-to-b from-surface-2 to-page-alt sm:p-5 lg:mt-19 lg:p-11">
+    <!--
+      As divisórias são o fundo aparecendo pelo gap de 1px. Com número ímpar de
+      fases em 2 colunas, a última ocupa a linha inteira para não sobrar célula vazia.
+    -->
+    <ol class="grid gap-px bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
+      {fases.map(({ numero, titulo, descricao }) => (
+        <li class="bg-page-alt p-5.5 sm:last:odd:col-span-2 lg:p-7.5 lg:last:odd:col-span-1">
+          <div class="flex items-center gap-3.5">
+            <NumberBadge numero={numero} variant="tint" />
+            <h3 class="text-body font-semibold text-ink">{titulo}</h3>
+          </div>
+          <p class="mt-3.5 max-w-prose text-base text-muted">{descricao}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+  <p class="mt-5.5 max-w-4xl text-sm text-subtle">
+    Descrição geral do procedimento administrativo e judicial. Prazos,
+    exigências e resultados variam conforme o caso e a agência, e não podem ser
+    previstos nesta página.
+  </p>
+</Section>

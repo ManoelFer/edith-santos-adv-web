@@ -1,0 +1,34 @@
+---
+import Card from "@components/common/Card.astro"
+import Icon from "@components/common/Icon.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import { areas } from "@data/areas"
+---
+
+<Section id="atuacao">
+  <SectionHeading
+    align="center"
+    eyebrow="Especialidade em previdenciário"
+    title="Áreas de atuação"
+    lead="Cada caso depende do histórico de contribuições, dos documentos e da situação de saúde ou familiar de quem procura."
+  />
+  <ul class="mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-18 lg:grid-cols-4">
+    {areas.map(({ titulo, descricao, icone }) => (
+      <Card
+        as="li"
+        variant="gradient"
+        hover
+        class="flex gap-3.5 sm:block lg:px-6.5 lg:py-7.5"
+      >
+        <Icon name={icone} class="size-7 text-primary" />
+        <div>
+          <h3 class="mb-2 text-lg font-semibold tracking-tight text-ink sm:mt-5">
+            {titulo}
+          </h3>
+          <p class="text-base text-muted">{descricao}</p>
+        </div>
+      </Card>
+    ))}
+  </ul>
+</Section>

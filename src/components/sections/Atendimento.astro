@@ -1,0 +1,27 @@
+---
+import Card from "@components/common/Card.astro"
+import NumberBadge from "@components/common/NumberBadge.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import { etapas } from "@data/etapas"
+---
+
+<Section id="atendimento" tone="alt" glow="atendimento">
+  <SectionHeading
+    eyebrow="Sua jornada, passo a passo"
+    title="Como funciona o atendimento"
+    lead="Você sabe desde o começo o que estou fazendo, o que falta e em que ponto está o seu processo."
+  />
+  <ol class="mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-18 lg:grid-cols-4">
+    {etapas.map(({ numero, titulo, descricao }) => (
+      <Card as="li" accent="top">
+        <NumberBadge numero={numero} />
+        <h3 class="mt-5 mb-2 text-lg font-semibold text-ink">
+          <span class="sr-only">Etapa {numero}: </span>
+          {titulo}
+        </h3>
+        <p class="text-base text-muted">{descricao}</p>
+      </Card>
+    ))}
+  </ol>
+</Section>

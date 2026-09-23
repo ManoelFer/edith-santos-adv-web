@@ -1,0 +1,59 @@
+---
+import InfoList from "@components/common/InfoList.astro"
+import Portrait from "@components/common/Portrait.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import { site } from "@data/site"
+
+const ficha = [
+  {
+    rotulo: "Formação",
+    valor: "Bacharela em Direito, Universidade Estadual de Goiás",
+  },
+  { rotulo: "Inscrição", valor: site.oab },
+  { rotulo: "Atuação", valor: site.area },
+  { rotulo: "Atendimento", valor: "Online, em todo o Brasil" },
+  { rotulo: "Base", valor: site.base },
+]
+---
+
+<Section
+  id="sobre"
+  tone="alt"
+  glow="sobre"
+  class="grid gap-8 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-7"
+>
+  <SectionHeading
+    eyebrow="Conheça a advogada"
+    title="Escolhi o previdenciário porque é onde a explicação faz mais falta"
+    class="lg:col-span-6 lg:self-end"
+  />
+
+  <Portrait
+    alt="Retrato de Edith Silva de Almeida Santos"
+    sizes="(min-width: 1024px) 560px, (min-width: 640px) 320px, 240px"
+    class="mx-auto w-full max-w-60 sm:max-w-80 lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:max-w-none lg:self-center"
+  />
+
+  <div class="max-w-2xl lg:col-span-6 lg:self-start">
+    <p class="mb-5 text-lg text-ink-soft">
+      Sou natural de Iporá, em Goiás. Me formei Bacharela em Direito pela
+      Universidade Estadual de Goiás em 2024 e me inscrevi na Ordem dos
+      Advogados do Brasil, Seccional Goiás, sob o nº 73.463. Desde então dedico
+      minha atuação ao Direito Previdenciário.
+    </p>
+    <p class="mb-5 text-muted">
+      A maior parte das pessoas que me procura chega depois de um indeferimento
+      que não entendeu: o documento veio com um código, uma sigla, uma data.
+      Antes de falar de processo, eu leio o histórico no CNIS junto com a pessoa
+      e explico o que aquilo significa, inclusive quando a conclusão é que não
+      há pedido a fazer agora.
+    </p>
+    <p class="mb-8 text-muted">
+      Atendo por videochamada e por WhatsApp, o que permite acompanhar casos de
+      qualquer cidade do país sem que ninguém precise viajar. Todo documento que
+      você me envia fica sob sigilo profissional.
+    </p>
+    <InfoList itens={ficha} layout="split" />
+  </div>
+</Section>
