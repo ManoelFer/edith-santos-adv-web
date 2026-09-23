@@ -1,0 +1,95 @@
+---
+import Container from "@components/common/Container.astro"
+import Eyebrow from "@components/common/Eyebrow.astro"
+import Logo from "@components/common/Logo.astro"
+import { site } from "@data/site"
+import { whatsappUrl } from "@lib/whatsapp"
+
+const canais = [
+  {
+    label: `WhatsApp ${site.telefone}`,
+    href: whatsappUrl(),
+    event: "whatsapp_click",
+  },
+  { label: site.email, href: `mailto:${site.email}` },
+  ...(site.social.instagram
+    ? [{ label: "Instagram profissional", href: site.social.instagram }]
+    : []),
+]
+
+const linkClasses =
+  "inline-flex min-h-12 items-center break-words text-ink hover:text-primary"
+const ano = new Date().getFullYear()
+---
+
+<footer class="bg-page-alt">
+  <Container class="pt-12 pb-32 md:pb-10 lg:pt-20">
+    <div class="grid gap-10 border-b border-ink/10 pb-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <Logo width={152} class="w-31 lg:w-38" />
+        <p class="mt-5 text-base text-muted">
+          {site.nomeCompleto}
+          <br />
+          {site.profissao} · {site.oab}
+        </p>
+      </div>
+
+      <div>
+        <Eyebrow line={false} class="mb-3">
+          Canais oficiais
+        </Eyebrow>
+        <ul class="grid gap-1 text-base">
+          {canais.map(({ label, href, event }) => (
+            <li>
+              <a
+                href={href}
+                class={linkClasses}
+                data-event={event}
+                {...(href.startsWith("http") && {
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+                })}
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <Eyebrow line={false} class="mb-3">
+          Atendimento
+        </Eyebrow>
+        <p class="text-base text-muted">
+          {site.atendimento}.<br />
+          Base em {site.base}.
+        </p>
+      </div>
+
+      <div>
+        <Eyebrow line={false} class="mb-3">
+          Institucional
+        </Eyebrow>
+        <ul class="grid gap-1 text-base">
+          {site.institucional.map(({ label, href }) => (
+            <li>
+              <a href={href} class={linkClasses}>
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <p class="mt-7 max-w-4xl text-sm leading-relaxed text-subtle">
+      Este site tem caráter meramente informativo, em conformidade com o
+      Provimento 205/2021 do CFOAB, e não constitui oferta de serviços nem
+      promessa de resultado.
+    </p>
+    <p class="mt-2.5 text-sm text-subtle">
+      © {ano} {site.nomeCompleto}.
+    </p>
+  </Container>
+</footer>

@@ -1,0 +1,49 @@
+---
+import Button from "@components/common/Button.astro"
+import Container from "@components/common/Container.astro"
+import Icon from "@components/common/Icon.astro"
+import Logo from "@components/common/Logo.astro"
+import MobileMenu from "@components/layout/MobileMenu.astro"
+import { site } from "@data/site"
+
+const idMenu = "menu-mobile"
+---
+
+<header class="sticky top-0 z-40 border-b border-ink/8 bg-page/86 backdrop-blur-md backdrop-saturate-150">
+  <Container class="flex min-h-18 items-center justify-between gap-6 lg:min-h-24">
+    <a href="/" class="block flex-none rounded-sm">
+      <Logo width={108} class="w-20 lg:w-27" />
+    </a>
+
+    <nav aria-label="Seções da página" class="flex items-center gap-8">
+      <ul class="hidden gap-6 lg:flex">
+        {site.nav.map(({ label, href }) => (
+          <li>
+            <a
+              href={href}
+              class="inline-flex min-h-11 items-center px-1 text-base text-muted no-underline transition-colors hover:text-ink"
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="hidden sm:block">
+        <Button href="/#contato">Falar com a advogada</Button>
+      </div>
+
+      <button
+        type="button"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls={idMenu}
+        class="inline-flex size-13 flex-none items-center justify-center rounded-sm border border-ink/20 text-ink transition-colors hover:border-ink/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary lg:hidden"
+      >
+        <Icon name="menu" />
+      </button>
+    </nav>
+  </Container>
+
+  <MobileMenu id={idMenu} />
+</header>

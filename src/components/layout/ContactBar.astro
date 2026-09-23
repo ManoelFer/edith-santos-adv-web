@@ -1,0 +1,42 @@
+---
+import Button from "@components/common/Button.astro"
+import Icon from "@components/common/Icon.astro"
+import { site } from "@data/site"
+import { whatsappUrl } from "@lib/whatsapp"
+
+const whatsapp = whatsappUrl()
+---
+
+<!-- Celular: barra fixa com WhatsApp e ligação -->
+<div class="fixed inset-x-0 bottom-0 z-30 border-t border-ink/10 bg-page/92 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md md:hidden">
+  <div class="flex gap-2.5">
+    <Button
+      href={whatsapp}
+      size="lg"
+      event="whatsapp_click"
+      class="flex-1 shadow-lg shadow-primary/25"
+    >
+      Falar no WhatsApp
+    </Button>
+    <a
+      href={`tel:${site.telefoneE164}`}
+      aria-label={`Ligar para ${site.telefone}`}
+      data-event="phone_click"
+      class="inline-flex size-14 flex-none items-center justify-center rounded-sm border border-ink/25 text-ink hover:border-ink/50 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+    >
+      <Icon name="telefone" />
+    </a>
+  </div>
+</div>
+
+<!-- Tablet e desktop: botão flutuante -->
+<a
+  href={whatsapp}
+  target="_blank"
+  rel="noopener noreferrer"
+  data-event="whatsapp_click"
+  class="fixed right-7 bottom-7 z-30 hidden min-h-13 items-center gap-2.5 rounded-full bg-primary px-5.5 text-base font-semibold text-page no-underline shadow-xl shadow-primary/30 transition-colors hover:bg-primary-hover hover:text-page focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:inline-flex"
+>
+  <Icon name="whatsapp" class="size-5" />
+  Falar no WhatsApp
+</a>

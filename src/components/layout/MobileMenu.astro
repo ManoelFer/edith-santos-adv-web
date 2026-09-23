@@ -1,0 +1,96 @@
+---
+import Button from "@components/common/Button.astro"
+import Icon from "@components/common/Icon.astro"
+import Logo from "@components/common/Logo.astro"
+import { site } from "@data/site"
+import { whatsappUrl } from "@lib/whatsapp"
+
+interface Props {
+  id: string
+}
+
+const { id } = Astro.props
+---
+
+<dialog
+  id={id}
+  data-menu-mobile
+  aria-label="Menu"
+  class="m-0 h-dvh max-h-none w-full max-w-none bg-page p-5 text-ink backdrop:bg-page sm:p-8"
+>
+  <div class="flex min-h-full flex-col">
+    <div class="flex items-center justify-between">
+      <Logo width={88} alt="" class="w-20" />
+      <button
+        type="button"
+        data-menu-fechar
+        aria-label="Fechar menu"
+        class="inline-flex size-13 items-center justify-center rounded-sm border border-ink/20 text-ink transition-colors hover:border-ink/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      >
+        <Icon name="fechar" />
+      </button>
+    </div>
+
+    <nav aria-label="Seções" class="mt-8">
+      <ul>
+        {site.nav.map(({ label, href }) => (
+          <li>
+            <a
+              href={href}
+              data-menu-link
+              class="block border-b border-ink/10 py-4 font-serif text-3xl text-ink no-underline hover:text-primary"
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="mt-auto pt-8">
+      <Button
+        href={whatsappUrl()}
+        size="lg"
+        block
+        event="whatsapp_click"
+        data-menu-link
+      >
+        Falar no WhatsApp
+      </Button>
+      <p class="mt-4 text-center text-sm break-words text-subtle">
+        {site.telefone} · {site.email}
+      </p>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  document
+    .querySelectorAll<HTMLDialogElement>("dialog[data-menu-mobile]")
+    .forEach((menu) => {
+      const botoes = document.querySelectorAll<HTMLButtonElement>(
+        `[aria-controls="${menu.id}"]`,
+      )
+      if (botoes.length === 0) return
+
+      const fechar = () => menu.close()
+
+      botoes.forEach((botao) =>
+        botao.addEventListener("click", () => {
+          menu.showModal()
+          botao.setAttribute("aria-expanded", "true")
+        }),
+      )
+      menu.addEventListener("close", () =>
+        botoes.forEach((botao) => botao.setAttribute("aria-expanded", "false")),
+      )
+      menu
+        .querySelectorAll("[data-menu-fechar], [data-menu-link]")
+        .forEach((el) => el.addEventListener("click", fechar))
+
+      // O menu só existe abaixo de lg: fecha se a tela crescer com ele aberto
+      window
+        .matchMedia("(min-width: 64rem)")
+        .addEventListener("change", (e) => e.matches && fechar())
+    })
+</script>

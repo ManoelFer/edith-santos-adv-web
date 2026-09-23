@@ -1,0 +1,13 @@
+---
+import { site } from "@data/site"
+
+const { provedor, id, script } = site.analytics
+const ativo = provedor !== null && id !== "" && script !== ""
+---
+
+{ativo && provedor === "umami" && (
+  <script is:inline defer src={script} data-website-id={id}></script>
+)}
+{ativo && provedor === "plausible" && (
+  <script is:inline defer src={script} data-domain={id}></script>
+)}

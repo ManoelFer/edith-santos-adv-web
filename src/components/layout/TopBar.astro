@@ -1,0 +1,14 @@
+---
+import Container from "@components/common/Container.astro"
+import { site } from "@data/site"
+---
+
+<div class="border-b border-ink/8 bg-topbar text-sm tracking-wide text-muted">
+  <Container class="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 py-2.5 text-center sm:justify-between">
+    <span>
+      <span class="hidden sm:inline">{site.nomeCompleto} · </span>
+      {site.oab}
+    </span>
+    <span class="text-primary">Atendimento online em todo o Brasil</span>
+  </Container>
+</div>
