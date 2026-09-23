@@ -33,13 +33,12 @@ export function legalServiceSchema(imagem: string): Schema {
       jobTitle: site.profissao,
       identifier: site.oab,
     },
-    openingHoursSpecification: {
+    openingHoursSpecification: horario.faixas.map(({ abre, fecha }) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: horario.dias,
-      ...(horario.abre && horario.fecha
-        ? { opens: horario.abre, closes: horario.fecha }
-        : {}),
-    },
+      opens: abre,
+      closes: fecha,
+    })),
     ...(sameAs.length > 0 ? { sameAs } : {}),
   }
 }

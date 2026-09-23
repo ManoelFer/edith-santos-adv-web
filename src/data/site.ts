@@ -36,11 +36,12 @@ export const site = {
   abrangencia,
   atendimento: `Online, por videochamada, ${abrangencia}`,
   horario: {
-    texto: "Segunda a sexta, por videochamada",
+    texto: "Segunda a sexta, das 8h às 12h e das 14h às 18h",
     dias: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    // TODO(cliente): confirmar horário de abertura e fechamento (ex.: "08:00" e "18:00")
-    abre: "",
-    fecha: "",
+    faixas: [
+      { abre: "08:00", fecha: "12:00" },
+      { abre: "14:00", fecha: "18:00" },
+    ],
   },
 
   // TODO(cliente): links oficiais. Links vazios não são exibidos nem entram no Schema.
