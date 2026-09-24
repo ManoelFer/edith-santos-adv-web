@@ -27,25 +27,27 @@ const cards = areas.map((area) => {
     align="center"
     eyebrow="Especialidade em previdenciário"
     title="Áreas de atuação"
-    lead="Cada caso depende do histórico de contribuições, dos documentos e da situação de saúde ou familiar de quem procura."
+    lead="Cada caso é analisado individualmente, considerando o histórico de contribuições, os documentos apresentados e a situação de cada pessoa."
   />
-  <ul class="mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-18 lg:grid-cols-4">
+  <ul class="reveal-itens mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-18 lg:grid-cols-4">
     {cards.map(({ titulo, descricao, imagem, principal, extras }) => (
       <li
         class:list={[
-          "flex flex-col overflow-hidden rounded-sm border border-ink/8 bg-linear-to-b from-surface to-page-alt",
-          "transition-colors duration-200 hover:border-primary/45",
+          "group flex flex-col overflow-hidden rounded-sm border border-ink/8 bg-linear-to-b from-surface to-page-alt",
+          "transition duration-300 ease-suave hover:border-primary/45",
+          principal &&
+            "motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-xl motion-safe:hover:shadow-black/40 motion-safe:active:scale-98",
           principal &&
             "relative has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary",
         ]}
       >
         <!-- Ilustração decorativa: o título já diz do que se trata -->
-        <div class="border-b border-ink/8">
+        <div class="overflow-hidden border-b border-ink/8">
           <Image
             src={imagem}
             alt=""
             format="svg"
-            class="aspect-video h-auto w-full object-cover"
+            class="aspect-video h-auto w-full object-cover transition duration-700 ease-suave motion-safe:group-hover:scale-105"
           />
         </div>
         <!-- Alturas fixas de título e descrição: o "Saiba mais" fica na mesma linha em todos os cards -->
@@ -74,7 +76,12 @@ const cards = areas.map((area) => {
               class="mt-auto inline-flex min-h-11 items-center gap-1.5 pt-3 text-base font-medium after:absolute after:inset-0 focus-visible:outline-none"
             >
               Saiba mais<span class="sr-only"> sobre {principal.nome}</span>
-              <span aria-hidden="true">→</span>
+              <span
+                aria-hidden="true"
+                class="transition duration-300 ease-suave group-hover:translate-x-1"
+              >
+                →
+              </span>
             </a>
           )}
         </div>

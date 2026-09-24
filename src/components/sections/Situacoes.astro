@@ -12,7 +12,7 @@ import { situacoes } from "@data/situacoes"
     lead="Se alguma destas frases parece com a sua, vale conversar antes de tomar qualquer decisão sozinho."
     class="lg:col-span-5"
   />
-  <ul class="grid gap-3.5 sm:grid-cols-2 lg:col-span-7">
+  <ul class="reveal-itens grid gap-3.5 sm:grid-cols-2 lg:col-span-7">
     {situacoes.map(({ titulo, descricao }) => (
       <Card as="li" accent="left" hover>
         <h3 class="mb-2 text-lg font-semibold tracking-tight text-ink">

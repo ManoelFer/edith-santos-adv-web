@@ -20,17 +20,20 @@ const { h1, eyebrow, description, imagem } = beneficio.data
 -->
 <article
   class:list={[
-    "relative flex flex-col overflow-hidden rounded-sm border border-ink/8 bg-surface",
-    "transition-colors duration-200 hover:border-primary/45 hover:bg-field",
+    "group relative flex flex-col overflow-hidden rounded-sm border border-ink/8 bg-surface",
+    "transition duration-300 ease-suave hover:border-primary/45 hover:bg-field",
+    "motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-xl motion-safe:hover:shadow-black/40 motion-safe:active:scale-98",
     "has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary",
   ]}
 >
-  <Image
-    src={imagem}
-    alt=""
-    format="svg"
-    class="aspect-16/10 h-auto w-full border-b border-ink/8 object-cover"
-  />
+  <div class="overflow-hidden border-b border-ink/8">
+    <Image
+      src={imagem}
+      alt=""
+      format="svg"
+      class="aspect-16/10 h-auto w-full object-cover transition duration-700 ease-suave motion-safe:group-hover:scale-105"
+    />
+  </div>
   <div class="flex flex-1 flex-col p-5 md:p-6">
     <p class="mb-2.5 text-xs tracking-eyebrow text-primary uppercase md:min-h-8">
       {eyebrow}
@@ -45,7 +48,10 @@ const { h1, eyebrow, description, imagem } = beneficio.data
     </Titulo>
     <p class="text-base text-muted md:min-h-24">{description}</p>
     <p class="mt-auto pt-4 text-base text-primary" aria-hidden="true">
-      Ler sobre o benefício →
+      Ler sobre o benefício{" "}
+      <span class="inline-block transition duration-300 ease-suave group-hover:translate-x-1">
+        →
+      </span>
     </p>
   </div>
 </article>
