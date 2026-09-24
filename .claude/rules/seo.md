@@ -107,7 +107,7 @@ NAP = Nome, Endereço (ou área atendida) e Telefone.
 - Crédito de quem desenvolveu o site fica **só no rodapé**, discreto, na última linha (ao lado do ©), com link:
   - dados do estúdio em `src/data/estudio.ts` e HTML num componente (`CreditoEstudio.astro`), nunca escritos à mão no footer;
   - texto âncora é só a marca do estúdio, nunca palavra-chave ("criação de sites em ..."): link de rodapé repetido em vários sites com palavra-chave é esquema de links para o Google;
-  - `target="_blank" rel="noopener noreferrer"`, `aria-label` com o nome do estúdio e "abre em nova aba", alvo de toque de 44px;
+  - `target="_blank" rel="noopener noreferrer"`, nome acessível com o nome do estúdio e "abre em nova aba", em texto `sr-only` depois do texto visível (um `aria-label` diferente do texto visível quebra o WCAG 2.5.3), alvo de toque de 44px;
   - UTM no link (`utm_source` = domínio do cliente, `utm_medium=referral`, `utm_campaign=credito-rodape`), porque o `noreferrer` esconde a origem da visita;
   - `public/humans.txt` com cliente e estúdio, ligado no `<head>` por `<link rel="author" href="/humans.txt" />`.
 - Nunca sugira comprar links, pacotes de backlinks ou trocas em massa de links sem relação com o tema.
