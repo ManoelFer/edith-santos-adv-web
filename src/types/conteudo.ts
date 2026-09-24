@@ -16,8 +16,6 @@ export interface Area extends Topico {
    * A primeira é o "Saiba mais" do card; as outras entram como "Veja também".
    */
   slugs?: string[]
-  /** Card em largura total, com a ilustração ao lado do texto. */
-  destaque?: boolean
 }
 
 /** Link exibido junto de um item (contato oficial, consulta externa). */

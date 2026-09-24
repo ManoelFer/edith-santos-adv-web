@@ -9,11 +9,17 @@
 <rect width="960" height="600" fill="url(#brilho)"/>
 <path d="M80 480H880" stroke="#f4f1ec" stroke-opacity=".16" stroke-width="2"/>
 <g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<g stroke="#c69c5d">
+<path d="M234 478L258 282M366 478L342 282" stroke-width="5"/>
+<path d="M246 282h24M330 282h24M242 345h16M342 345h16" stroke-width="6"/>
+<circle cx="300" cy="226" r="24"/>
+<path d="M270 372V292a30 30 0 0 1 60 0V372z" fill="#c69c5d" fill-opacity=".07"/>
+<path d="M272 290L250 345M328 290L350 345"/>
+<path d="M298 372V478h-28a4 4 0 0 1 0-8h6V372" fill="#c69c5d" fill-opacity=".07"/>
+<path d="M304 392h22v48a8 8 0 0 1-8 8h-6a8 8 0 0 1-8-8z" fill="#c69c5d" fill-opacity=".22"/>
+<path d="M304 372v20M326 372v20M304 404l22-8M304 418l22-8M304 432l22-8M306 444l18-7" stroke-opacity=".7"/>
+</g>
 <g transform="translate(0 58)">
-<path d="M205 400c0-128 210-128 210 0" stroke="#c69c5d" fill="#c69c5d" fill-opacity=".07"/>
-<path d="M292 400V305q18-5 36 0v95z" fill="#c69c5d" fill-opacity=".12" stroke="#c69c5d"/>
-<path d="M175 400h270a10 10 0 0 1 0 20H175a10 10 0 0 1 0-20z" stroke="#c69c5d"/>
-<path d="M225 360c20-10 45-14 70-14" stroke="#c69c5d" stroke-opacity=".5"/>
 <path d="M510 400A150 150 0 0 1 810 400" stroke="#f4f1ec" stroke-opacity=".38" stroke-width="10"/>
 <path d="M510 400A150 150 0 0 1 706.4 257.3" stroke="#c69c5d" stroke-width="10"/>
 <path d="M494.0 400.0L476.0 400.0M542.6 282.6L529.9 269.9M660.0 234.0L660.0 216.0M777.4 282.6L790.1 269.9M826.0 400.0L844.0 400.0" stroke="#f4f1ec" stroke-opacity=".38"/>

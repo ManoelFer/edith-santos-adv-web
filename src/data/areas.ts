@@ -2,6 +2,7 @@ import pcd from "@assets/beneficios/aposentadoria-da-pessoa-com-deficiencia.svg"
 import idade from "@assets/beneficios/aposentadoria-por-idade.svg"
 import invalidez from "@assets/beneficios/aposentadoria-por-invalidez.svg"
 import tempo from "@assets/beneficios/aposentadoria-por-tempo-de-contribuicao.svg"
+import acidente from "@assets/beneficios/auxilio-acidente.svg"
 import auxilio from "@assets/beneficios/auxilio-doenca.svg"
 import bpc from "@assets/beneficios/bpc-loas.svg"
 import pensao from "@assets/beneficios/pensao-por-morte.svg"
@@ -11,7 +12,8 @@ import type { Area } from "@typings/conteudo"
 
 // Ilustrações próprias (src/assets/beneficios), as mesmas das páginas de benefício.
 // Ordem da grade: as quatro aposentadorias na primeira linha, os demais benefícios na
-// segunda e o planejamento em destaque, em largura total, no fim.
+// segunda (pensão e auxílio-acidente lado a lado) e, no fim, a revisão ao lado do
+// planejamento.
 export const areas: Area[] = [
   {
     titulo: "Aposentadoria por idade",
@@ -56,11 +58,18 @@ export const areas: Area[] = [
     imagem: bpc,
   },
   {
-    titulo: "Pensão por morte e auxílio-acidente",
-    slugs: ["pensao-por-morte", "auxilio-acidente"],
+    titulo: "Pensão por morte",
+    slugs: ["pensao-por-morte"],
     descricao:
-      "Pensão para a família de quem faleceu. Para quem ficou com sequela de um acidente, há uma indenização.",
+      "Pensão para a família de quem faleceu, com análise de quem tem direito e por quanto tempo.",
     imagem: pensao,
+  },
+  {
+    titulo: "Auxílio-acidente",
+    slugs: ["auxilio-acidente"],
+    descricao:
+      "Indenização para quem ficou com sequela de um acidente que reduz a capacidade para o trabalho.",
+    imagem: acidente,
   },
   {
     titulo: "Revisão de benefício",
@@ -73,8 +82,7 @@ export const areas: Area[] = [
     titulo: "Planejamento previdenciário",
     slugs: ["planejamento-previdenciario"],
     descricao:
-      "Análise do seu histórico antes de pedir a aposentadoria: o que corrigir no CNIS, em quais regras você se encaixa e qual o melhor momento para dar entrada.",
+      "Análise do seu histórico antes de pedir a aposentadoria, para saber em qual regra você se encaixa e o melhor momento.",
     imagem: planejamento,
-    destaque: true,
   },
 ]

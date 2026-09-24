@@ -6,7 +6,7 @@ eyebrow: "Benefício por incapacidade"
 resumo: "O auxílio-acidente é uma indenização paga pelo INSS a quem ficou com sequela de um acidente que reduz a capacidade para o trabalho que fazia. Você pode continuar trabalhando e receber o benefício junto com o salário. Não exige número mínimo de contribuições, mas só empregados, domésticos, avulsos e segurados especiais têm direito."
 beneficio: "acidente"
 imagem: "../../assets/beneficios/auxilio-acidente.svg"
-imagemAlt: "Ilustração de um capacete de proteção ao lado de um medidor com o ponteiro abaixo do máximo, representando a capacidade de trabalho reduzida depois de um acidente"
+imagemAlt: "Ilustração de uma pessoa de muletas, com uma perna enfaixada, ao lado de um medidor com o ponteiro abaixo do máximo, representando a capacidade de trabalho reduzida depois de um acidente"
 requisitos:
   - titulo: "Ser de uma categoria com direito"
     texto: "Têm direito o empregado com carteira assinada, o empregado doméstico (para acidentes a partir de junho de 2015), o trabalhador avulso e o segurado especial, como o pequeno produtor rural. Quem contribui por conta própria ou como facultativo não tem direito."
