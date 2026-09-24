@@ -2,17 +2,30 @@
 import Section from "@components/common/Section.astro"
 import SectionHeading from "@components/common/SectionHeading.astro"
 import { faq } from "@data/faq"
+import type { FaqItem } from "@typings/conteudo"
+
+interface Props {
+  itens?: FaqItem[]
+  titulo?: string
+  tone?: "default" | "alt"
+}
+
+const {
+  itens = faq,
+  titulo = "Perguntas que chegam quase sempre",
+  tone,
+} = Astro.props
 ---
 
-<Section id="duvidas" class="grid gap-8 lg:grid-cols-12 lg:gap-14">
+<Section id="duvidas" tone={tone} class="grid gap-8 lg:grid-cols-12 lg:gap-14">
   <SectionHeading
     size="md"
     eyebrow="Dúvidas frequentes"
-    title="Perguntas que chegam quase sempre"
+    title={titulo}
     class="lg:col-span-4"
   />
   <div class="border-t border-ink/14 lg:col-span-8">
-    {faq.map(({ pergunta, resposta }, i) => (
+    {itens.map(({ pergunta, resposta }, i) => (
       <details name="faq" open={i === 0} class="group border-b border-ink/14">
         <summary class="flex min-h-16 cursor-pointer list-none items-baseline justify-between gap-5 py-5 text-ink-soft transition-colors group-open:text-ink-strong hover:text-ink-strong [&::-webkit-details-marker]:hidden">
           <h3 class="font-serif text-xl leading-snug font-normal lg:text-2xl">

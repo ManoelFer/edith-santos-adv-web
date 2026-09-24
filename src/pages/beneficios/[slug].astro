@@ -1,0 +1,115 @@
+---
+import { getImage } from "astro:assets"
+import { render } from "astro:content"
+
+import IndicePagina from "@components/common/IndicePagina.astro"
+import BeneficioDetalhes from "@components/sections/BeneficioDetalhes.astro"
+import BeneficioDocumentos from "@components/sections/BeneficioDocumentos.astro"
+import BeneficioFontes from "@components/sections/BeneficioFontes.astro"
+import BeneficioHero from "@components/sections/BeneficioHero.astro"
+import BeneficioPassos from "@components/sections/BeneficioPassos.astro"
+import BeneficioRequisitos from "@components/sections/BeneficioRequisitos.astro"
+import BeneficiosRelacionados from "@components/sections/BeneficiosRelacionados.astro"
+import Contato from "@components/sections/Contato.astro"
+import Faq from "@components/sections/Faq.astro"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import {
+  assuntoDe,
+  beneficiosPublicados,
+  nomeCurto,
+  rotuloDe,
+  secaoPassosDe,
+  secaoRequisitosDe,
+  urlBeneficio,
+} from "@lib/beneficios"
+import {
+  beneficioSchema,
+  breadcrumbSchema,
+  faqPageSchema,
+  type ItemTrilha,
+} from "@lib/schema"
+import { mensagemSobre } from "@lib/whatsapp"
+
+export async function getStaticPaths() {
+  const todos = await beneficiosPublicados()
+  return todos.map((beneficio) => ({
+    params: { slug: beneficio.id },
+    props: {
+      beneficio,
+      relacionados: beneficio.data.relacionados.flatMap(
+        (slug) => todos.find((outro) => outro.id === slug) ?? [],
+      ),
+    },
+  }))
+}
+
+const { beneficio, relacionados } = Astro.props
+const { Content, headings } = await render(beneficio)
+const dados = beneficio.data
+
+const assunto = assuntoDe(beneficio)
+const secaoRequisitos = secaoRequisitosDe(beneficio)
+
+const trilha: ItemTrilha[] = [
+  { nome: "Início", caminho: "/" },
+  { nome: "Benefícios", caminho: "/beneficios/" },
+  { nome: nomeCurto(beneficio), caminho: urlBeneficio(beneficio.id) },
+]
+
+const indice = [
+  { label: secaoRequisitos.titulo, href: "#requisitos" },
+  { label: "Passo a passo", href: "#passo-a-passo" },
+  { label: "Documentos", href: "#documentos" },
+  ...headings
+    .filter(({ depth }) => depth === 2)
+    .map(({ text, slug }) => ({ label: text, href: `#${slug}` })),
+  { label: "Dúvidas", href: "#duvidas" },
+  { label: "Fontes", href: "#fontes" },
+]
+
+const og = await getImage({
+  src: dados.imagem,
+  width: 1200,
+  height: 630,
+  format: "jpg",
+})
+const schemas = [
+  beneficioSchema({
+    titulo: dados.h1,
+    descricao: dados.description,
+    url: new URL(Astro.url.pathname, Astro.site).toString(),
+    imagem: new URL(og.src, Astro.site).toString(),
+    servico: rotuloDe(beneficio),
+    revisado: dados.revisado,
+  }),
+  breadcrumbSchema(trilha),
+  ...(dados.faq.length > 0 ? [faqPageSchema(dados.faq)] : []),
+]
+---
+
+<BaseLayout
+  title={dados.title}
+  description={dados.description}
+  image={dados.imagem}
+  schemas={schemas}
+>
+  <BeneficioHero
+    beneficio={beneficio}
+    trilha={trilha}
+    assunto={assunto}
+    tituloRequisitos={secaoRequisitos.titulo}
+  />
+  <IndicePagina itens={indice} />
+  <BeneficioRequisitos itens={dados.requisitos} {...secaoRequisitos} />
+  <BeneficioPassos passos={dados.passos} {...secaoPassosDe(beneficio)} />
+  <BeneficioDocumentos documentos={dados.documentos} assunto={assunto} />
+  <BeneficioDetalhes>
+    <Content />
+  </BeneficioDetalhes>
+  {dados.faq.length > 0 && (
+    <Faq itens={dados.faq} titulo={`Dúvidas sobre ${assunto}`} />
+  )}
+  <BeneficioFontes fontes={dados.fontes} revisado={dados.revisado} />
+  <BeneficiosRelacionados beneficios={relacionados} />
+  <Contato beneficio={dados.beneficio} mensagem={mensagemSobre(assunto)} />
+</BaseLayout>

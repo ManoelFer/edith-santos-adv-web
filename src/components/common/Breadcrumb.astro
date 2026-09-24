@@ -1,0 +1,33 @@
+---
+import type { ItemTrilha } from "@lib/schema"
+
+interface Props {
+  /** Do início até a página atual (a última não vira link). */
+  itens: ItemTrilha[]
+  class?: string
+}
+
+const { itens, class: className } = Astro.props
+---
+
+<nav aria-label="Trilha de navegação" class={className}>
+  <ol class="flex flex-wrap items-center gap-x-2 text-sm text-subtle">
+    {itens.map(({ nome, caminho }, i) =>
+      i < itens.length - 1 ? (
+        <li class="flex items-center gap-2">
+          <a
+            href={caminho}
+            class="inline-flex min-h-11 items-center text-muted no-underline hover:text-ink"
+          >
+            {nome}
+          </a>
+          <span aria-hidden="true">›</span>
+        </li>
+      ) : (
+        <li aria-current="page" class="text-ink-soft">
+          {nome}
+        </li>
+      ),
+    )}
+  </ol>
+</nav>

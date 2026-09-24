@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" width="960" height="600">
+<defs>
+<linearGradient id="fundo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#111316"/><stop offset="1" stop-color="#08090a"/></linearGradient>
+<radialGradient id="brilho" cx="75%" cy="70%" r="75%"><stop offset="0" stop-color="#c69c5d" stop-opacity=".26"/><stop offset=".62" stop-color="#c69c5d" stop-opacity="0"/></radialGradient>
+<pattern id="pontos" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#f4f1ec" fill-opacity=".07"/></pattern>
+</defs>
+<rect width="960" height="600" fill="url(#fundo)"/>
+<rect width="960" height="600" fill="url(#pontos)"/>
+<rect width="960" height="600" fill="url(#brilho)"/>
+<path d="M80 480H880" stroke="#f4f1ec" stroke-opacity=".16" stroke-width="2"/>
+<g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+
+<path d="M560 480A150 150 0 0 1 860 480" stroke="#c69c5d" fill="#c69c5d" fill-opacity=".12"/>
+<path d="M520 480A190 190 0 0 1 900 480" stroke="#c69c5d" stroke-opacity=".3"/>
+<path d="M710 262v-34M592 312l-22-24M828 312l22-24" stroke="#c69c5d" stroke-opacity=".45"/>
+<circle cx="250" cy="318" r="24" stroke="#c69c5d"/>
+<path d="M215 480V398a35 35 0 0 1 70 0V480" stroke="#c69c5d" fill="#c69c5d" fill-opacity=".07"/>
+<circle cx="340" cy="388" r="17" stroke="#c69c5d"/>
+<path d="M316 480V438a24 24 0 0 1 48 0V480" stroke="#c69c5d" fill="#c69c5d" fill-opacity=".07"/>
+<circle cx="430" cy="318" r="24" stroke="#f4f1ec" stroke-opacity=".38" stroke-dasharray="3 9"/>
+<path d="M395 480V398a35 35 0 0 1 70 0V480" stroke="#f4f1ec" stroke-opacity=".38" stroke-dasharray="3 9"/>
+<path d="M285 432h31M364 446h31" stroke="#c69c5d" stroke-opacity=".6"/>
+
+<path d="M560 170q12-12 24 0 12-12 24 0M650 128q9-9 18 0 9-9 18 0" stroke="#c69c5d" stroke-opacity=".55" stroke-width="2.5"/>
+</g>
+</svg>

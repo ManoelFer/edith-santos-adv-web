@@ -29,6 +29,11 @@ export default defineConfig({
       },
     },
   },
+  // Converte as ilustrações SVG em JPG para o og:image (redes sociais não
+  // aceitam SVG). Seguro aqui: só entram SVGs criados no projeto, em src/assets.
+  image: {
+    dangerouslyProcessSVG: true,
+  },
   integrations: [
     sitemap({
       filter: (page) =>

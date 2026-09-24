@@ -1,0 +1,35 @@
+---
+import Card from "@components/common/Card.astro"
+import Icon from "@components/common/Icon.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import type { ItemBeneficio } from "@typings/conteudo"
+
+interface Props {
+  itens: ItemBeneficio[]
+  eyebrow: string
+  titulo: string
+  lead: string
+}
+
+const { itens, eyebrow, titulo, lead } = Astro.props
+---
+
+<Section id="requisitos">
+  <SectionHeading eyebrow={eyebrow} title={titulo} lead={lead} />
+  <ul class="mt-9 grid gap-3.5 md:grid-cols-2 lg:mt-12">
+    {itens.map(({ titulo, texto }) => (
+      <Card as="li" variant="gradient" class="flex gap-4">
+        <span class="inline-flex size-9 flex-none items-center justify-center rounded-full border border-primary/45 bg-primary/12 text-primary">
+          <Icon name="check" class="size-5" />
+        </span>
+        <div>
+          <h3 class="mb-1.5 text-lg font-semibold tracking-tight text-ink">
+            {titulo}
+          </h3>
+          <p class="text-base text-muted">{texto}</p>
+        </div>
+      </Card>
+    ))}
+  </ul>
+</Section>

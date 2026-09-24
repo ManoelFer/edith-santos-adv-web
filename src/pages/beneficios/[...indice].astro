@@ -1,0 +1,44 @@
+---
+import BeneficioCard from "@components/common/BeneficioCard.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import { beneficiosPublicados } from "@lib/beneficios"
+import { breadcrumbSchema } from "@lib/schema"
+
+// Rota de resto em vez de index.astro: /beneficios/ só é gerada quando existe
+// pelo menos um benefício publicado (evita página vazia no Google).
+export async function getStaticPaths() {
+  const beneficios = await beneficiosPublicados()
+  return beneficios.length > 0
+    ? [{ params: { indice: undefined }, props: { beneficios } }]
+    : []
+}
+
+const { beneficios } = Astro.props
+
+const schema = breadcrumbSchema([
+  { nome: "Início", caminho: "/" },
+  { nome: "Benefícios", caminho: "/beneficios/" },
+])
+---
+
+<BaseLayout
+  title="Benefícios do INSS: qual é o seu caso?"
+  description="Aposentadoria por invalidez, auxílio-doença, BPC/LOAS e pensão por morte: quem tem direito, documentos e o que fazer se o INSS negar o pedido."
+  schemas={[schema]}
+>
+  <Section reveal={false} glow="hero">
+    <SectionHeading
+      as="h1"
+      eyebrow="Benefícios do INSS"
+      title="Qual benefício combina com a sua situação?"
+      lead="Cada página explica, em linguagem simples, quem tem direito, como pedir, quais documentos separar e o que fazer se o INSS negar. Conteúdo informativo, revisado pela advogada."
+    />
+    <div class="mt-10 grid gap-4 md:grid-cols-2 lg:mt-14 xl:grid-cols-4">
+      {beneficios.map((beneficio) => (
+        <BeneficioCard beneficio={beneficio} nivel="h2" />
+      ))}
+    </div>
+  </Section>
+</BaseLayout>

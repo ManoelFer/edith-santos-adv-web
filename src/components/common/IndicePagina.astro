@@ -1,0 +1,33 @@
+---
+import Container from "@components/common/Container.astro"
+import type { LinkNav } from "@typings/conteudo"
+
+interface Props {
+  itens: LinkNav[]
+}
+
+const { itens } = Astro.props
+---
+
+<nav aria-labelledby="indice-titulo" class="border-b border-ink/8 bg-page-alt">
+  <Container class="py-5 md:py-6">
+    <p
+      id="indice-titulo"
+      class="mb-3 text-sm font-semibold tracking-wider text-subtle uppercase"
+    >
+      Nesta página
+    </p>
+    <ul class="flex flex-wrap gap-2">
+      {itens.map(({ label, href }) => (
+        <li>
+          <a
+            href={href}
+            class="inline-flex min-h-11 items-center rounded-full border border-ink/14 px-4 text-base text-ink-soft no-underline transition-colors hover:border-primary/60 hover:text-ink"
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Container>
+</nav>

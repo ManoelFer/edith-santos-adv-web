@@ -1,0 +1,32 @@
+---
+import BeneficioCard from "@components/common/BeneficioCard.astro"
+import Section from "@components/common/Section.astro"
+import type { Beneficio } from "@lib/beneficios"
+
+interface Props {
+  beneficios: Beneficio[]
+}
+
+const { beneficios } = Astro.props
+---
+
+{beneficios.length > 0 && (
+  <Section>
+    <div class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 border-b border-ink/10 pb-6">
+      <h2 class="font-serif text-3xl leading-display font-normal tracking-tight text-ink-strong lg:text-4xl">
+        Outros benefícios do INSS
+      </h2>
+      <a
+        href="/beneficios/"
+        class="inline-flex min-h-11 items-center text-base"
+      >
+        Ver todos os benefícios
+      </a>
+    </div>
+    <div class="mt-9 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {beneficios.map((beneficio) => (
+        <BeneficioCard beneficio={beneficio} />
+      ))}
+    </div>
+  </Section>
+)}

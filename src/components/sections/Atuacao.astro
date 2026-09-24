@@ -1,9 +1,25 @@
 ---
-import Card from "@components/common/Card.astro"
-import Icon from "@components/common/Icon.astro"
+import { Image } from "astro:assets"
+
 import Section from "@components/common/Section.astro"
 import SectionHeading from "@components/common/SectionHeading.astro"
 import { areas } from "@data/areas"
+import { beneficiosPublicados, nomeCurto, urlBeneficio } from "@lib/beneficios"
+
+// Só vira link a página de benefício já publicada. A primeira página do card
+// é o "Saiba mais" (o card inteiro é clicável); as outras, "Veja também".
+const publicados = new Map(
+  (await beneficiosPublicados()).map((beneficio) => [beneficio.id, beneficio]),
+)
+const cards = areas.map((area) => {
+  const links = (area.slugs ?? []).flatMap((slug) => {
+    const beneficio = publicados.get(slug)
+    return beneficio
+      ? [{ href: urlBeneficio(slug), nome: nomeCurto(beneficio) }]
+      : []
+  })
+  return { ...area, principal: links[0], extras: links.slice(1) }
+})
 ---
 
 <Section id="atuacao">
@@ -14,21 +30,93 @@ import { areas } from "@data/areas"
     lead="Cada caso depende do histórico de contribuições, dos documentos e da situação de saúde ou familiar de quem procura."
   />
   <ul class="mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-18 lg:grid-cols-4">
-    {areas.map(({ titulo, descricao, icone }) => (
-      <Card
-        as="li"
-        variant="gradient"
-        hover
-        class="flex gap-3.5 sm:block lg:px-6.5 lg:py-7.5"
+    {cards.map(({ titulo, descricao, imagem, principal, extras, destaque }) => (
+      <li
+        class:list={[
+          "flex flex-col overflow-hidden rounded-sm border border-ink/8 bg-linear-to-b from-surface to-page-alt",
+          "transition-colors duration-200 hover:border-primary/45",
+          principal &&
+            "relative has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary",
+          // Destaque: largura total, ilustração à esquerda e texto à direita
+          destaque &&
+            "border-primary/30 sm:col-span-2 sm:flex-row lg:col-span-4",
+        ]}
       >
-        <Icon name={icone} class="size-7 text-primary" />
-        <div>
-          <h3 class="mb-2 text-lg font-semibold tracking-tight text-ink sm:mt-5">
+        <!-- Ilustração decorativa: o título já diz do que se trata -->
+        <div
+          class:list={[
+            "border-b border-ink/8",
+            destaque &&
+              "sm:relative sm:w-1/2 sm:flex-none sm:border-r sm:border-b-0 lg:w-5/12",
+          ]}
+        >
+          <Image
+            src={imagem}
+            alt=""
+            format="svg"
+            class:list={[
+              "aspect-video h-auto w-full object-cover",
+              destaque && "sm:absolute sm:inset-0 sm:aspect-auto sm:h-full",
+            ]}
+          />
+        </div>
+        <!-- Alturas fixas de título e descrição: o "Saiba mais" fica na mesma linha em todos os cards -->
+        <div
+          class:list={[
+            "flex flex-1 flex-col p-5",
+            destaque
+              ? "sm:justify-center sm:p-8 lg:px-12 lg:py-11"
+              : "lg:px-6.5 lg:pt-6 lg:pb-6.5",
+          ]}
+        >
+          {destaque && (
+            <p class="mb-3 text-xs tracking-eyebrow text-primary uppercase">
+              Antes de pedir a aposentadoria
+            </p>
+          )}
+          <h3
+            class:list={[
+              destaque
+                ? "mb-3 font-serif text-3xl leading-display font-normal tracking-tight text-ink-strong lg:text-4xl"
+                : "mb-2 text-lg font-semibold tracking-tight text-ink sm:min-h-14",
+            ]}
+          >
             {titulo}
           </h3>
-          <p class="text-base text-muted">{descricao}</p>
+          <p
+            class:list={[
+              "text-base text-muted",
+              destaque ? "max-w-xl lg:text-lg" : "sm:min-h-24",
+            ]}
+          >
+            {descricao}
+            {extras.length > 0 && (
+              <span class="block pt-2">
+                Veja também:{" "}
+                {extras.map(({ href, nome }) => (
+                  // Acima do ::after do "Saiba mais", para receber o clique
+                  <a href={href} class="relative z-10 font-medium">
+                    {nome}
+                  </a>
+                ))}
+              </span>
+            )}
+          </p>
+          {principal && (
+            // O ::after estende o clique ao card inteiro
+            <a
+              href={principal.href}
+              class:list={[
+                "inline-flex min-h-11 items-center gap-1.5 pt-3 text-base font-medium after:absolute after:inset-0 focus-visible:outline-none",
+                destaque ? "mt-4" : "mt-auto",
+              ]}
+            >
+              Saiba mais<span class="sr-only"> sobre {principal.nome}</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          )}
         </div>
-      </Card>
+      </li>
     ))}
   </ul>
 </Section>

@@ -1,0 +1,49 @@
+---
+import Button from "@components/common/Button.astro"
+import Checklist from "@components/common/Checklist.astro"
+import Icon from "@components/common/Icon.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+
+interface Props {
+  documentos: string[]
+  /** Nome do benefício, para o título da lista enviada. */
+  assunto: string
+}
+
+const { documentos, assunto } = Astro.props
+
+// wa.me sem número: a própria pessoa escolhe para quem enviar (pode ser ela
+// mesma). Nada passa pelo site.
+const lista = [
+  `Documentos para separar (${assunto}):`,
+  ...documentos.map((doc) => `- ${doc}`),
+].join("\n")
+const compartilhar = new URL("https://wa.me/")
+compartilhar.searchParams.set("text", lista)
+---
+
+<Section id="documentos" class="grid gap-9 lg:grid-cols-12 lg:gap-14">
+  <SectionHeading
+    size="md"
+    eyebrow="Organização"
+    title="Documentos para separar"
+    lead="Com eles em mãos, a análise do caso fica mais rápida. Se faltar algum, separe o que tiver e anote o que falta."
+    class="lg:col-span-5"
+  />
+  <div class="lg:col-span-7">
+    <div class="rounded-md border border-ink/10 bg-surface-2 p-5 md:p-7">
+      <Checklist itens={documentos} class="md:grid-cols-2 md:gap-x-8" />
+    </div>
+    <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+      <Button href={compartilhar.toString()} variant="outline">
+        <Icon name="whatsapp" class="size-5 text-primary" />
+        Compartilhar a lista pelo WhatsApp
+      </Button>
+      <p class="flex gap-2 text-sm text-subtle">
+        <Icon name="alerta" class="size-4.5 text-primary" />
+        Não envie documentos pelo formulário do site.
+      </p>
+    </div>
+  </div>
+</Section>
