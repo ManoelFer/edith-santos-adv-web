@@ -5,10 +5,12 @@ import { beneficios } from "@data/beneficios"
 import { limiteMensagem } from "@lib/contato"
 
 interface Props {
+  /** Valor do benefício já escolhido (vindo da página do benefício). */
+  beneficio?: string
   class?: string
 }
 
-const { class: className } = Astro.props
+const { beneficio, class: className } = Astro.props
 ---
 
 <form
@@ -47,6 +49,7 @@ const { class: className } = Astro.props
     label="Sobre qual benefício você quer falar"
     as="select"
     options={beneficios}
+    value={beneficio}
     placeholder="Escolha uma opção"
   />
 

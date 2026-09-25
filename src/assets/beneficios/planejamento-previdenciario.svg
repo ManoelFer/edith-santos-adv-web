@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" width="960" height="600">
+<defs>
+<linearGradient id="fundo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#111316"/><stop offset="1" stop-color="#08090a"/></linearGradient>
+<radialGradient id="brilho" cx="70%" cy="35%" r="75%"><stop offset="0" stop-color="#c69c5d" stop-opacity=".26"/><stop offset=".62" stop-color="#c69c5d" stop-opacity="0"/></radialGradient>
+<pattern id="pontos" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#f4f1ec" fill-opacity=".07"/></pattern>
+</defs>
+<rect width="960" height="600" fill="url(#fundo)"/>
+<rect width="960" height="600" fill="url(#pontos)"/>
+<rect width="960" height="600" fill="url(#brilho)"/>
+<path d="M80 480H880" stroke="#f4f1ec" stroke-opacity=".16" stroke-width="2"/>
+<g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M150 470C300 470 300 380 430 380S560 300 650 290 730 210 780 200" stroke="#c69c5d" stroke-width="4" stroke-dasharray="1 16"/>
+<circle cx="150" cy="470" r="10" fill="#c69c5d" stroke="none"/>
+<circle cx="430" cy="380" r="12" stroke="#c69c5d" fill="#111316"/>
+<circle cx="430" cy="380" r="4" fill="#c69c5d" stroke="none"/>
+<circle cx="650" cy="290" r="12" stroke="#c69c5d" fill="#111316"/>
+<circle cx="650" cy="290" r="4" fill="#c69c5d" stroke="none"/>
+<path d="M780 200V100" stroke="#c69c5d" stroke-width="4"/>
+<path d="M780 104h70l-18 24 18 24h-70z" stroke="#c69c5d" fill="#c69c5d" fill-opacity=".3"/>
+<circle cx="780" cy="200" r="8" fill="#c69c5d" stroke="none"/>
+<circle cx="230" cy="190" r="72" stroke="#c69c5d" fill="#c69c5d" fill-opacity=".07"/>
+<circle cx="230" cy="190" r="56" stroke="#f4f1ec" stroke-opacity=".38"/>
+<path d="M230 134v10M230 236v10M174 190h10M276 190h10" stroke="#f4f1ec" stroke-opacity=".38"/>
+<path d="M252 142 238 194 222 186z" fill="#c69c5d" stroke="#c69c5d" stroke-width="2"/>
+<path d="M208 238 222 186 238 194z" fill="#f4f1ec" fill-opacity=".35" stroke="#f4f1ec" stroke-opacity=".5" stroke-width="2"/>
+<circle cx="230" cy="190" r="5" fill="#111316" stroke="#c69c5d" stroke-width="2"/>
+</g>
+</svg>

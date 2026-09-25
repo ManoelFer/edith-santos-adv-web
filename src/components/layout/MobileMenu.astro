@@ -16,7 +16,12 @@ const { id } = Astro.props
   id={id}
   data-menu-mobile
   aria-label="Menu"
-  class="m-0 h-dvh max-h-none w-full max-w-none bg-page p-5 text-ink backdrop:bg-page sm:p-8"
+  class:list={[
+    "m-0 h-dvh max-h-none w-full max-w-none bg-page p-5 text-ink backdrop:bg-page sm:p-8",
+    "motion-safe:transition-[opacity,translate,display,overlay] motion-safe:transition-discrete motion-safe:duration-300 motion-safe:ease-suave",
+    "opacity-0 open:opacity-100 starting:open:opacity-0",
+    "translate-y-3 open:translate-y-0 starting:open:translate-y-3",
+  ]}
 >
   <div class="flex min-h-full flex-col">
     <div class="flex items-center justify-between">

@@ -44,7 +44,8 @@ Passo a passo completo em [`organizacao-do-claude-md.md`](.claude/rules/organiza
 - **Análise de acessos:** Umami Cloud (plano Hobby, sem cookies), configurado em `site.analytics`. Os eventos `whatsapp_click`, `phone_click` e `form_submit` são metas no painel do Umami e disparam via `data-event`.
 - **Horário:** segunda a sexta, das 8h às 12h e das 14h às 18h (`site.horario`, duas faixas no Schema).
 - **Segurança:** CSP completa gerada pelo Astro (`security.csp` no `astro.config.mjs`, em `<meta>` com hash dos scripts); `frame-ancestors` e HSTS com `preload` ficam no `public/_headers`. Domínio externo novo (script, fonte, API) precisa entrar na CSP.
-- **Páginas de benefício:** plano em `docs/plano-paginas-beneficios.md`.
+- **Páginas de benefício:** collection `beneficios` (`/beneficios/<slug>/`), plano em `docs/plano-paginas-beneficios.md`. Texto jurídico só com fonte oficial (Planalto, DOU, gov.br, STF/STJ/TRF1) e `draft: true` até a Dra. Edith aprovar; checklist em `docs/validacao-paginas-beneficios.md` e pesquisa com as fontes em `docs/pesquisa-beneficios/`. Rascunhos aparecem no `yarn dev` e no build com `MOSTRAR_RASCUNHOS=1`. Card de Atuação, rodapé e `/beneficios/` só mostram as páginas publicadas.
+- **Ilustrações dos benefícios:** SVGs próprios em `src/assets/beneficios/` (traço dourado sobre fundo escuro, sem pessoas reais), nunca imagem de banco. `image.dangerouslyProcessSVG` está ligado só para gerar o JPG do `og:image` a partir desses SVGs; na página o SVG vai direto (`format="svg"`).
 - **Pendências do cliente** (marcadas com `TODO(cliente)` no código): links do Instagram e do Perfil da Empresa no Google e revisão jurídica da Política de Privacidade e dos Termos.
 
 ## Stack
@@ -70,6 +71,7 @@ yarn typecheck        # tsc --noEmit (TS 7; não cobre arquivos .astro)
 yarn knip             # arquivos, exports e dependências não usados
 yarn secretlint       # procura tokens e chaves no código
 yarn seo              # confere o ./dist contra as regras de seo.md (rode depois do build)
+MOSTRAR_RASCUNHOS=1 yarn build  # build de prévia com as páginas em rascunho
 yarn astro add <int>  # adicionar integração (ex.: sitemap, tailwind, react)
 yarn add <pacote>     # adicionar dependência
 yarn add -D <pacote>  # adicionar dependência de desenvolvimento

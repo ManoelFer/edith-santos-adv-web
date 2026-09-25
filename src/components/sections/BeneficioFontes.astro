@@ -1,0 +1,57 @@
+---
+import AuthorCard from "@components/common/AuthorCard.astro"
+import Icon from "@components/common/Icon.astro"
+import Section from "@components/common/Section.astro"
+import { formatarData } from "@lib/formatarData"
+import type { Fonte } from "@typings/conteudo"
+
+interface Props {
+  fontes: Fonte[]
+  revisado: Date
+}
+
+const { fontes, revisado } = Astro.props
+---
+
+<Section id="fontes" tone="alt" class="grid gap-10 lg:grid-cols-12 lg:gap-14">
+  <div class="lg:col-span-5">
+    <h2 class="font-serif text-3xl leading-display font-normal tracking-tight text-ink-strong">
+      Quem escreveu e em que se baseia
+    </h2>
+    <p class="mt-4 text-base text-muted">
+      Texto revisado em{" "}
+      <time datetime={revisado.toISOString()}>{formatarData(revisado)}</time>,
+      conforme a legislação e as normas do INSS vigentes nessa data. As regras
+      mudam: confira sempre a data da revisão.
+    </p>
+    <AuthorCard class="mt-8" />
+  </div>
+
+  <div class="lg:col-span-7">
+    <h3 class="text-sm font-semibold tracking-wider text-primary uppercase">
+      Fontes oficiais
+    </h3>
+    <ul class="mt-4 border-t border-ink/10">
+      {fontes.map(({ rotulo, url }) => (
+        <li class="border-b border-ink/6">
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex min-h-12 items-center justify-between gap-4 py-2.5 text-base break-words"
+          >
+            <span>
+              {rotulo}
+              <span class="sr-only"> (abre em nova aba)</span>
+            </span>
+            <Icon name="externo" class="size-4.5 text-subtle" />
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-6 text-sm text-subtle">
+      Conteúdo informativo. Não substitui a análise individual do caso, que
+      depende dos documentos e do histórico de quem procura.
+    </p>
+  </div>
+</Section>

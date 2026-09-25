@@ -28,7 +28,7 @@ const { posts } = Astro.props
       title="Entenda o seu benefício antes de decidir"
       lead="Conteúdo informativo. Cada caso depende da análise individual dos documentos."
     />
-    <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div class="entrada-itens mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {posts.map((post) => (
         <ArticleCard post={post} nivel="h2" />
       ))}

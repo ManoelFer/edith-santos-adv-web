@@ -11,6 +11,8 @@ interface Props {
   hint?: string
   /** Opções do select; a primeira, vazia, usa `placeholder`. */
   options?: Opcao[]
+  /** Opção já escolhida no select. */
+  value?: string
   placeholder?: string
   autocomplete?: string
   inputmode?: "text" | "tel" | "email" | "numeric"
@@ -27,6 +29,7 @@ const {
   type = "text",
   hint,
   options = [],
+  value,
   placeholder,
   autocomplete,
   inputmode,
@@ -66,7 +69,9 @@ const comum = {
       <select {...comum} class:list={[controle, "appearance-none pr-11"]}>
         <option value="">{placeholder}</option>
         {options.map(({ valor, rotulo }) => (
-          <option value={valor}>{rotulo}</option>
+          <option value={valor} selected={valor === value}>
+            {rotulo}
+          </option>
         ))}
       </select>
       <Icon

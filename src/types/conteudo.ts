@@ -1,5 +1,6 @@
+import type { ImageMetadata } from "astro"
+
 import type { EventoConversao } from "@typings/analytics"
-import type { IconName } from "@typings/icon"
 
 /** Card com título e descrição curta (situações, credenciais, etapas). */
 export interface Topico {
@@ -8,7 +9,13 @@ export interface Topico {
 }
 
 export interface Area extends Topico {
-  icone: IconName
+  /** Ilustração do topo do card (SVG próprio). */
+  imagem: ImageMetadata
+  /**
+   * Páginas em /beneficios/<slug>/ (o link só aparece se estiver publicada).
+   * A primeira é o "Saiba mais" do card; as outras entram como "Veja também".
+   */
+  slugs?: string[]
 }
 
 /** Link exibido junto de um item (contato oficial, consulta externa). */
@@ -39,4 +46,16 @@ export interface LinkNav {
 export interface Opcao {
   valor: string
   rotulo: string
+}
+
+/** Item com título curto e texto (requisitos e passos de um benefício). */
+export interface ItemBeneficio {
+  titulo: string
+  texto: string
+}
+
+/** Referência oficial citada no conteúdo (lei, portaria, página do INSS). */
+export interface Fonte {
+  rotulo: string
+  url: string
 }

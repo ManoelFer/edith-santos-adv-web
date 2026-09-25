@@ -30,7 +30,7 @@ const {
 
 const variants = {
   primary:
-    "border-primary bg-primary font-semibold text-page hover:border-primary-hover hover:bg-primary-hover hover:text-page",
+    "border-primary bg-primary font-semibold text-page hover:border-primary-hover hover:bg-primary-hover hover:text-page hover:shadow-lg hover:shadow-primary/20",
   outline:
     "border-ink/25 font-medium text-ink hover:border-ink/50 hover:bg-ink/5 hover:text-ink",
 } as const
@@ -41,7 +41,7 @@ const sizes = {
 } as const
 
 const classes = [
-  "inline-flex items-center justify-center gap-2.5 rounded-sm border text-center no-underline transition-colors duration-200",
+  "inline-flex items-center justify-center gap-2.5 rounded-sm border text-center no-underline transition duration-200 ease-suave active:scale-97",
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
   "disabled:cursor-progress disabled:border-ink/15 disabled:bg-ink/10 disabled:text-subtle",
   variants[variant],

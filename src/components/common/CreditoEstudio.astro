@@ -19,7 +19,6 @@ href.searchParams.set("utm_campaign", "credito-rodape")
   href={href.toString()}
   target="_blank"
   rel="noopener noreferrer"
-  aria-label={`Site criado por hello.world (${estudio.nome}, ${estudio.descricao}), abre em nova aba`}
   class:list={[
     "group inline-flex min-h-11 items-center gap-2 text-sm text-subtle",
     "transition-colors hover:text-ink",
@@ -36,5 +35,9 @@ href.searchParams.set("utm_campaign", "credito-rodape")
       &gt;_
     </span>
     hello.world
+  </span>
+  <!-- Nome acessível começa pelo texto visível (WCAG 2.5.3) -->
+  <span class="sr-only">
+    ({estudio.nome}, {estudio.descricao}, abre em nova aba)
   </span>
 </a>

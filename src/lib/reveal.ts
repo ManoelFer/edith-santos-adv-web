@@ -1,6 +1,7 @@
 /**
  * Faz as seções com `data-reveal` aparecerem com um leve deslize ao entrar na
- * tela. É só melhoria progressiva: sem JS, sem IntersectionObserver ou com
+ * tela, e marca `data-revealed` para os filhos com `reveal-itens` entrarem em
+ * sequência (global.css). É só melhoria progressiva: sem JS, sem IntersectionObserver ou com
  * movimento reduzido, tudo aparece normalmente.
  */
 export function iniciarReveal(): void {
@@ -18,6 +19,7 @@ export function iniciarReveal(): void {
       for (const entrada of entradas) {
         if (!entrada.isIntersecting) continue
         entrada.target.removeAttribute("data-pending")
+        entrada.target.setAttribute("data-revealed", "")
         observer.unobserve(entrada.target)
       }
     },

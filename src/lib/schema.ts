@@ -56,6 +56,66 @@ export function faqPageSchema(itens: FaqItem[]): Schema {
   }
 }
 
+export interface ItemTrilha {
+  nome: string
+  /** Caminho a partir da raiz (ex.: "/beneficios/"). */
+  caminho: string
+}
+
+/** Trilha de navegação (Início › Benefícios › BPC/LOAS). */
+export function breadcrumbSchema(itens: ItemTrilha[]): Schema {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: itens.map(({ nome, caminho }, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: nome,
+      item: `${site.url}${caminho}`,
+    })),
+  }
+}
+
+interface DadosBeneficio {
+  titulo: string
+  descricao: string
+  url: string
+  imagem: string
+  /** Nome do benefício que o serviço trata (ex.: "BPC/LOAS"). */
+  servico: string
+  revisado: Date
+}
+
+/**
+ * Página de benefício: conteúdo jurídico revisado pela advogada (`reviewedBy`
+ * e `lastReviewed`) sobre um serviço prestado pelo negócio.
+ */
+export function beneficioSchema(pagina: DadosBeneficio): Schema {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: pagina.titulo,
+    description: pagina.descricao,
+    url: pagina.url,
+    image: pagina.imagem,
+    inLanguage: "pt-BR",
+    lastReviewed: pagina.revisado.toISOString().slice(0, 10),
+    reviewedBy: {
+      "@type": "Person",
+      name: site.nomeCompleto,
+      jobTitle: site.profissao,
+      identifier: site.oab,
+    },
+    mainEntity: {
+      "@type": "Service",
+      name: pagina.servico,
+      serviceType: site.area,
+      areaServed: { "@type": "Country", name: site.areaAtendida },
+      provider: { "@id": idNegocio },
+    },
+  }
+}
+
 interface DadosArtigo {
   titulo: string
   descricao: string

@@ -8,9 +8,11 @@ export type GlowVariant = "hero" | "atendimento" | "sobre" | "contato"
 
 interface Props {
   variant: GlowVariant
+  /** Acende devagar ao abrir a página (topo). */
+  animado?: boolean
 }
 
-const { variant } = Astro.props
+const { variant, animado = false } = Astro.props
 
 const camadas: Record<GlowVariant, string[]> = {
   hero: [
@@ -31,7 +33,11 @@ const camadas: Record<GlowVariant, string[]> = {
 
 {camadas[variant].map((camada) => (
   <div
-    class:list={["pointer-events-none absolute inset-0", camada]}
+    class:list={[
+      "pointer-events-none absolute inset-0",
+      animado && "motion-safe:animate-brilho",
+      camada,
+    ]}
     aria-hidden="true"
   />
 ))}

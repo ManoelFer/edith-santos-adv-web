@@ -9,3 +9,8 @@ export function whatsappUrl(mensagem: string = mensagemPadrao): string {
   url.searchParams.set("text", mensagem)
   return url.toString()
 }
+
+/** Mensagem pronta quando a pessoa vem da página de um benefício. */
+export function mensagemSobre(assunto: string): string {
+  return `Olá, vim pelo site e gostaria de agendar uma análise do meu caso sobre ${assunto}.`
+}

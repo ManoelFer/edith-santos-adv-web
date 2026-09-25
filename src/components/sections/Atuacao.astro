@@ -1,9 +1,25 @@
 ---
-import Card from "@components/common/Card.astro"
-import Icon from "@components/common/Icon.astro"
+import { Image } from "astro:assets"
+
 import Section from "@components/common/Section.astro"
 import SectionHeading from "@components/common/SectionHeading.astro"
 import { areas } from "@data/areas"
+import { beneficiosPublicados, nomeCurto, urlBeneficio } from "@lib/beneficios"
+
+// Só vira link a página de benefício já publicada. A primeira página do card
+// é o "Saiba mais" (o card inteiro é clicável); as outras, "Veja também".
+const publicados = new Map(
+  (await beneficiosPublicados()).map((beneficio) => [beneficio.id, beneficio]),
+)
+const cards = areas.map((area) => {
+  const links = (area.slugs ?? []).flatMap((slug) => {
+    const beneficio = publicados.get(slug)
+    return beneficio
+      ? [{ href: urlBeneficio(slug), nome: nomeCurto(beneficio) }]
+      : []
+  })
+  return { ...area, principal: links[0], extras: links.slice(1) }
+})
 ---
 
 <Section id="atuacao">
@@ -11,24 +27,65 @@ import { areas } from "@data/areas"
     align="center"
     eyebrow="Especialidade em previdenciário"
     title="Áreas de atuação"
-    lead="Cada caso depende do histórico de contribuições, dos documentos e da situação de saúde ou familiar de quem procura."
+    lead="Cada caso é analisado individualmente, considerando o histórico de contribuições, os documentos apresentados e a situação de cada pessoa."
   />
-  <ul class="mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-18 lg:grid-cols-4">
-    {areas.map(({ titulo, descricao, icone }) => (
-      <Card
-        as="li"
-        variant="gradient"
-        hover
-        class="flex gap-3.5 sm:block lg:px-6.5 lg:py-7.5"
+  <ul class="reveal-itens mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-18 lg:grid-cols-4">
+    {cards.map(({ titulo, descricao, imagem, principal, extras }) => (
+      <li
+        class:list={[
+          "group flex flex-col overflow-hidden rounded-sm border border-ink/8 bg-linear-to-b from-surface to-page-alt",
+          "transition duration-300 ease-suave hover:border-primary/45",
+          principal &&
+            "motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-xl motion-safe:hover:shadow-black/40 motion-safe:active:scale-98",
+          principal &&
+            "relative has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary",
+        ]}
       >
-        <Icon name={icone} class="size-7 text-primary" />
-        <div>
-          <h3 class="mb-2 text-lg font-semibold tracking-tight text-ink sm:mt-5">
+        <!-- Ilustração decorativa: o título já diz do que se trata -->
+        <div class="overflow-hidden border-b border-ink/8">
+          <Image
+            src={imagem}
+            alt=""
+            format="svg"
+            class="aspect-video h-auto w-full object-cover transition duration-700 ease-suave motion-safe:group-hover:scale-105"
+          />
+        </div>
+        <!-- Alturas fixas de título e descrição: o "Saiba mais" fica na mesma linha em todos os cards -->
+        <div class="flex flex-1 flex-col p-5 lg:px-6.5 lg:pt-6 lg:pb-6.5">
+          <h3 class="mb-2 text-lg font-semibold tracking-tight text-ink sm:min-h-14">
             {titulo}
           </h3>
-          <p class="text-base text-muted">{descricao}</p>
+          <p class="text-base text-muted sm:min-h-24">
+            {descricao}
+            {extras.length > 0 && (
+              <span class="block pt-2">
+                Veja também:{" "}
+                {extras.map(({ href, nome }) => (
+                  // Acima do ::after do "Saiba mais", para receber o clique
+                  <a href={href} class="relative z-10 font-medium">
+                    {nome}
+                  </a>
+                ))}
+              </span>
+            )}
+          </p>
+          {principal && (
+            // O ::after estende o clique ao card inteiro
+            <a
+              href={principal.href}
+              class="mt-auto inline-flex min-h-11 items-center gap-1.5 pt-3 text-base font-medium after:absolute after:inset-0 focus-visible:outline-none"
+            >
+              Saiba mais<span class="sr-only"> sobre {principal.nome}</span>
+              <span
+                aria-hidden="true"
+                class="transition duration-300 ease-suave group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </a>
+          )}
         </div>
-      </Card>
+      </li>
     ))}
   </ul>
 </Section>

@@ -4,7 +4,13 @@ import CreditoEstudio from "@components/common/CreditoEstudio.astro"
 import Eyebrow from "@components/common/Eyebrow.astro"
 import Logo from "@components/common/Logo.astro"
 import { site } from "@data/site"
+import { beneficiosPublicados, nomeCurto, urlBeneficio } from "@lib/beneficios"
 import { whatsappUrl } from "@lib/whatsapp"
+
+const beneficios = (await beneficiosPublicados()).map((beneficio) => ({
+  label: nomeCurto(beneficio),
+  href: urlBeneficio(beneficio.id),
+}))
 
 const canais = [
   {
@@ -26,7 +32,12 @@ const ano = new Date().getFullYear()
 <footer class="bg-page-alt">
   <!-- Respiro no fim para a barra fixa (celular) e o botão flutuante (md+) não cobrirem a última linha -->
   <Container class="pt-12 pb-32 md:pb-28 lg:pt-20">
-    <div class="grid gap-10 border-b border-ink/10 pb-10 sm:grid-cols-2 lg:grid-cols-4">
+    <div
+      class:list={[
+        "grid gap-10 border-b border-ink/10 pb-10 sm:grid-cols-2",
+        beneficios.length > 0 ? "lg:grid-cols-5" : "lg:grid-cols-4",
+      ]}
+    >
       <div>
         <Logo width={152} class="w-31 lg:w-38" />
         <p class="mt-5 text-base text-muted">
@@ -68,6 +79,23 @@ const ano = new Date().getFullYear()
           Base em {site.base}.
         </p>
       </div>
+
+      {beneficios.length > 0 && (
+        <div>
+          <Eyebrow line={false} class="mb-3">
+            Benefícios
+          </Eyebrow>
+          <ul class="grid gap-1 text-base">
+            {beneficios.map(({ label, href }) => (
+              <li>
+                <a href={href} class={linkClasses}>
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div>
         <Eyebrow line={false} class="mb-3">

@@ -1,0 +1,94 @@
+---
+import { Image } from "astro:assets"
+
+import Breadcrumb from "@components/common/Breadcrumb.astro"
+import Button from "@components/common/Button.astro"
+import Container from "@components/common/Container.astro"
+import Eyebrow from "@components/common/Eyebrow.astro"
+import Glow from "@components/common/Glow.astro"
+import { site } from "@data/site"
+import type { Beneficio } from "@lib/beneficios"
+import { formatarData } from "@lib/formatarData"
+import type { ItemTrilha } from "@lib/schema"
+import { mensagemSobre, whatsappUrl } from "@lib/whatsapp"
+
+interface Props {
+  beneficio: Beneficio
+  trilha: ItemTrilha[]
+  /** Nome curto do benefício, usado na mensagem do WhatsApp. */
+  assunto: string
+  /** Título da seção de requisitos, para o botão que leva até ela. */
+  tituloRequisitos: string
+}
+
+const { beneficio, trilha, assunto, tituloRequisitos } = Astro.props
+const { h1, eyebrow, nomeOficial, resumo, imagem, imagemAlt, revisado } =
+  beneficio.data
+---
+
+<section class="relative overflow-hidden border-b border-ink/8">
+  <Glow variant="hero" animado />
+  <Container class="relative pt-4 pb-12 md:pt-8 md:pb-16 lg:pb-22">
+    <!--
+      Celular: texto de cima, ilustração, texto de baixo (ordem do HTML).
+      Desktop: as duas partes do texto à esquerda e a ilustração à direita.
+    -->
+    <div class="grid gap-7 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-8">
+      <div class="motion-safe:animate-surgir lg:col-span-7">
+        <Breadcrumb itens={trilha} class="mb-4 lg:mb-8" />
+        <Eyebrow class="mb-4">{eyebrow}</Eyebrow>
+        <h1 class="font-serif text-4xl leading-display font-normal tracking-tight text-balance text-ink-strong sm:text-5xl lg:text-6xl">
+          {h1}
+        </h1>
+        {nomeOficial && (
+          <p class="mt-5 inline-flex rounded-full border border-primary/35 bg-primary/8 px-3.5 py-1.5 text-sm text-ink-soft">
+            Nome oficial: {nomeOficial}
+          </p>
+        )}
+      </div>
+
+      <figure class="motion-safe:animate-surgir motion-safe:animate-delay-150 lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:self-center">
+        <Image
+          src={imagem}
+          alt={imagemAlt}
+          format="svg"
+          loading="eager"
+          fetchpriority="high"
+          class="aspect-16/10 h-auto w-full rounded-md border border-ink/10 bg-surface object-cover"
+        />
+      </figure>
+
+      <div class="motion-safe:animate-entrada motion-safe:animate-delay-250 lg:col-span-7">
+        <div class="rounded-md border border-ink/10 border-l-2 border-l-primary bg-surface-2 p-5 md:p-6">
+          <p class="mb-2 text-sm font-semibold tracking-wider text-primary uppercase">
+            Em resumo
+          </p>
+          <p class="text-lg leading-relaxed text-ink-soft">{resumo}</p>
+        </div>
+
+        <p class="mt-5 text-sm text-subtle">
+          Por <a href="/#sobre">{site.nomeCompleto}</a>, {site.oab} · Revisado
+          em{" "}
+          <time datetime={revisado.toISOString()}>
+            {formatarData(revisado)}
+          </time>
+        </p>
+
+        <div class="mt-7 grid gap-2.5 sm:flex sm:flex-wrap sm:gap-3.5">
+          <Button
+            href={whatsappUrl(mensagemSobre(assunto))}
+            size="lg"
+            event="whatsapp_click"
+          >
+            Agendar uma análise do caso
+          </Button>
+          <Button href="#requisitos" variant="outline" size="lg">
+            Ver{" "}
+            {tituloRequisitos.charAt(0).toLowerCase() +
+              tituloRequisitos.slice(1)}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>

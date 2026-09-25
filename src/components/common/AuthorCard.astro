@@ -3,11 +3,20 @@ import { Image } from "astro:assets"
 
 import retrato from "@assets/edith-santos-advogada.png"
 import { site } from "@data/site"
+
+interface Props {
+  class?: string
+}
+
+const { class: className = "mt-12" } = Astro.props
 ---
 
 <aside
   aria-label="Sobre a autora"
-  class="mt-12 flex max-w-3xl items-center gap-5 rounded-md border border-ink/10 bg-surface-2 p-5"
+  class:list={[
+    "flex max-w-3xl items-center gap-5 rounded-md border border-ink/10 bg-surface-2 p-5",
+    className,
+  ]}
 >
   <Image
     src={retrato}

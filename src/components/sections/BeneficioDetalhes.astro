@@ -1,0 +1,10 @@
+---
+import Prose from "@components/common/Prose.astro"
+import Section from "@components/common/Section.astro"
+---
+
+<Section id="detalhes" tone="alt" aria-label="Detalhes do benefício">
+  <Prose class="[&>:first-child]:mt-0">
+    <slot />
+  </Prose>
+</Section>
