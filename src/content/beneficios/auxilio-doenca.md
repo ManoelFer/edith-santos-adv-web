@@ -88,7 +88,6 @@ fontes:
     url: "https://www.trf1.jus.br/sjgo/home/"
 relacionados: ["aposentadoria-por-invalidez", "bpc-loas", "pensao-por-morte"]
 revisado: 2026-09-23
-draft: true
 ---
 
 ## O que mudou no nome

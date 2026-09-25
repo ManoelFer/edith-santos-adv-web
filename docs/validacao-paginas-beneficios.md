@@ -2,7 +2,7 @@
 
 Para a Dra. Edith Santos revisar antes da publicação. Revisão feita em 23/09/2026 (quatro páginas na primeira leva, cinco na segunda e o planejamento previdenciário na terceira).
 
-As dez páginas estão prontas no site como **rascunho** (`draft: true`): aparecem só na prévia e ficam fora do site no ar até a aprovação.
+**Aprovadas pela Dra. Edith em 25/09/2026 e publicadas** (sem `draft`). Os pontos abaixo ficam como registro e lembrete de revisão futura.
 
 | Página                      | Endereço final                                             | Arquivo do texto                                      |
 | --------------------------- | ---------------------------------------------------------- | ----------------------------------------------------- |

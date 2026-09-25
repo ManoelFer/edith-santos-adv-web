@@ -104,7 +104,6 @@ fontes:
 relacionados:
   ["aposentadoria-por-invalidez", "auxilio-doenca", "pensao-por-morte"]
 revisado: 2026-09-23
-draft: true
 ---
 
 ## BPC não é aposentadoria

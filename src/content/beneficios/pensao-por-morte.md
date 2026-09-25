@@ -76,7 +76,6 @@ fontes:
     url: "https://www.planalto.gov.br/ccivil_03/leis/l5010.htm"
 relacionados: ["aposentadoria-por-invalidez", "auxilio-doenca", "bpc-loas"]
 revisado: 2026-09-23
-draft: true
 ---
 
 Perder alguém da família já é difícil o bastante. A pensão por morte existe para que a renda da casa não desapareça de uma vez.

@@ -1,6 +1,6 @@
 # Plano: páginas de benefício ("Saiba mais")
 
-> **Status (23/09/2026):** todas as áreas de atuação têm página (10 páginas em rascunho, aguardando a validação da Dra. Edith em `docs/validacao-paginas-beneficios.md`), além da página `/beneficios/`. O planejamento previdenciário tem página própria e card de destaque na Home. Autoavaliação e artigos de Orientações ligados aos pilares continuam pendentes.
+> **Status (25/09/2026):** todas as áreas de atuação têm página (10 páginas aprovadas pela Dra. Edith e publicadas; validação em `docs/validacao-paginas-beneficios.md`), além da página `/beneficios/`. O planejamento previdenciário tem página própria e card de destaque na Home. Autoavaliação e artigos de Orientações ligados aos pilares continuam pendentes.
 
 Objetivo: quem busca "aposentadoria por invalidez", "BPC LOAS", "pensão por morte INSS" (e os outros benefícios que a Dra. Edith atende) encontrar o site no Google e chegar ao contato. Hoje só a Home disputa essas buscas, e uma página só não consegue ranquear para oito temas diferentes.
 

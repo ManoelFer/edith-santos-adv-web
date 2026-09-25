@@ -79,7 +79,6 @@ relacionados:
     "revisao-de-beneficio",
   ]
 revisado: 2026-09-23
-draft: true
 ---
 
 ## A aposentadoria por tempo acabou?

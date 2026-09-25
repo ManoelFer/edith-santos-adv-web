@@ -92,7 +92,6 @@ relacionados:
     "bpc-loas",
   ]
 revisado: 2026-09-23
-draft: true
 ---
 
 ## Não é BPC nem aposentadoria por invalidez

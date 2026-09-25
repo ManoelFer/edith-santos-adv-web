@@ -81,7 +81,6 @@ fontes:
     url: "https://portal.trf1.jus.br/sjgo/"
 relacionados: ["auxilio-doenca", "bpc-loas", "pensao-por-morte"]
 revisado: 2026-09-23
-draft: true
 ---
 
 ## O que mudou no nome

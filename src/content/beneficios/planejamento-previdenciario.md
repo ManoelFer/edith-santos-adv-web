@@ -112,7 +112,6 @@ relacionados:
     "revisao-de-beneficio",
   ]
 revisado: 2026-09-23
-draft: true
 ---
 
 ## Por que planejar antes de pedir

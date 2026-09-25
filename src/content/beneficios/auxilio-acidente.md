@@ -95,7 +95,6 @@ fontes:
 relacionados:
   ["auxilio-doenca", "aposentadoria-por-invalidez", "pensao-por-morte"]
 revisado: 2026-09-23
-draft: true
 ---
 
 ## Uma indenização, não um salário
