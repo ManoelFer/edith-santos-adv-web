@@ -17,6 +17,25 @@ Para a Dra. Edith Santos revisar antes da publicação. Revisão feita em 23/09/
 | Revisão de benefício | edithsantos.adv.br/beneficios/revisao-de-beneficio/ | `src/content/beneficios/revisao-de-beneficio.md` |
 | Planejamento previdenciário | edithsantos.adv.br/beneficios/planejamento-previdenciario/ | `src/content/beneficios/planejamento-previdenciario.md` |
 
+## Nova página em rascunho (27/09/2026): Salário-maternidade
+
+**Ainda não revisada nem aprovada pela Dra. Edith.** Diferente das dez páginas acima, esta ficou fora das ondas do plano original — foi pedida depois, com `draft: true`, e só entra no site quando a Dra. aprovar o texto e trocar para `draft: false`.
+
+| Página | Endereço (quando publicada) | Arquivo do texto | Pesquisa |
+| --- | --- | --- | --- |
+| Salário-maternidade | edithsantos.adv.br/beneficios/salario-maternidade/ | `src/content/beneficios/salario-maternidade.md` | `pesquisa-beneficios/salario-maternidade.md` |
+
+### O que a Dra. precisa decidir
+
+- [ ] **Leitura geral:** o texto está correto, no tom certo e de acordo com a sua prática? Esta é a primeira página de um benefício fora da linha "incapacidade/idade/morte" das demais — vale conferir se o enfoque (carência, valor, adoção, prazo de 180 dias) é o que os clientes mais perguntam.
+- [ ] **Numeração da ADI da isenção de carência (STF, ADIs 2.110 e 2.111):** a informação de que o STF dispensou a carência de 10 contribuições para contribuinte individual, segurada especial e facultativa, desde 5/04/2024, está bem amparada (LexML, página oficial do INSS e várias fontes secundárias), mas não encontrei o acórdão de mérito de 2024 em fonte primária do STF, porque o portal do STF bloqueou a consulta (mesmo problema já registrado nas outras páginas). Conferir o número da ADI antes de publicar.
+- [ ] **Carência da segurada especial (atividade rural x contribuições):** o Decreto 3.048 ainda exige da segurada especial comprovar atividade rural nos últimos 10 meses. Não achei norma dizendo se esse prazo também caiu com a decisão do STF. A página não cita esse prazo específico.
+- [ ] **Valor da segurada especial como "um salário mínimo":** a lei fala em "um doze avos da última contribuição anual", que na prática costuma dar um salário mínimo, mas não é uma regra fixa. A página usa "costuma equivaler".
+- [ ] **Motivos comuns de negativa:** vêm da prática geral de benefícios do INSS, não de estatística oficial específica do salário-maternidade. Batem com o que a Dra. vê no dia a dia?
+- [ ] **Competência delegada em Goiás e pedido prévio ao INSS antes da ação (STF, Tema 350):** mesmos pontos pendentes das outras páginas (regra dos 70 km sem lista de comarcas; portal do STF bloqueado).
+
+Detalhes completos, com a base legal de cada afirmação e o grau de confiança, em [`pesquisa-beneficios/salario-maternidade.md`](pesquisa-beneficios/salario-maternidade.md).
+
 ## Como o conteúdo foi feito
 
 - **Fontes só oficiais:** Planalto (leis, decretos e a Constituição, na versão compilada), Diário Oficial da União (portarias), gov.br/INSS, MDS e Ministério da Previdência, STF, STJ e TRF1. Blogs e sites de escritório não foram usados como fonte.
