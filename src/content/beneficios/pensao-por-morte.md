@@ -49,7 +49,7 @@ faq:
     resposta: "Não. A pensão por morte não exige um número mínimo de contribuições. O que se exige é que a pessoa ainda estivesse ligada ao INSS na data do falecimento. Se ela tinha menos de 18 contribuições, a pensão do cônjuge ou companheiro(a) dura, em regra, só 4 meses."
   - pergunta: "Posso receber pensão por morte e minha aposentadoria ao mesmo tempo?"
     resposta: "Sim, a lei permite. Nesse caso, você recebe o benefício de maior valor por inteiro e uma parte do outro, calculada por faixas de salário mínimo. Se o direito aos dois benefícios foi adquirido antes de 13 de novembro de 2019, essa redução não se aplica."
-  - pergunta: "Ex-esposa ou ex-marido tem direito à pensão por morte?"
+  - pergunta: "Ex-cônjuge tem direito à pensão por morte?"
     resposta: "Tem, se recebia pensão alimentícia do falecido. Nesse caso, divide a pensão em partes iguais com os demais dependentes. Se a pensão alimentícia tinha prazo para acabar, a pensão por morte é paga só pelo tempo que faltava."
   - pergunta: "O que fazer se o INSS negar a pensão por morte?"
     resposta: "Leia com atenção o motivo da negativa na carta do INSS. Você pode recorrer ao Conselho de Recursos da Previdência Social em até 30 dias ou levar o caso à Justiça Federal. Um advogado pode avaliar qual caminho faz mais sentido no seu caso."
