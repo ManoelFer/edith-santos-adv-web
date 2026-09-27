@@ -16,6 +16,7 @@ export const beneficios: Opcao[] = [
   },
   { valor: "pensao", rotulo: "Pensão por morte" },
   { valor: "acidente", rotulo: "Auxílio-acidente" },
+  { valor: "maternidade", rotulo: "Salário-maternidade" },
   { valor: "revisao", rotulo: "Revisão de benefício" },
   { valor: "planejamento", rotulo: "Planejamento previdenciário" },
   { valor: "nao-sei", rotulo: "Não sei dizer ainda" },

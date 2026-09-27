@@ -8,12 +8,13 @@ import bpc from "@assets/beneficios/bpc-loas.svg"
 import pensao from "@assets/beneficios/pensao-por-morte.svg"
 import planejamento from "@assets/beneficios/planejamento-previdenciario.svg"
 import revisao from "@assets/beneficios/revisao-de-beneficio.svg"
+import maternidade from "@assets/beneficios/salario-maternidade.svg"
 import type { Area } from "@typings/conteudo"
 
 // Ilustrações próprias (src/assets/beneficios), as mesmas das páginas de benefício.
 // Ordem da grade: as quatro aposentadorias na primeira linha, os demais benefícios na
-// segunda (pensão e auxílio-acidente lado a lado) e, no fim, a revisão ao lado do
-// planejamento.
+// segunda (pensão, auxílio-acidente e salário-maternidade) e, no fim, a revisão ao
+// lado do planejamento.
 export const areas: Area[] = [
   {
     titulo: "Aposentadoria por idade",
@@ -70,6 +71,13 @@ export const areas: Area[] = [
     descricao:
       "Indenização para quem ficou com sequela de um acidente que reduz a capacidade para o trabalho.",
     imagem: acidente,
+  },
+  {
+    titulo: "Salário-maternidade",
+    slugs: ["salario-maternidade"],
+    descricao:
+      "Renda para quem se afasta do trabalho por parto, adoção ou guarda judicial para fins de adoção.",
+    imagem: maternidade,
   },
   {
     titulo: "Revisão de benefício",
