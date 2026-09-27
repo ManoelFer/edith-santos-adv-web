@@ -131,7 +131,7 @@ Diferenças em relação às aposentadorias:
 Para o BPC, "família" não é qualquer pessoa da casa. A [LOAS, art. 20, § 1º](https://www.planalto.gov.br/ccivil_03/leis/l8742.htm#art20) conta apenas quem **mora sob o mesmo teto** e é:
 
 - a própria pessoa que pede o benefício;
-- o marido, a esposa ou o companheiro;
+- o cônjuge ou o companheiro;
 - o pai e a mãe (e, na falta de um deles, o padrasto ou a madrasta);
 - os irmãos solteiros;
 - os filhos e enteados solteiros;
@@ -150,7 +150,7 @@ A lei manda deixar de fora alguns valores:
 - bolsa de estágio e salário de jovem aprendiz;
 - auxílios e indenizações por rompimento de barragem.
 
-Exemplo: o marido, com 70 anos, recebe aposentadoria de um salário mínimo. Esse valor não é contado quando a esposa, também idosa, pede o BPC.
+Exemplo: um dos cônjuges, com 70 anos, recebe aposentadoria de um salário mínimo. Esse valor não é contado quando o outro cônjuge, também idoso, pede o BPC.
 
 As regras atuais também permitem descontar da renda gastos contínuos com remédios, consultas, fraldas e alimentação especial que o SUS não fornece. O desconto usa valores médios definidos pelo governo e exige documento médico.
 

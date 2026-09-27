@@ -27,7 +27,7 @@ export const situacoes: Topico[] = [
       "O tempo de roça ou de trabalho informal não aparece no seu histórico de contribuições.",
   },
   {
-    titulo: "Perdi meu marido ou minha esposa",
+    titulo: "Perdi meu cônjuge",
     descricao:
       "Você não sabe se tem direito à pensão nem quais documentos precisa reunir.",
   },
