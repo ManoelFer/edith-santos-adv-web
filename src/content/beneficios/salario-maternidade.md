@@ -102,8 +102,7 @@ fontes:
     url: "https://www.planalto.gov.br/ccivil_03/leis/l10259.htm"
   - rotulo: "Lei nº 13.876/2019 (competência delegada)"
     url: "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/lei/l13876.htm"
-revisado: 2026-09-27
-draft: true
+revisado: 2026-09-28
 ---
 
 O salário-maternidade existe para que a renda não pare quando alguém se afasta do trabalho por causa de um filho. Ele é pago a todas as categorias de seguradas do INSS, com regras que mudaram bastante nos últimos anos.

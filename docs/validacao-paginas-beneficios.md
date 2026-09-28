@@ -16,16 +16,15 @@ Para a Dra. Edith Santos revisar antes da publicação. Revisão feita em 23/09/
 | Auxílio-acidente | edithsantos.adv.br/beneficios/auxilio-acidente/ | `src/content/beneficios/auxilio-acidente.md` |
 | Revisão de benefício | edithsantos.adv.br/beneficios/revisao-de-beneficio/ | `src/content/beneficios/revisao-de-beneficio.md` |
 | Planejamento previdenciário | edithsantos.adv.br/beneficios/planejamento-previdenciario/ | `src/content/beneficios/planejamento-previdenciario.md` |
+| Salário-maternidade | edithsantos.adv.br/beneficios/salario-maternidade/ | `src/content/beneficios/salario-maternidade.md` |
 
-## Nova página em rascunho (27/09/2026): Salário-maternidade
+## Décima primeira página, aprovada em 28/09/2026: Salário-maternidade
 
-**Ainda não revisada nem aprovada pela Dra. Edith.** Diferente das dez páginas acima, esta ficou fora das ondas do plano original — foi pedida depois, com `draft: true`, e só entra no site quando a Dra. aprovar o texto e trocar para `draft: false`.
+Ficou fora das ondas do plano original — foi pedida depois, com `draft: true`. A Dra. Edith validou o texto e a página já está publicada (sem `draft`). Os pontos abaixo ficam como registro e lembrete de revisão futura.
 
-| Página | Endereço (quando publicada) | Arquivo do texto | Pesquisa |
-| --- | --- | --- | --- |
-| Salário-maternidade | edithsantos.adv.br/beneficios/salario-maternidade/ | `src/content/beneficios/salario-maternidade.md` | `pesquisa-beneficios/salario-maternidade.md` |
+Pesquisa completa em [`pesquisa-beneficios/salario-maternidade.md`](pesquisa-beneficios/salario-maternidade.md).
 
-### O que a Dra. precisa decidir
+### O que a Dra. precisou decidir
 
 - [ ] **Leitura geral:** o texto está correto, no tom certo e de acordo com a sua prática? Esta é a primeira página de um benefício fora da linha "incapacidade/idade/morte" das demais — vale conferir se o enfoque (carência, valor, adoção, prazo de 180 dias) é o que os clientes mais perguntam.
 - [ ] **Numeração da ADI da isenção de carência (STF, ADIs 2.110 e 2.111):** a informação de que o STF dispensou a carência de 10 contribuições para contribuinte individual, segurada especial e facultativa, desde 5/04/2024, está bem amparada (LexML, página oficial do INSS e várias fontes secundárias), mas não encontrei o acórdão de mérito de 2024 em fonte primária do STF, porque o portal do STF bloqueou a consulta (mesmo problema já registrado nas outras páginas). Conferir o número da ADI antes de publicar.
