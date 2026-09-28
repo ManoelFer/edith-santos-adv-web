@@ -56,6 +56,11 @@ export const site = {
     script: "https://cloud.umami.is/script.js",
   } as ConfigAnalytics,
 
+  // Google tag (gtag.js) fornecida pelo Google Ads, para medir conversões dos anúncios.
+  googleAds: {
+    id: "G-NHR49Y9N0V",
+  },
+
   features: {
     // Depende de confirmação da OAB/GO (ver .claude/rules/publicidade-advocacia.md)
     depoimentos: false,

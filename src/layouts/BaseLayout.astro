@@ -5,7 +5,9 @@ import { Font, getImage } from "astro:assets"
 import ogPadrao from "@assets/og-edith-santos.jpg"
 import Analytics from "@components/layout/Analytics.astro"
 import ContactBar from "@components/layout/ContactBar.astro"
+import CookieBanner from "@components/layout/CookieBanner.astro"
 import Footer from "@components/layout/Footer.astro"
+import GoogleAds from "@components/layout/GoogleAds.astro"
 import Header from "@components/layout/Header.astro"
 import TopBar from "@components/layout/TopBar.astro"
 import { site } from "@data/site"
@@ -81,6 +83,7 @@ const jsonLd = [legalServiceSchema(ogUrl), ...schemas]
     <Font cssVariable="--font-public-sans" preload />
     <Font cssVariable="--font-instrument-serif" />
     <Analytics />
+    <GoogleAds />
 
     {jsonLd.map((schema) => (
       <script
@@ -103,6 +106,7 @@ const jsonLd = [legalServiceSchema(ogUrl), ...schemas]
     </main>
     <Footer />
     <ContactBar />
+    <CookieBanner />
 
     <script>
       import { iniciarEventos } from "@lib/analytics"
