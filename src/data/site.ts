@@ -59,6 +59,10 @@ export const site = {
   // Google tag (gtag.js) fornecida pelo Google Ads, para medir conversões dos anúncios.
   googleAds: {
     id: "G-NHR49Y9N0V",
+    // Tag da conta de anúncios 859-314-3974 (criada em 28/09/2026; a anterior ficou pausada).
+    conversaoId: "AW-18480818483",
+    // Evento "Contato": formulário enviado, disparado na página /obrigado.
+    conversaoContatoId: "AW-18480818483/40lICMXBtIkdELPSq-xE",
   },
 
   features: {

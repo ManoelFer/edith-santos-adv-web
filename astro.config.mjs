@@ -16,9 +16,9 @@ export default defineConfig({
     csp: {
       directives: [
         "default-src 'self'",
-        "img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com",
+        "img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://*.g.doubleclick.net https://www.googleadservices.com",
         "font-src 'self'",
-        "connect-src 'self' https://gateway.umami.is https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com",
+        "connect-src 'self' https://gateway.umami.is https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://www.googleadservices.com",
         "object-src 'none'",
         "base-uri 'self'",
         "form-action 'self'",
