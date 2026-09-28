@@ -7,8 +7,11 @@ declare global {
   }
 }
 
-function gtag(...args: unknown[]) {
-  window.dataLayer.push(args)
+// gtag.js só reconhece o objeto arguments (array-like), não um array de verdade:
+// por isso usa arguments em vez de _args no push.
+function gtag(..._args: unknown[]) {
+  // eslint-disable-next-line prefer-rest-params
+  window.dataLayer.push(arguments)
 }
 
 // Só mede visitas no domínio real (fica de fora de localhost, preview e CI),
