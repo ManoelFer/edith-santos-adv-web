@@ -49,6 +49,6 @@ export const credenciais: Credencial[] = [
   {
     titulo: "Atendimento a distância",
     descricao:
-      "A gente conversa por videochamada, com horário marcado. Você não precisa sair de casa nem pegar fila.",
+      "A gente conversa por videochamada, com horário marcado, tudo no conforto da sua casa.",
   },
 ]
