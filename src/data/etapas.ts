@@ -11,7 +11,7 @@ export const etapas: Etapa[] = [
     numero: "2",
     titulo: "Análise dos documentos",
     descricao:
-      "Leio o extrato do CNIS, a carta de indeferimento e os laudos, e levanto o que falta.",
+      "Analiso o seu histórico de contribuições, identifico o que já está comprovado e se falta apresentar alguma documentação.",
   },
   {
     numero: "3",

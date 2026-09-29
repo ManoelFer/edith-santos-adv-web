@@ -29,6 +29,6 @@ export const situacoes: Topico[] = [
   {
     titulo: "Perdi meu cônjuge",
     descricao:
-      "Você não sabe se tem direito à pensão nem quais documentos precisa reunir.",
+      "Você não sabe se tem direito à pensão por morte, nem quais documentos precisa reunir.",
   },
 ]
