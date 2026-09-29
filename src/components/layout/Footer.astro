@@ -25,7 +25,7 @@ const canais = [
 ]
 
 const linkClasses =
-  "inline-flex min-h-12 items-center break-words text-ink hover:text-primary"
+  "inline-flex min-h-11 items-center break-words py-2.5 leading-snug text-ink hover:text-primary"
 const ano = new Date().getFullYear()
 ---
 
@@ -51,7 +51,7 @@ const ano = new Date().getFullYear()
         <Eyebrow line={false} class="mb-3">
           Canais oficiais
         </Eyebrow>
-        <ul class="grid gap-1 text-base">
+        <ul class="grid text-base">
           {canais.map(({ label, href, event }) => (
             <li>
               <a
@@ -85,7 +85,7 @@ const ano = new Date().getFullYear()
           <Eyebrow line={false} class="mb-3">
             Benefícios
           </Eyebrow>
-          <ul class="grid gap-1 text-base">
+          <ul class="grid text-base">
             {beneficios.map(({ label, href }) => (
               <li>
                 <a href={href} class={linkClasses}>
@@ -101,7 +101,7 @@ const ano = new Date().getFullYear()
         <Eyebrow line={false} class="mb-3">
           Institucional
         </Eyebrow>
-        <ul class="grid gap-1 text-base">
+        <ul class="grid text-base">
           {site.institucional.map(({ label, href }) => (
             <li>
               <a href={href} class={linkClasses}>
