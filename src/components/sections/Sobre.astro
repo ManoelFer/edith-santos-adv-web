@@ -10,6 +10,7 @@ const ficha = [
     rotulo: "Formação",
     valor: "Bacharela em Direito, Universidade Estadual de Goiás",
   },
+  { rotulo: "Pós-graduação", valor: "Aposentadoria Especial" },
   { rotulo: "Inscrição", valor: site.oab },
   { rotulo: "Atuação", valor: site.area },
   { rotulo: "Atendimento", valor: `Online, ${site.abrangencia}` },
@@ -36,26 +37,33 @@ const ficha = [
   />
 
   <div class="max-w-2xl lg:col-span-6 lg:self-start">
-    <p class="mb-5 text-lg text-ink-soft">
-      Sou natural de Iporá, em Goiás. Comecei como estagiária de Direito em um
-      escritório previdenciário em 2021, ainda na graduação, e foi essa a área
-      que escolhi seguir. Me formei Bacharela em Direito pela Universidade
-      Estadual de Goiás em 2024 e me inscrevi na Ordem dos Advogados do Brasil,
-      Seccional Goiás, sob o nº 73.463, para atuar com exclusividade em Direito
-      Previdenciário.
+    <p class="mb-5 text-base text-ink-soft">
+      Sou natural de Iporá, em Goiás, e foi ainda durante a graduação que
+      encontrei no Direito Previdenciário a área em que queria construir minha
+      carreira. Comecei a estagiar em um escritório previdenciário em 2021 e,
+      desde então, venho me dedicando exclusivamente a essa área. Sou bacharela
+      em Direito pela Universidade Estadual de Goiás e advogada inscrita na
+      OAB/GO sob o nº 73.463. Também sou pós-graduada em Aposentadoria Especial,
+      área na qual aprofundei minha formação e atuação profissional.
     </p>
-    <p class="mb-5 text-muted">
-      A maior parte das pessoas que me procura chega depois de um indeferimento
-      que não entendeu: o documento veio com um código, uma sigla, uma data.
-      Antes de falar de processo, eu leio o histórico no CNIS junto com a pessoa
-      e explico o que aquilo significa, inclusive quando a conclusão é que não
-      há pedido a fazer agora.
+    <p class="mb-5 text-base text-ink-soft">
+      Grande parte das pessoas que chega até mim está diante de um indeferimento
+      que não conseguiu entender. Há um código, uma sigla, uma data ou uma
+      informação no CNIS, mas ninguém explicou o que aquilo realmente significa.
+      Por isso, antes de falar em processo, eu procuro entender o que aconteceu.
+      Analiso o histórico previdenciário no CNIS junto com o cliente, explico o
+      que cada informação representa e, a partir disso, avalio quais são os
+      caminhos possíveis, inclusive quando a orientação mais adequada é não
+      fazer um novo pedido naquele momento.
     </p>
-    <p class="mb-8 text-muted">
-      Atendo por videochamada e por WhatsApp, o que permite acompanhar casos de
-      qualquer cidade do país, e também de brasileiros que moram fora, sem que
-      ninguém precise viajar. Todo documento que você me envia fica sob sigilo
-      profissional.
+    <p class="mb-5 text-base text-ink-soft">
+      Meu atendimento é feito por videochamada e WhatsApp, o que me permite
+      acompanhar casos de diferentes cidades do Brasil e também atender
+      brasileiros que vivem no exterior, sem a necessidade de deslocamento.
+    </p>
+    <p class="mb-8 text-base text-ink-soft">
+      Cada caso é analisado individualmente, e as informações e documentos
+      compartilhados comigo ficam sob sigilo profissional.
     </p>
     <InfoList itens={ficha} layout="split" />
   </div>
