@@ -47,7 +47,7 @@ export const site = {
   // TODO(cliente): links oficiais. Links vazios não são exibidos nem entram no Schema.
   social: {
     instagram: "",
-    perfilGoogle: "",
+    perfilGoogle: "https://share.google/lmOc1yPqXP0gMm3ET",
   },
 
   analytics: {
@@ -66,8 +66,9 @@ export const site = {
   },
 
   features: {
-    // Depende de confirmação da OAB/GO (ver .claude/rules/publicidade-advocacia.md)
-    depoimentos: false,
+    // Selo com nota e link para o Google, sem citar comentários. Ligue quando o
+    // perfil tiver avaliações reais e `yarn avaliacoes` tiver rodado.
+    avaliacoesGoogle: true,
   },
 
   nav: [

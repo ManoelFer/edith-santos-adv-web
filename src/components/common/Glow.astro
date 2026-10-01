@@ -4,7 +4,8 @@
  * gradiente são únicos de cada seção do layout, por isso ficam concentrados
  * aqui como valores arbitrários, e não espalhados pelas seções.
  */
-export type GlowVariant = "hero" | "atendimento" | "sobre" | "contato"
+export type GlowVariant =
+  "hero" | "atendimento" | "sobre" | "contato" | "avaliacoes"
 
 interface Props {
   variant: GlowVariant
@@ -24,6 +25,9 @@ const camadas: Record<GlowVariant, string[]> = {
   ],
   sobre: [
     "bg-radial-[820px_520px_at_84%_18%] from-primary/12 to-transparent to-64%",
+  ],
+  avaliacoes: [
+    "bg-radial-[820px_420px_at_50%_100%] from-primary/10 to-transparent to-64%",
   ],
   contato: [
     "bg-radial-[900px_520px_at_20%_10%] from-primary/14 to-transparent to-62%",

@@ -19,6 +19,7 @@
     "knip": "knip",
     "secretlint": "secretlint \"**/*\"",
     "seo": "node verificar-seo.mjs",
+    "avaliacoes": "node --env-file-if-exists=.env scripts/atualizarAvaliacoes.mjs",
     "prepare": "husky"
   },
   "dependencies": {

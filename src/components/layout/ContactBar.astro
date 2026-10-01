@@ -7,8 +7,12 @@ import { whatsappUrl } from "@lib/whatsapp"
 const whatsapp = whatsappUrl()
 ---
 
-<!-- Celular: barra fixa com WhatsApp e ligação -->
-<div class="fixed inset-x-0 bottom-0 z-30 border-t border-ink/10 bg-page/92 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md md:hidden">
+<!-- Celular: barra fixa com WhatsApp e ligação. Só aparece depois da primeira seção, que já tem os botões. -->
+<div
+  id="barra-contato"
+  inert
+  class="invisible translate-y-full opacity-0 transition-[opacity,translate,visibility] duration-300 ease-suave data-visivel:visible data-visivel:translate-y-0 data-visivel:opacity-100 fixed inset-x-0 bottom-0 z-30 border-t border-ink/10 bg-page/92 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md md:hidden"
+>
   <div class="flex gap-2.5">
     <Button
       href={whatsapp}
@@ -40,3 +44,9 @@ const whatsapp = whatsappUrl()
   <Icon name="whatsapp" class="size-5" />
   Falar no WhatsApp
 </a>
+
+<script>
+  import { iniciarBarraContato } from "@lib/barraContato"
+
+  iniciarBarraContato()
+</script>

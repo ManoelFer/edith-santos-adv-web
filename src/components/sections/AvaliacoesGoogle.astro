@@ -1,0 +1,270 @@
+---
+import Button from "@components/common/Button.astro"
+import Icon from "@components/common/Icon.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import { avaliacoesGoogle } from "@data/avaliacoesGoogle"
+
+const { nota, total, exibidas, verUrl, avaliarUrl } = avaliacoesGoogle
+
+const notaTexto = nota.toFixed(1).replace(".", ",")
+const totalTexto = total === 1 ? "1 avaliação" : `${total} avaliações`
+const cheias = Math.round(nota)
+
+const mesAno = new Intl.DateTimeFormat("pt-BR", {
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+})
+const inicial = (autor: string) => autor.trim().charAt(0).toUpperCase()
+
+// Poucos cards ficam centralizados no desktop; muitos rolam na horizontal
+const centralizar = exibidas.length <= 3
+---
+
+{total > 0 && (
+  <Section tone="alt" glow="avaliacoes" aria-label="Avaliações no Google">
+    <SectionHeading
+      align="center"
+      eyebrow="Avaliações no Google"
+      title="Quem foi atendido avaliou no Google"
+      lead="Avaliações espontâneas publicadas por clientes no Perfil da Empresa no Google, reproduzidas sem edição."
+    />
+
+    <div class="mt-8 flex flex-col items-center gap-2 text-center">
+      <div class="flex items-center gap-0.5 text-primary" aria-hidden="true">
+        {Array.from({ length: 5 }, (_, i) => (
+          <Icon
+            name="estrela"
+            class:list={["size-6", i < cheias ? "fill-current" : "opacity-30"]}
+          />
+        ))}
+      </div>
+      <p class="text-base text-ink-soft">
+        <span class="sr-only">Nota </span>
+        <strong class="font-semibold text-ink-strong">{notaTexto}</strong>
+        <span class="sr-only"> de 5.</span> · {totalTexto} no Google
+      </p>
+    </div>
+
+    {exibidas.length > 0 && (
+      <div class="relative mt-8 lg:mt-10">
+        <span
+          class="pointer-events-none absolute top-1/2 left-1/4 size-64 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl"
+          aria-hidden="true"
+        />
+        <span
+          class="pointer-events-none absolute top-1/3 right-1/4 size-56 rounded-full bg-primary/5 blur-3xl"
+          aria-hidden="true"
+        />
+        <ul
+          data-carrossel
+          tabindex="0"
+          aria-label="Avaliações de clientes no Google"
+          class:list={[
+            "flex snap-x snap-mandatory gap-4 overflow-x-auto [scrollbar-width:none] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary lg:gap-6",
+            centralizar && "lg:justify-center",
+          ]}
+        >
+          {exibidas.map(({ autor, texto, data }) => (
+            <li
+              data-slide
+              class="w-5/6 flex-none snap-start sm:w-[22rem] lg:w-[calc((100%-3rem)/3)]"
+            >
+              <figure class="relative isolate flex h-full flex-col overflow-hidden rounded-lg border border-ink/10 bg-ink/3 p-6 backdrop-blur-xl backdrop-saturate-150">
+                <span
+                  class="pointer-events-none absolute inset-0 -z-10 bg-linear-to-br from-ink/8 via-transparent to-transparent"
+                  aria-hidden="true"
+                />
+                <span
+                  class="pointer-events-none absolute inset-x-6 top-0 h-px bg-linear-to-r from-transparent via-ink/35 to-transparent"
+                  aria-hidden="true"
+                />
+                <div
+                  class="mb-4 flex items-center gap-0.5 text-primary"
+                  aria-hidden="true"
+                >
+                  {Array.from({ length: 5 }, () => (
+                    <Icon name="estrela" class="size-5 fill-current" />
+                  ))}
+                </div>
+                <blockquote class="flex-1 text-base text-ink-soft">
+                  <span class="sr-only">Avaliação com 5 estrelas. </span>
+                  {texto}
+                </blockquote>
+                <figcaption class="mt-6 flex items-center gap-3">
+                  <span
+                    class="flex size-10 flex-none items-center justify-center rounded-full bg-primary/15 font-serif text-xl text-primary"
+                    aria-hidden="true"
+                  >
+                    {inicial(autor)}
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block truncate font-semibold text-ink-strong">
+                      {autor}
+                    </span>
+                    <span class="block text-sm text-subtle">
+                      Avaliação no Google
+                      {data && ` · ${mesAno.format(new Date(data))}`}
+                    </span>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+
+        <div
+          class="mt-4 hidden flex-wrap items-center justify-center"
+          data-pontos
+          role="group"
+          aria-label="Escolher avaliação"
+        >
+          {exibidas.map(({ autor }, i) => (
+            <button
+              type="button"
+              data-ponto
+              aria-label={`Ir para a avaliação ${i + 1} de ${exibidas.length}, de ${autor}`}
+              class="group flex size-11 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              <span class="block h-2 w-2 rounded-full bg-ink/25 transition-all duration-300 ease-suave group-hover:bg-ink/50 group-aria-current:w-6 group-aria-current:bg-primary" />
+            </button>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <div class="mx-auto mt-8 flex w-full max-w-md flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center">
+      <Button href={verUrl}>
+        Ver todas as avaliações no Google
+        <Icon name="externo" class="size-4.5" />
+        <span class="sr-only">(abre em nova aba)</span>
+      </Button>
+      <Button href={avaliarUrl} variant="outline">
+        Avaliar no Google
+        <span class="sr-only">(abre em nova aba)</span>
+      </Button>
+    </div>
+
+    <p class="mx-auto mt-8 max-w-3xl text-center text-sm text-subtle">
+      Conteúdo informativo, em conformidade com o Provimento 205/2021 do CFOAB.
+      As avaliações são espontâneas, escritas pelos próprios clientes no Google
+      e reproduzidas sem edição. Elas não representam promessa nem garantia de
+      resultado: cada caso é analisado individualmente e o desfecho depende dos
+      fatos, das provas e da decisão do INSS ou do Judiciário.
+    </p>
+  </Section>
+)}
+
+<script>
+  const lista = document.querySelector<HTMLElement>("[data-carrossel]")
+  const pontos = document.querySelector<HTMLElement>("[data-pontos]")
+
+  if (lista && pontos) {
+    const itens = Array.from(lista.children) as HTMLElement[]
+    const botoes = Array.from(
+      pontos.querySelectorAll<HTMLButtonElement>("[data-ponto]"),
+    )
+
+    const atualizar = () => {
+      const { scrollWidth, clientWidth, scrollLeft } = lista
+      const transborda = scrollWidth > clientWidth + 1
+      pontos.classList.toggle("hidden", !transborda)
+      pontos.classList.toggle("flex", transborda)
+
+      // Slide atual: o card mais perto do início; no fim da rolagem, o último
+      const noFim = scrollLeft + clientWidth >= scrollWidth - 1
+      let atual = noFim ? itens.length - 1 : 0
+      if (!noFim) {
+        let menor = Infinity
+        itens.forEach((item, i) => {
+          const distancia = Math.abs(
+            item.offsetLeft - lista.offsetLeft - scrollLeft,
+          )
+          if (distancia < menor) {
+            menor = distancia
+            atual = i
+          }
+        })
+      }
+      botoes.forEach((botao, i) => {
+        if (i === atual) botao.setAttribute("aria-current", "true")
+        else botao.removeAttribute("aria-current")
+      })
+    }
+
+    // Rolagem com easing próprio (easeInOutCubic), mais suave que o
+    // `behavior: smooth` do navegador. Desliga o encaixe só durante o movimento.
+    const reduzido = matchMedia("(prefers-reduced-motion: reduce)")
+    let quadro = 0
+    const irPara = (alvo: number) => {
+      cancelAnimationFrame(quadro)
+      const maximo = lista.scrollWidth - lista.clientWidth
+      const destino = Math.min(Math.max(alvo, 0), maximo)
+      if (reduzido.matches) {
+        lista.scrollTo({ left: destino })
+        return
+      }
+      const inicio = lista.scrollLeft
+      const duracao = Math.min(900, 450 + Math.abs(destino - inicio) * 0.25)
+      const t0 = performance.now()
+      lista.style.scrollSnapType = "none"
+      const passo = (agora: number) => {
+        const t = Math.min((agora - t0) / duracao, 1)
+        const ease = t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2
+        lista.scrollLeft = inicio + (destino - inicio) * ease
+        if (t < 1) quadro = requestAnimationFrame(passo)
+        else lista.style.scrollSnapType = ""
+      }
+      quadro = requestAnimationFrame(passo)
+    }
+    // Se a pessoa tocar ou rolar no meio da animação, ela cede o controle
+    for (const evento of ["touchstart", "wheel", "pointerdown"]) {
+      lista.addEventListener(
+        evento,
+        () => {
+          cancelAnimationFrame(quadro)
+          lista.style.scrollSnapType = ""
+        },
+        { passive: true },
+      )
+    }
+
+    botoes.forEach((botao, i) =>
+      botao.addEventListener("click", () =>
+        irPara(itens[i].offsetLeft - lista.offsetLeft),
+      ),
+    )
+    lista.addEventListener("scroll", atualizar, { passive: true })
+    new ResizeObserver(atualizar).observe(lista)
+
+    // Card visível (pelo menos 60%) fica em destaque; vale também para o último,
+    // que encosta na borda direita e nunca chega ao início da lista
+    const observador = new IntersectionObserver(
+      (entradas) => {
+        for (const { target, isIntersecting } of entradas) {
+          target.toggleAttribute("data-fora", !isIntersecting)
+        }
+      },
+      { root: lista, threshold: 0.6 },
+    )
+    itens.forEach((item) => observador.observe(item))
+
+    atualizar()
+  }
+</script>
+
+<style>
+  /* Card fora da área visível fica mais discreto; o JS marca [data-fora] */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-slide] {
+      transition:
+        opacity 0.5s var(--ease-suave),
+        scale 0.5s var(--ease-suave);
+    }
+    [data-slide][data-fora] {
+      opacity: 0.5;
+      scale: 0.97;
+    }
+  }
+</style>

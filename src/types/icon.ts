@@ -7,3 +7,4 @@ export type IconName =
   | "alerta"
   | "check"
   | "externo"
+  | "estrela"
