@@ -1,3 +1,4 @@
+import { registrarConversaoWhatsApp } from "@lib/googleAds"
 import type { EventoConversao } from "@typings/analytics"
 
 declare global {
@@ -21,6 +22,7 @@ function ehEvento(valor: string | undefined): valor is EventoConversao {
 export function track(evento: EventoConversao): void {
   window.umami?.track(evento)
   window.plausible?.(evento)
+  if (evento === "whatsapp_click") registrarConversaoWhatsApp()
 }
 
 /** Dispara o evento de qualquer elemento clicado que tenha `data-event`. */

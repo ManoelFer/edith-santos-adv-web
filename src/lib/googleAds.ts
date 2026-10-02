@@ -89,3 +89,30 @@ export function registrarConversaoContato() {
     window.addEventListener(EVENTO_COOKIES_ACEITOS, disparar, { once: true })
   }
 }
+
+const CHAVE_CONVERSAO_WHATSAPP = "conversao-whatsapp-disparada"
+const PAGINA_VIRTUAL_WHATSAPP = new URL("/whatsapp/", site.url).href
+
+/**
+ * Conversão "Clique WhatsApp": a meta da campanha inteligente é a visita à
+ * página /whatsapp/, que não existe de verdade. O clique envia uma visualização
+ * de página virtual com esse endereço. Fica de fora em /obrigado, onde o
+ * contato já contou pelo formulário, e conta uma vez por sessão.
+ */
+export function registrarConversaoWhatsApp() {
+  // Confere pelo script no DOM, não pela variável `ativado`: o Astro pode
+  // empacotar este módulo em mais de um script da página.
+  if (!document.getElementById("google-ads-gtag") || !noDominioReal()) return
+  if (window.location.pathname.startsWith("/obrigado")) return
+  try {
+    if (sessionStorage.getItem(CHAVE_CONVERSAO_WHATSAPP) === "1") return
+    sessionStorage.setItem(CHAVE_CONVERSAO_WHATSAPP, "1")
+  } catch {
+    // Armazenamento bloqueado: segue sem a trava da sessão.
+  }
+  gtag("event", "page_view", {
+    page_location: PAGINA_VIRTUAL_WHATSAPP,
+    page_title: "Clique WhatsApp",
+    send_to: site.googleAds.id,
+  })
+}
