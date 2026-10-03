@@ -5,7 +5,15 @@ import Section from "@components/common/Section.astro"
 import SectionHeading from "@components/common/SectionHeading.astro"
 import { avaliacoesGoogle } from "@data/avaliacoesGoogle"
 
-const { nota, total, exibidas, verUrl, avaliarUrl } = avaliacoesGoogle
+const { nota, total, verUrl, avaliarUrl } = avaliacoesGoogle
+
+// Só o primeiro nome de quem avaliou. Feito aqui para valer mesmo depois de
+// `yarn avaliacoes`, que grava o nome completo no JSON.
+const primeiroNome = (autor: string) => autor.trim().split(/\s+/)[0] ?? autor
+const exibidas = avaliacoesGoogle.exibidas.map((a) => ({
+  ...a,
+  autor: primeiroNome(a.autor),
+}))
 
 const notaTexto = nota.toFixed(1).replace(".", ",")
 const totalTexto = total === 1 ? "1 avaliação" : `${total} avaliações`
