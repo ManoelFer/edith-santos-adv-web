@@ -23,6 +23,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@astrojs/mdx": "^8.0.2",
     "@astrojs/sitemap": "^3.7.4",
     "@tailwindcss/vite": "^4.3.3",
     "@typescript/native": "npm:typescript@^7.0.2",

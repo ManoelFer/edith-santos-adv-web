@@ -1,4 +1,5 @@
 // @ts-check
+import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
 import tailwindcss from "@tailwindcss/vite"
 import { defineConfig, fontProviders } from "astro/config"
@@ -45,7 +46,14 @@ export default defineConfig({
   image: {
     dangerouslyProcessSVG: true,
   },
+  // Sem realce de código no Markdown/MDX: o site não tem blocos de código e o
+  // Shiki usa estilos inline, que a CSP bloqueia.
+  markdown: {
+    syntaxHighlight: false,
+  },
   integrations: [
+    // MDX nas orientações: permite componentes no meio do texto (ex.: CtaWhatsApp).
+    mdx(),
     sitemap({
       filter: (page) =>
         !foraDoSitemap.some((caminho) => new URL(page).pathname === caminho),
