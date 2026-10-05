@@ -23,13 +23,43 @@ function noDominioReal() {
 
 let ativado = false
 
-// Só carrega o script do Google e configura as tags depois do aceite no aviso
-// de cookies (CookieBanner.astro), porque elas usam cookies não essenciais.
+const CONSENTIMENTO_NEGADO = {
+  ad_storage: "denied",
+  analytics_storage: "denied",
+  ad_user_data: "denied",
+  ad_personalization: "denied",
+} as const
+
+const CONSENTIMENTO_CONCEDIDO = {
+  ad_storage: "granted",
+  analytics_storage: "granted",
+  ad_user_data: "granted",
+  ad_personalization: "granted",
+} as const
+
+function concederConsentimento() {
+  gtag("consent", "update", CONSENTIMENTO_CONCEDIDO)
+}
+
+// Modo de consentimento v2 (avançado): o script do Google carrega em toda
+// visita, mas começa com tudo negado. Sem o aceite, ele não grava cookies nem
+// identificadores e só envia sinais sem cookies, que o Google usa para estimar
+// as conversões. Com o aceite no aviso (CookieBanner.astro), o consentimento
+// passa a "granted" e a medição fica completa.
 // Chamada tanto por iniciarGoogleAds() (toda página) quanto por
 // registrarConversaoContato() (só /obrigado): o guard evita configurar duas vezes.
 function ativar() {
   if (ativado || !noDominioReal()) return
   ativado = true
+  window.dataLayer = window.dataLayer || []
+  // O padrão de consentimento precisa entrar no dataLayer antes do "config".
+  gtag("consent", "default", { ...CONSENTIMENTO_NEGADO, wait_for_update: 500 })
+  // Sem cookies, guarda o gclid do anúncio nos links internos (não nos
+  // externos, como o do WhatsApp) e tira dados de anúncio dos sinais anônimos.
+  gtag("set", "url_passthrough", true)
+  gtag("set", "ads_data_redaction", true)
+  if (lerConsentimento() === "aceito") concederConsentimento()
+
   const script = document.createElement("script")
   script.id = "google-ads-gtag"
   script.async = true
@@ -41,13 +71,8 @@ function ativar() {
 }
 
 export function iniciarGoogleAds() {
-  window.dataLayer = window.dataLayer || []
-
-  if (lerConsentimento() === "aceito") {
-    ativar()
-  }
-
-  window.addEventListener(EVENTO_COOKIES_ACEITOS, ativar)
+  ativar()
+  window.addEventListener(EVENTO_COOKIES_ACEITOS, concederConsentimento)
 }
 
 const CHAVE_CONVERSAO_CONTATO = "conversao-contato-disparada"
@@ -74,20 +99,10 @@ function marcarConversaoContatoDisparada() {
 
 /** Conversão "Contato": formulário enviado. Chamar só na página /obrigado. */
 export function registrarConversaoContato() {
-  window.dataLayer = window.dataLayer || []
-
-  function disparar() {
-    ativar()
-    if (!noDominioReal() || jaDisparouConversaoContato()) return
-    marcarConversaoContatoDisparada()
-    gtag("event", "conversion", { send_to: site.googleAds.conversaoContatoId })
-  }
-
-  if (lerConsentimento() === "aceito") {
-    disparar()
-  } else {
-    window.addEventListener(EVENTO_COOKIES_ACEITOS, disparar, { once: true })
-  }
+  ativar()
+  if (!noDominioReal() || jaDisparouConversaoContato()) return
+  marcarConversaoContatoDisparada()
+  gtag("event", "conversion", { send_to: site.googleAds.conversaoContatoId })
 }
 
 const CHAVE_CONVERSAO_WHATSAPP = "conversao-whatsapp-disparada"
@@ -101,7 +116,9 @@ const PAGINA_VIRTUAL_WHATSAPP = new URL("/whatsapp/", site.url).href
  */
 export function registrarConversaoWhatsApp() {
   // Confere pelo script no DOM, não pela variável `ativado`: o Astro pode
-  // empacotar este módulo em mais de um script da página.
+  // empacotar este módulo em mais de um script da página. Com o modo de
+  // consentimento, o script existe em toda visita no domínio real, com ou sem
+  // aceite: quem recusou envia o clique como sinal sem cookies.
   if (!document.getElementById("google-ads-gtag") || !noDominioReal()) return
   if (window.location.pathname.startsWith("/obrigado")) return
   try {
