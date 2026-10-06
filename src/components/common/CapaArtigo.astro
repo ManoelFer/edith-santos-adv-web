@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets"
+
+import type { Artigo } from "@lib/artigos"
+
+interface Props {
+  artigo: Artigo
+  /** Maior no artigo em destaque (a capa é baixada nesse tamanho no build). */
+  tamanho?: "padrao" | "destaque"
+  class?: string
+}
+
+const { artigo, tamanho = "padrao", class: className } = Astro.props
+const { cover, coverAlt } = artigo.data
+const medidas = {
+  padrao: { width: 800, height: 500 },
+  destaque: { width: 1200, height: 750 },
+} as const
+---
+
+<!--
+  Com capa: a imagem do CMS, sempre em 16:10. Sem capa: o "§" (símbolo de
+  parágrafo das leis) sobre o dourado da marca, para o artigo nunca ficar
+  sem imagem nem pedir uma foto de banco.
+-->
+{cover ? (
+  <Image
+    src={cover}
+    alt={coverAlt ?? ""}
+    {...medidas[tamanho]}
+    class:list={[
+      "aspect-16/10 h-auto w-full object-cover transition duration-700 ease-suave motion-safe:group-hover:scale-105",
+      className,
+    ]}
+  />
+) : (
+  <div
+    aria-hidden="true"
+    class:list={[
+      "relative flex aspect-16/10 w-full items-center justify-center overflow-hidden bg-surface-2 bg-linear-to-br from-primary/16 via-transparent to-transparent",
+      className,
+    ]}
+  >
+    <span class="absolute inset-3 rounded-sm border border-primary/22 md:inset-4"></span>
+    <span
+      class:list={[
+        "font-serif leading-none font-normal text-primary/45 transition duration-700 ease-suave select-none motion-safe:group-hover:scale-110",
+        tamanho === "destaque" ? "text-9xl lg:text-9xl" : "text-8xl",
+      ]}
+    >
+      §
+    </span>
+  </div>
+)}

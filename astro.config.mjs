@@ -45,7 +45,7 @@ export default defineConfig({
   // aceitam SVG). Seguro aqui: só entram SVGs criados no projeto, em src/assets.
   image: {
     dangerouslyProcessSVG: true,
-    // Capas das orientações vêm do CMS e são baixadas e otimizadas no build.
+    // Capas dos artigos vêm do CMS e são baixadas e otimizadas no build.
     remotePatterns: [
       { protocol: "https", hostname: "cms.helloworldestudio.com.br" },
       { protocol: "https", hostname: "media.helloworldestudio.com.br" },
@@ -57,7 +57,7 @@ export default defineConfig({
     syntaxHighlight: false,
   },
   integrations: [
-    // MDX nas orientações: permite componentes no meio do texto (ex.: CtaWhatsApp).
+    // MDX: permite componentes no meio do texto (ex.: CtaWhatsApp).
     mdx(),
     sitemap({
       filter: (page) =>

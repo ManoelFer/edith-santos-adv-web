@@ -57,7 +57,7 @@ interface ContextoDoLoader {
     set(entrada: {
       id: string
       data: Record<string, unknown>
-      rendered: { html: string }
+      rendered: { html: string; metadata: { headings: TituloDoArtigo[] } }
       digest: string
     }): unknown
   }
@@ -70,6 +70,61 @@ interface ContextoDoLoader {
 }
 
 const UMA_HORA_MS = 3_600_000
+
+/** Título (h2/h3) do artigo, no formato que `render()` do Astro devolve em `headings`. */
+interface TituloDoArtigo {
+  depth: number
+  slug: string
+  text: string
+}
+
+const ENTIDADES: Record<string, string> = {
+  "&amp;": "&",
+  "&lt;": "<",
+  "&gt;": ">",
+  "&quot;": '"',
+  "&#39;": "'",
+}
+
+function slugDoTitulo(texto: string): string {
+  return texto
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+}
+
+/**
+ * O HTML do CMS não traz id nos títulos. Aqui cada h2/h3 ganha um (para link
+ * direto e índice do artigo) e a lista de títulos sai pronta para o Astro.
+ * O HTML já vem limpo do servidor: títulos sem atributos, só texto e negrito.
+ */
+function comAncoras(html: string): {
+  html: string
+  headings: TituloDoArtigo[]
+} {
+  const headings: TituloDoArtigo[] = []
+  const usados = new Map<string, number>()
+
+  const novo = html.replace(
+    /<h([23])>([\s\S]*?)<\/h\1>/g,
+    (_inteiro, nivel: string, miolo: string) => {
+      const texto = miolo
+        .replace(/<[^>]+>/g, "")
+        .replace(/&(?:amp|lt|gt|quot|#39);/g, (e) => ENTIDADES[e] ?? e)
+        .trim()
+      const base = slugDoTitulo(texto) || "secao"
+      const vezes = (usados.get(base) ?? 0) + 1
+      usados.set(base, vezes)
+      const slug = vezes === 1 ? base : `${base}-${vezes}`
+
+      headings.push({ depth: Number(nivel), slug, text: texto })
+      return `<h${nivel} id="${slug}">${miolo}</h${nivel}>`
+    },
+  )
+  return { html: novo, headings }
+}
 
 /**
  * Dados padrão da coleção. `updated` só aparece quando o artigo foi mexido
@@ -134,10 +189,11 @@ export function cmsLoader(opcoes: OpcoesCms) {
       store.clear()
       for (const artigo of posts) {
         const data = await parseData({ id: artigo.slug, data: mapear(artigo) })
+        const { html, headings } = comAncoras(artigo.bodyHtml)
         store.set({
           id: artigo.slug,
           data,
-          rendered: { html: artigo.bodyHtml },
+          rendered: { html, metadata: { headings } },
           digest: generateDigest(artigo),
         })
       }

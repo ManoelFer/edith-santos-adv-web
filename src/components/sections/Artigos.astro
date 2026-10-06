@@ -1,0 +1,35 @@
+---
+import ArticleCard from "@components/common/ArticleCard.astro"
+import Eyebrow from "@components/common/Eyebrow.astro"
+import Section from "@components/common/Section.astro"
+import { artigosPublicados } from "@lib/artigos"
+
+// A seção só aparece quando há artigo publicado
+const [destaque, ...demais] = (await artigosPublicados()).slice(0, 3)
+---
+
+{destaque && (
+  <Section tone="alt" id="artigos">
+    <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4 border-b border-ink/10 pb-6">
+      <div class="max-w-2xl">
+        <Eyebrow class="mb-4 md:mb-5">Artigos</Eyebrow>
+        <h2 class="font-serif text-3xl leading-display font-normal tracking-tight text-balance text-ink-strong md:text-4xl lg:text-5xl">
+          Leia antes de decidir
+        </h2>
+      </div>
+      <a href="/artigos/" class="inline-flex min-h-11 items-center text-base">
+        Ver todos os artigos
+      </a>
+    </div>
+    <div class="reveal-itens mt-9 grid gap-4">
+      <ArticleCard artigo={destaque} variante="destaque" />
+      {demais.length > 0 && (
+        <div class="grid gap-4 md:grid-cols-2">
+          {demais.map((artigo) => (
+            <ArticleCard artigo={artigo} />
+          ))}
+        </div>
+      )}
+    </div>
+  </Section>
+)}

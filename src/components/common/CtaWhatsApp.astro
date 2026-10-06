@@ -11,18 +11,24 @@ interface Props {
   assunto: string
   titulo?: string
   texto?: string
+  /** Sem a margem de cima e de baixo (quando a seção já dá o espaço). */
+  semMargem?: boolean
 }
 
 const {
   assunto,
   titulo = "Quer saber se o seu caso se enquadra?",
   texto = "Me conte a sua situação pelo WhatsApp. Eu explico, com base nos documentos, quais são as possibilidades do seu caso.",
+  semMargem = false,
 } = Astro.props
 ---
 
 <aside
   aria-label="Fale com a advogada"
-  class="my-10 rounded-md border border-ink/10 border-l-2 border-l-primary bg-surface-2 p-5 md:p-6"
+  class:list={[
+    !semMargem && "my-10",
+    "rounded-md border border-ink/10 border-l-2 border-l-primary bg-surface-2 p-5 md:p-6",
+  ]}
 >
   <p class="mb-2! text-lg font-semibold text-ink">{titulo}</p>
   <p class="mb-5! text-ink-soft">{texto}</p>
