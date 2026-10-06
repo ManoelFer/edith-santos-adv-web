@@ -3,3 +3,8 @@
 /orientacoes /artigos/ 301
 /orientacoes/ /artigos/ 301
 /orientacoes/* /artigos/:splat 301
+
+# Atalho para o painel do Hello World CMS, onde a Dra. Edith escreve os artigos.
+# 302 (temporário): o endereço do painel pode mudar e o navegador não deve guardar o destino.
+/admin https://cms.helloworldestudio.com.br 302
+/admin/ https://cms.helloworldestudio.com.br 302
