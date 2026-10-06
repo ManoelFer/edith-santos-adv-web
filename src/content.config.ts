@@ -2,6 +2,7 @@ import { glob } from "astro/loaders"
 import { defineCollection, z } from "astro:content"
 import { loadEnv } from "vite"
 
+import { site } from "./data/site"
 import { cmsLoader } from "./lib/cmsLoader"
 
 // CMS_* vêm do ambiente do build (Cloudflare, GitHub) ou do .env no dev.
@@ -12,6 +13,11 @@ const cms = loadEnv(process.env.NODE_ENV ?? "production", process.cwd(), "CMS_")
 // anterior do que publicar o site sem artigos); no `yarn dev` só avisa.
 // A capa é uma URL: o Astro baixa e otimiza no build (image.domains).
 // Conteúdo que depende de lei tem `updated` e deve ser revisto quando a regra mudar.
+// O <title> é "<título> | <nome do site>" e precisa caber em 60 letras (yarn seo).
+// Os mesmos números ficam no CMS (Sites > Edith > Integração > Título no Google):
+// lá o editor barra o artigo antes de publicar. Aqui é a rede de segurança.
+const TITULO_GOOGLE_MAX = 60 - ` | ${site.name}`.length
+
 const artigos = defineCollection({
   loader: cmsLoader({
     url: cms.CMS_URL,
@@ -19,15 +25,22 @@ const artigos = defineCollection({
     token: cms.CMS_TOKEN,
     obrigatorio: process.env.NODE_ENV === "production",
   }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string().min(120).max(155),
-    date: z.coerce.date(),
-    updated: z.coerce.date().optional(),
-    cover: z.url().optional(),
-    coverAlt: z.string().optional(),
-    draft: z.boolean().default(false),
-  }),
+  schema: z
+    .object({
+      title: z.string(),
+      /** Título para a aba e o Google (opcional); a página usa `title` no h1. */
+      tituloGoogle: z.string().optional(),
+      description: z.string().min(120).max(155),
+      date: z.coerce.date(),
+      updated: z.coerce.date().optional(),
+      cover: z.url().optional(),
+      coverAlt: z.string().optional(),
+      draft: z.boolean().default(false),
+    })
+    .refine((d) => (d.tituloGoogle ?? d.title).length <= TITULO_GOOGLE_MAX, {
+      message: `O título no Google passa de ${TITULO_GOOGLE_MAX} letras. No CMS, encurte o título ou preencha "Título para o Google".`,
+      path: ["tituloGoogle"],
+    }),
 })
 
 const topico = z.object({ titulo: z.string(), texto: z.string() })

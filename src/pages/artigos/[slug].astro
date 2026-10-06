@@ -25,7 +25,8 @@ export async function getStaticPaths() {
 
 const { artigo, outros } = Astro.props
 const { Content, headings } = await render(artigo)
-const { title, description, date, updated, cover, coverAlt } = artigo.data
+const { title, tituloGoogle, description, date, updated, cover, coverAlt } =
+  artigo.data
 
 // capa remota (URL do CMS) exige as duas dimensões; a local mantém só a largura
 const imagem = await getImage(
@@ -54,6 +55,7 @@ const schemas = [
 
 <ArtigoLayout
   title={title}
+  tituloGoogle={tituloGoogle}
   description={description}
   trilha={trilha}
   publicado={date}

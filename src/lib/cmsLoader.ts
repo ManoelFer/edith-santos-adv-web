@@ -25,6 +25,8 @@ interface ArtigoDoCms {
   id: string
   slug: string
   title: string
+  /** Título para o Google (aba e busca); null = o site usa `title`. */
+  seoTitle: string | null
   description: string
   /** HTML já limpo pelo servidor; imagens com endereço completo. */
   bodyHtml: string
@@ -136,6 +138,7 @@ function dadosPadrao(a: ArtigoDoCms): Record<string, unknown> {
     UMA_HORA_MS
   return {
     title: a.title,
+    tituloGoogle: a.seoTitle ?? undefined,
     description: a.description,
     date: a.publishedAt,
     updated: foiEditadoDepois ? a.updatedAt : undefined,
@@ -188,7 +191,18 @@ export function cmsLoader(opcoes: OpcoesCms) {
       const { posts } = (await resposta.json()) as { posts: ArtigoDoCms[] }
       store.clear()
       for (const artigo of posts) {
-        const data = await parseData({ id: artigo.slug, data: mapear(artigo) })
+        // artigo fora das regras do site: diz QUAL e onde corrigir, em vez de só
+        // despejar o erro do schema (o build falha de propósito)
+        let data: Record<string, unknown>
+        try {
+          data = await parseData({ id: artigo.slug, data: mapear(artigo) })
+        } catch (erro) {
+          const motivo = erro instanceof Error ? erro.message : String(erro)
+          throw new Error(
+            `CMS: o artigo "${artigo.title}" (${artigo.slug}) não passou nas regras do site. Corrija no CMS e publique de novo; o site se reconstrói sozinho. Motivo: ${motivo}`,
+            { cause: erro },
+          )
+        }
         const { html, headings } = comAncoras(artigo.bodyHtml)
         store.set({
           id: artigo.slug,
