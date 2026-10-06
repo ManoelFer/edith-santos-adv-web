@@ -1,0 +1,5 @@
+# A seção "Orientações" virou "Artigos" (a Cloudflare lê este arquivo no Pages e nos Static Assets).
+# 301 mantém o que o Google já indexou e quem salvou o link.
+/orientacoes /artigos/ 301
+/orientacoes/ /artigos/ 301
+/orientacoes/* /artigos/:splat 301

@@ -45,6 +45,11 @@ export default defineConfig({
   // aceitam SVG). Seguro aqui: só entram SVGs criados no projeto, em src/assets.
   image: {
     dangerouslyProcessSVG: true,
+    // Capas dos artigos vêm do CMS e são baixadas e otimizadas no build.
+    remotePatterns: [
+      { protocol: "https", hostname: "cms.helloworldestudio.com.br" },
+      { protocol: "https", hostname: "media.helloworldestudio.com.br" },
+    ],
   },
   // Sem realce de código no Markdown/MDX: o site não tem blocos de código e o
   // Shiki usa estilos inline, que a CSP bloqueia.
@@ -52,7 +57,7 @@ export default defineConfig({
     syntaxHighlight: false,
   },
   integrations: [
-    // MDX nas orientações: permite componentes no meio do texto (ex.: CtaWhatsApp).
+    // MDX: permite componentes no meio do texto (ex.: CtaWhatsApp).
     mdx(),
     sitemap({
       filter: (page) =>

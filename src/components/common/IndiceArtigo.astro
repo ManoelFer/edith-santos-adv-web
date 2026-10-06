@@ -1,0 +1,74 @@
+---
+import type { MarkdownHeading } from "astro"
+
+interface Props {
+  /** Títulos h2 do artigo (já com id). */
+  titulos: MarkdownHeading[]
+}
+
+const { titulos } = Astro.props
+---
+
+<!--
+  Celular: caixa recolhida ("Neste artigo") antes do texto. Desktop: lista
+  fixa ao lado, que acompanha a leitura. São dois blocos porque o <details>
+  não abre sozinho no desktop sem JavaScript.
+-->
+<nav aria-label="Neste artigo">
+  <details class="group rounded-sm border border-ink/10 bg-surface lg:hidden">
+    <summary class="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-base font-semibold text-ink [&::-webkit-details-marker]:hidden">
+      <span>
+        Neste artigo
+        <span class="font-normal text-subtle"> · {titulos.length} seções</span>
+      </span>
+      <span
+        class="text-primary transition-transform duration-300 ease-suave group-open:rotate-180"
+        aria-hidden="true"
+      >
+        ⌄
+      </span>
+    </summary>
+    <ol class="grid gap-1 border-t border-ink/8 px-4 py-3">
+      {titulos.map(({ slug, text }, i) => (
+        <li>
+          <a
+            href={`#${slug}`}
+            class="flex min-h-11 items-center gap-3 text-base text-ink-soft no-underline hover:text-ink"
+          >
+            <span
+              class="w-6 text-sm text-primary tabular-nums"
+              aria-hidden="true"
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            {text}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </details>
+
+  <div class="hidden rounded-sm border border-ink/10 bg-surface p-5 lg:block">
+    <p class="mb-3 text-sm font-semibold tracking-wider text-primary uppercase">
+      Neste artigo
+    </p>
+    <ol class="grid gap-0.5">
+      {titulos.map(({ slug, text }, i) => (
+        <li>
+          <a
+            href={`#${slug}`}
+            class="flex min-h-11 items-start gap-3 py-2 text-base leading-snug text-muted no-underline transition-colors duration-200 hover:text-ink"
+          >
+            <span
+              class="w-6 flex-none text-sm text-primary tabular-nums"
+              aria-hidden="true"
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            {text}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</nav>

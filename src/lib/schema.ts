@@ -125,7 +125,7 @@ interface DadosArtigo {
   atualizado?: Date
 }
 
-/** Artigo de Orientações, com a advogada como autora. */
+/** Artigo do blog, com a advogada como autora. */
 export function articleSchema(artigo: DadosArtigo): Schema {
   return {
     "@context": "https://schema.org",

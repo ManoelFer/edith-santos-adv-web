@@ -1,0 +1,64 @@
+---
+import ArticleCard from "@components/common/ArticleCard.astro"
+import Breadcrumb from "@components/common/Breadcrumb.astro"
+import CtaWhatsApp from "@components/common/CtaWhatsApp.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import { artigosPublicados } from "@lib/artigos"
+import { breadcrumbSchema } from "@lib/schema"
+
+// Rota de resto em vez de index.astro: assim /artigos/ só é gerada quando
+// existe pelo menos um artigo publicado (evita página vazia no Google).
+export async function getStaticPaths() {
+  const artigos = await artigosPublicados()
+  return artigos.length > 0
+    ? [{ params: { indice: undefined }, props: { artigos } }]
+    : []
+}
+
+const { artigos } = Astro.props
+const [destaque, ...demais] = artigos
+
+const trilha = [
+  { nome: "Início", caminho: "/" },
+  { nome: "Artigos", caminho: "/artigos/" },
+]
+---
+
+<BaseLayout
+  title="Artigos sobre INSS e aposentadoria"
+  description="Artigos em linguagem simples sobre CNIS, perícia médica, recursos e aposentadoria no INSS, escritos pela advogada previdenciária Edith Santos."
+  schemas={[breadcrumbSchema(trilha)]}
+>
+  <Section reveal={false} glow="hero">
+    <Breadcrumb itens={trilha} class="mb-4 lg:mb-8" />
+    <SectionHeading
+      as="h1"
+      eyebrow="Artigos"
+      title="Entenda o seu benefício antes de decidir"
+      lead="Textos em linguagem simples, escritos pela advogada. Conteúdo informativo: cada caso depende da análise individual dos documentos."
+    />
+
+    <div class="entrada-itens mt-10 grid gap-4 lg:mt-14">
+      {destaque && (
+        <ArticleCard artigo={destaque} variante="destaque" nivel="h2" />
+      )}
+      {demais.length > 0 && (
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {demais.map((artigo) => (
+            <ArticleCard artigo={artigo} nivel="h2" />
+          ))}
+        </div>
+      )}
+    </div>
+  </Section>
+
+  <Section tone="alt">
+    <CtaWhatsApp
+      assunto="o meu caso no INSS"
+      titulo="Ficou com dúvida sobre o seu caso?"
+      semMargem
+    />
+  </Section>
+</BaseLayout>

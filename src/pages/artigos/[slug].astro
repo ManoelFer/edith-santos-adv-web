@@ -1,0 +1,110 @@
+---
+import { getImage } from "astro:assets"
+import { render } from "astro:content"
+
+import ogPadrao from "@assets/og-edith-santos.jpg"
+import ArticleCard from "@components/common/ArticleCard.astro"
+import AuthorCard from "@components/common/AuthorCard.astro"
+import Button from "@components/common/Button.astro"
+import CtaWhatsApp from "@components/common/CtaWhatsApp.astro"
+import ArtigoLayout from "@layouts/ArtigoLayout.astro"
+import { artigosPublicados, textoDeLeitura } from "@lib/artigos"
+import { articleSchema, breadcrumbSchema } from "@lib/schema"
+
+export async function getStaticPaths() {
+  const artigos = await artigosPublicados()
+  return artigos.map((artigo, i) => ({
+    params: { slug: artigo.id },
+    props: {
+      artigo,
+      // para "Continue lendo": os outros artigos, começando pelo mais próximo
+      outros: [...artigos.slice(i + 1), ...artigos.slice(0, i)].slice(0, 2),
+    },
+  }))
+}
+
+const { artigo, outros } = Astro.props
+const { Content, headings } = await render(artigo)
+const { title, tituloGoogle, description, date, updated, cover, coverAlt } =
+  artigo.data
+
+// capa remota (URL do CMS) exige as duas dimensões; a local mantém só a largura
+const imagem = await getImage(
+  cover
+    ? { src: cover, width: 1200, height: 630 }
+    : { src: ogPadrao, width: 1200 },
+)
+
+const trilha = [
+  { nome: "Início", caminho: "/" },
+  { nome: "Artigos", caminho: "/artigos/" },
+  { nome: title, caminho: Astro.url.pathname },
+]
+const schemas = [
+  articleSchema({
+    titulo: title,
+    descricao: description,
+    url: new URL(Astro.url.pathname, Astro.site).toString(),
+    imagem: new URL(imagem.src, Astro.site).toString(),
+    publicado: date,
+    atualizado: updated,
+  }),
+  breadcrumbSchema(trilha),
+]
+---
+
+<ArtigoLayout
+  title={title}
+  tituloGoogle={tituloGoogle}
+  description={description}
+  trilha={trilha}
+  publicado={date}
+  atualizado={updated}
+  leitura={textoDeLeitura(artigo)}
+  capa={cover}
+  capaAlt={coverAlt}
+  titulos={headings}
+  image={cover}
+  schemas={schemas}
+>
+  <Content />
+
+  <!-- a chamada não vem do texto (o CMS não tem componentes): entra aqui, no fim -->
+  <CtaWhatsApp assunto={title} />
+
+  <div slot="rodape">
+    <div class="mt-12 max-w-3xl">
+      <AuthorCard />
+      <p class="mt-8 text-sm text-subtle">
+        Conteúdo informativo. Cada caso depende dos documentos e do histórico de
+        quem procura, e só pode ser avaliado com a análise individual.
+      </p>
+    </div>
+
+    {outros.length > 0 && (
+      <section
+        aria-labelledby="continue-lendo"
+        class="mt-16 border-t border-ink/8 pt-12"
+      >
+        <h2
+          id="continue-lendo"
+          class="mb-8 font-serif text-3xl leading-display font-normal text-ink-strong"
+        >
+          Continue lendo
+        </h2>
+        <div class="grid gap-4 md:grid-cols-2">
+          {outros.map((outro) => (
+            <ArticleCard artigo={outro} nivel="h3" />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <div class="mt-12 flex flex-wrap gap-3.5">
+      <Button href="/#contato">Entre em contato para uma análise</Button>
+      <Button href="/artigos/" variant="outline">
+        Ver todos os artigos
+      </Button>
+    </div>
+  </div>
+</ArtigoLayout>

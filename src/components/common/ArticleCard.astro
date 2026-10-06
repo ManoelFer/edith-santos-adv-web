@@ -1,31 +1,88 @@
 ---
-import type { CollectionEntry } from "astro:content"
-
-import Card from "@components/common/Card.astro"
+import CapaArtigo from "@components/common/CapaArtigo.astro"
+import { type Artigo, textoDeLeitura, urlArtigo } from "@lib/artigos"
 import { formatarData } from "@lib/formatarData"
 
 interface Props {
-  post: CollectionEntry<"orientacoes">
-  /** Nível do título conforme a página (h2 na listagem, h3 na Home). */
+  artigo: Artigo
+  /** `destaque`: o mais recente, em largura total e com texto maior. */
+  variante?: "padrao" | "destaque"
+  /** Nível do título conforme a página (h2 na listagem, h3 na Home e no fim do artigo). */
   nivel?: "h2" | "h3"
 }
 
-const { post, nivel: Titulo = "h3" } = Astro.props
-const { title, description, date } = post.data
+const { artigo, variante = "padrao", nivel: Titulo = "h3" } = Astro.props
+const { title, description, date } = artigo.data
+const destaque = variante === "destaque"
 ---
 
-<Card as="article" hover class="flex flex-col lg:p-7">
-  <p class="mb-3.5 text-sm tracking-wider text-primary uppercase">
-    <time datetime={date.toISOString()}>{formatarData(date)}</time>
-  </p>
-  <Titulo class="mb-3 font-serif text-2xl leading-tight font-normal text-ink-strong">
-    {title}
-  </Titulo>
-  <p class="mb-4.5 text-base text-muted">{description}</p>
-  <a
-    href={`/orientacoes/${post.id}/`}
-    class="mt-auto inline-flex min-h-11 items-center text-base"
+<!--
+  Card inteiro clicável: o link é o título e o ::after cobre o card.
+  No destaque, o texto fica à esquerda e a capa à direita (desktop).
+-->
+<article
+  class:list={[
+    "group relative overflow-hidden rounded-sm border border-ink/8 bg-surface",
+    "transition duration-300 ease-suave hover:border-primary/45 hover:bg-field",
+    "motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-xl motion-safe:hover:shadow-black/40 motion-safe:active:scale-99",
+    "has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary",
+    destaque ? "grid lg:grid-cols-12" : "flex flex-col",
+  ]}
+>
+  <div
+    class:list={[
+      "overflow-hidden border-b border-ink/8",
+      destaque && "lg:order-2 lg:col-span-5 lg:border-b-0 lg:border-l",
+    ]}
   >
-    Ler a orientação<span class="sr-only">: {title}</span>
-  </a>
-</Card>
+    <CapaArtigo
+      artigo={artigo}
+      tamanho={destaque ? "destaque" : "padrao"}
+      class={destaque ? "lg:h-full lg:aspect-auto" : undefined}
+    />
+  </div>
+
+  <div
+    class:list={[
+      "flex flex-1 flex-col p-5 md:p-6",
+      destaque && "lg:col-span-7 lg:justify-center lg:p-10 xl:p-12",
+    ]}
+  >
+    <p class="mb-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm tracking-wider text-primary uppercase">
+      {destaque && (
+        <span class="rounded-full border border-primary/35 bg-primary/8 px-3 py-1 text-xs tracking-eyebrow">
+          Mais recente
+        </span>
+      )}
+      <span>
+        <time datetime={date.toISOString()}>{formatarData(date)}</time>
+        <span aria-hidden="true"> · </span>
+        {textoDeLeitura(artigo)}
+      </span>
+    </p>
+    <Titulo
+      class:list={[
+        "mb-3 font-serif leading-tight font-normal text-balance text-ink-strong",
+        destaque ? "text-3xl md:text-4xl lg:text-5xl" : "text-2xl",
+      ]}
+    >
+      <a
+        href={urlArtigo(artigo.id)}
+        class="text-ink-strong no-underline after:absolute after:inset-0 focus-visible:outline-none"
+      >
+        {title}
+      </a>
+    </Titulo>
+    <p
+      class:list={["text-muted", destaque ? "max-w-2xl text-lg" : "text-base"]}
+    >
+      {description}
+    </p>
+    <p class="mt-auto pt-5 text-base text-primary" aria-hidden="true">
+      Ler o artigo{" "}
+      <span class="inline-block transition duration-300 ease-suave group-hover:translate-x-1">
+        →
+      </span>
+    </p>
+  </div>
+</article>

@@ -1,0 +1,130 @@
+---
+import type { MarkdownHeading } from "astro"
+import { Image } from "astro:assets"
+
+import Breadcrumb from "@components/common/Breadcrumb.astro"
+import Container from "@components/common/Container.astro"
+import Eyebrow from "@components/common/Eyebrow.astro"
+import Glow from "@components/common/Glow.astro"
+import IndiceArtigo from "@components/common/IndiceArtigo.astro"
+import Prose from "@components/common/Prose.astro"
+import { site } from "@data/site"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import { formatarData } from "@lib/formatarData"
+import type { ItemTrilha } from "@lib/schema"
+
+interface Props {
+  title: string
+  /** Título da aba e do Google, se o artigo tem um próprio e mais curto. */
+  tituloGoogle?: string
+  description: string
+  trilha: ItemTrilha[]
+  publicado: Date
+  /** Só quando o texto foi revisto depois de publicado. */
+  atualizado?: Date
+  /** Ex.: "5 min de leitura". */
+  leitura: string
+  /** Capa do CMS (URL) e a descrição dela. */
+  capa?: string
+  capaAlt?: string
+  /** h2 do artigo; o índice só aparece com 3 ou mais. */
+  titulos?: MarkdownHeading[]
+  /** Imagem de compartilhamento (a capa, se houver). */
+  image?: string
+  schemas?: Record<string, unknown>[]
+}
+
+const {
+  title,
+  tituloGoogle,
+  description,
+  trilha,
+  publicado,
+  atualizado,
+  leitura,
+  capa,
+  capaAlt = "",
+  titulos = [],
+  image,
+  schemas,
+} = Astro.props
+
+const indice = titulos.filter(({ depth }) => depth === 2)
+const comIndice = indice.length >= 3
+---
+
+<BaseLayout
+  title={tituloGoogle ?? title}
+  description={description}
+  image={image}
+  schemas={schemas}
+>
+  <article>
+    <section class="relative overflow-hidden border-b border-ink/8">
+      <Glow variant="hero" animado />
+      <Container class="relative pt-4 pb-10 md:pt-8 md:pb-14 lg:pb-16">
+        <Breadcrumb itens={trilha} class="mb-4 lg:mb-8" />
+        <header class="max-w-3xl motion-safe:animate-surgir">
+          <Eyebrow class="mb-5">Artigos</Eyebrow>
+          <h1 class="font-serif text-4xl leading-display font-normal tracking-tight text-balance text-ink-strong md:text-5xl lg:text-6xl">
+            {title}
+          </h1>
+          <p class="mt-6 text-lg leading-relaxed text-ink-lead md:text-xl">
+            {description}
+          </p>
+          <p class="mt-6 text-sm text-subtle">
+            Por <a href="/#sobre">{site.nomeCompleto}</a>, {site.oab}
+            <span aria-hidden="true"> · </span>
+            <time datetime={publicado.toISOString()}>
+              {formatarData(publicado)}
+            </time>
+            <span aria-hidden="true"> · </span>
+            {leitura}
+            {atualizado && (
+              <>
+                <span aria-hidden="true"> · </span>
+                Atualizado em{" "}
+                <time datetime={atualizado.toISOString()}>
+                  {formatarData(atualizado)}
+                </time>
+              </>
+            )}
+          </p>
+        </header>
+        {capa && (
+          <figure class="mt-9 max-w-5xl motion-safe:animate-entrada motion-safe:animate-delay-150">
+            <Image
+              src={capa}
+              alt={capaAlt}
+              width={1200}
+              height={675}
+              loading="eager"
+              fetchpriority="high"
+              class="aspect-video h-auto w-full rounded-md border border-ink/10 bg-surface object-cover"
+            />
+          </figure>
+        )}
+      </Container>
+    </section>
+
+    <Container class="py-10 md:py-14 lg:py-20">
+      <div
+        class:list={["grid gap-8 lg:gap-14", comIndice && "lg:grid-cols-12"]}
+      >
+        {comIndice && (
+          <aside class="lg:order-2 lg:col-span-4">
+            <div class="lg:sticky lg:top-28">
+              <IndiceArtigo titulos={indice} />
+            </div>
+          </aside>
+        )}
+        <div class:list={[comIndice && "lg:col-span-8"]}>
+          <Prose>
+            <slot />
+          </Prose>
+        </div>
+      </div>
+      <slot name="rodape" />
+    </Container>
+  </article>
+</BaseLayout>
