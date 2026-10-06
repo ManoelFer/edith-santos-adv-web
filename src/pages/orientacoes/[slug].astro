@@ -5,6 +5,7 @@ import { render } from "astro:content"
 import ogPadrao from "@assets/og-edith-santos.jpg"
 import AuthorCard from "@components/common/AuthorCard.astro"
 import Button from "@components/common/Button.astro"
+import CtaWhatsApp from "@components/common/CtaWhatsApp.astro"
 import TextoLayout from "@layouts/TextoLayout.astro"
 import { formatarData } from "@lib/formatarData"
 import { orientacoesPublicadas } from "@lib/orientacoes"
@@ -19,7 +20,12 @@ const { post } = Astro.props
 const { Content } = await render(post)
 const { title, description, date, updated, cover } = post.data
 
-const imagem = await getImage({ src: cover ?? ogPadrao, width: 1200 })
+// capa remota (URL do CMS) exige as duas dimensões; a local mantém só a largura
+const imagem = await getImage(
+  cover
+    ? { src: cover, width: 1200, height: 630 }
+    : { src: ogPadrao, width: 1200 },
+)
 const schema = articleSchema({
   titulo: title,
   descricao: description,
@@ -43,6 +49,9 @@ const schema = articleSchema({
   </p>
 
   <Content />
+
+  <!-- a chamada não vem do texto (o CMS não tem componentes): entra aqui, no fim -->
+  <CtaWhatsApp assunto={title} />
 
   <div slot="rodape">
     <AuthorCard />

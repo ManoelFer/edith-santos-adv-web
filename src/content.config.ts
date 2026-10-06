@@ -1,19 +1,33 @@
 import { glob } from "astro/loaders"
 import { defineCollection, z } from "astro:content"
+import { loadEnv } from "vite"
 
-// Orientações (artigos). Conteúdo que depende de lei tem `updated` e deve ser
-// revisto quando a regra mudar. Rascunhos ficam com `draft: true`.
+import { cmsLoader } from "./lib/cmsLoader"
+
+// CMS_* vêm do ambiente do build (Cloudflare, GitHub) ou do .env no dev.
+const cms = loadEnv(process.env.NODE_ENV ?? "production", process.cwd(), "CMS_")
+
+// Orientações (artigos), escritas pela advogada no Hello World CMS e lidas pela
+// API no build. Sem CMS_* o build falha de propósito (melhor manter o deploy
+// anterior do que publicar o site sem artigos); no `yarn dev` só avisa.
+// A capa é uma URL: o Astro baixa e otimiza no build (image.domains).
+// Conteúdo que depende de lei tem `updated` e deve ser revisto quando a regra mudar.
 const orientacoes = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/orientacoes" }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      description: z.string().min(120).max(155),
-      date: z.coerce.date(),
-      updated: z.coerce.date().optional(),
-      cover: image().optional(),
-      draft: z.boolean().default(false),
-    }),
+  loader: cmsLoader({
+    url: cms.CMS_URL,
+    siteId: cms.CMS_SITE_ID,
+    token: cms.CMS_TOKEN,
+    obrigatorio: process.env.NODE_ENV === "production",
+  }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().min(120).max(155),
+    date: z.coerce.date(),
+    updated: z.coerce.date().optional(),
+    cover: z.url().optional(),
+    coverAlt: z.string().optional(),
+    draft: z.boolean().default(false),
+  }),
 })
 
 const topico = z.object({ titulo: z.string(), texto: z.string() })
