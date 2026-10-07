@@ -23,6 +23,9 @@ export const site = {
   description:
     "Advogada previdenciária com planejamento estratégico para aposentadoria e benefícios do INSS. Atendimento online em todo o Brasil e no exterior.",
   oab: "OAB/GO nº 73.463",
+  /** Microtexto perto dos botões de contato: tira o medo de compromisso, sem falar em preço (Provimento 205/2021). */
+  avisoContato:
+    "Sem compromisso. Conte o seu caso e a advogada explica os próximos passos.",
   area: "Direito Previdenciário",
 
   // NAP: mesmo formato do Perfil da Empresa no Google e das redes

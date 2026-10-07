@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets"
 
+import AvisoContato from "@components/common/AvisoContato.astro"
 import Breadcrumb from "@components/common/Breadcrumb.astro"
 import Button from "@components/common/Button.astro"
 import Container from "@components/common/Container.astro"
@@ -80,6 +81,7 @@ const mostrarNota = site.features.avaliacoesGoogle && total > 0
           >
             Analisar meu caso pelo WhatsApp
           </Button>
+          <AvisoContato class="mt-3" />
           {mostrarNota && (
             <p class="mt-4 flex flex-wrap items-center gap-x-2 text-sm text-subtle">
               <Icon name="estrela" class="size-4 text-primary" />

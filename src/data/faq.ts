@@ -2,6 +2,11 @@ import type { FaqItem } from "@typings/conteudo"
 
 export const faq: FaqItem[] = [
   {
+    pergunta: "Entrar em contato me obriga a contratar?",
+    resposta:
+      "Não. O contato serve para a advogada entender o seu caso e explicar os próximos passos. Você decide com calma se quer seguir.",
+  },
+  {
     pergunta: "Preciso ir até o escritório?",
     resposta:
       "Não. Todo o atendimento pode ser feito a distância, por WhatsApp e videochamada, incluindo a assinatura de documentos por meio eletrônico.",

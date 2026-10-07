@@ -38,11 +38,11 @@ const canais = [
     <SectionHeading
       eyebrow="Contato"
       title="Conte o seu caso. Eu analiso e traço a estratégia."
-      lead={
+      lead={`${
         compacto
           ? "Deixe seu nome e WhatsApp, ou fale direto pelo botão abaixo. Eu respondo em dias úteis, no horário de atendimento."
           : "Você pode escrever pelo formulário ou falar direto pelo WhatsApp. Se tiver a carta de indeferimento ou o extrato do CNIS em mãos, já ajuda. Se não tiver, eu explico como conseguir."
-      }
+      } ${site.avisoContato}`}
     />
     <InfoList itens={canais} size="lg" class="mt-8" />
   </div>

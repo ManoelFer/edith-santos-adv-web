@@ -1,0 +1,11 @@
+---
+import { site } from "@data/site"
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<p class:list={["text-sm text-subtle", className]}>{site.avisoContato}</p>
