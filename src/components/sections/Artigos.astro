@@ -23,7 +23,10 @@ const [destaque, ...demais] = (await artigosPublicados()).slice(0, 3)
     </div>
     <div class="reveal-itens mt-9 grid gap-4">
       <ArticleCard artigo={destaque} variante="destaque" />
-      {demais.length > 0 && (
+      {demais.length === 1 && (
+        <ArticleCard artigo={demais[0]} variante="linha" />
+      )}
+      {demais.length > 1 && (
         <div class="grid gap-4 md:grid-cols-2">
           {demais.map((artigo) => (
             <ArticleCard artigo={artigo} />

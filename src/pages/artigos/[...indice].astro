@@ -44,7 +44,10 @@ const trilha = [
       {destaque && (
         <ArticleCard artigo={destaque} variante="destaque" nivel="h2" />
       )}
-      {demais.length > 0 && (
+      {demais.length === 1 && (
+        <ArticleCard artigo={demais[0]} variante="linha" nivel="h2" />
+      )}
+      {demais.length > 1 && (
         <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {demais.map((artigo) => (
             <ArticleCard artigo={artigo} nivel="h2" />
