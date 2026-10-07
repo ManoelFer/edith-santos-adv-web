@@ -1,8 +1,12 @@
 // @ts-check
+import { createHash } from "node:crypto"
+
 import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
 import tailwindcss from "@tailwindcss/vite"
 import { defineConfig, fontProviders } from "astro/config"
+
+import { scriptAvisoCookies } from "./src/lib/scriptAvisoCookies.ts"
 
 // Páginas que não devem ir para o sitemap (também recebem noindex)
 const foraDoSitemap = ["/obrigado/"]
@@ -30,6 +34,10 @@ export default defineConfig({
         "upgrade-insecure-requests",
       ],
       scriptDirective: {
+        // Script inline do aviso de cookies (is:inline não ganha hash sozinho)
+        hashes: [
+          `sha256-${createHash("sha256").update(scriptAvisoCookies).digest("base64")}`,
+        ],
         resources: [
           "'self'",
           "https://cloud.umami.is",

@@ -1,5 +1,6 @@
 ---
 import Button from "@components/common/Button.astro"
+import { scriptAvisoCookies } from "@lib/scriptAvisoCookies"
 ---
 
 <div
@@ -31,17 +32,7 @@ import Button from "@components/common/Button.astro"
   </div>
 </div>
 
-<!-- Roda antes da primeira pintura: quem já escolheu não vê o aviso, e quem não escolheu não vê a página "pular" quando ele aparece. A chave é a mesma de src/lib/cookies.ts. -->
-<script is:inline>
-  try {
-    if (localStorage.getItem("cookies-consentimento")) {
-      document.getElementById("aviso-cookies").remove()
-    }
-  } catch {
-    // Armazenamento bloqueado: o aviso fica visível.
-  }
-</script>
-
+<script is:inline set:html={scriptAvisoCookies}></script>
 <script>
   import { iniciarAvisoCookies } from "@lib/cookieBanner"
 

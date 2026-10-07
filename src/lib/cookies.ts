@@ -1,4 +1,4 @@
-const CHAVE_CONSENTIMENTO = "cookies-consentimento"
+export const CHAVE_CONSENTIMENTO = "cookies-consentimento"
 
 export const EVENTO_COOKIES_ACEITOS = "cookies:aceitos"
 
