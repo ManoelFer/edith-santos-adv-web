@@ -21,7 +21,7 @@ export const site = {
   profissao: "Advogada",
   url: "https://edithsantos.adv.br",
   description:
-    "Advogada previdenciária com atendimento online em todo o Brasil e para brasileiros no exterior. Pedidos, recursos e revisões de benefícios do INSS.",
+    "Advogada previdenciária com planejamento estratégico para aposentadoria e benefícios do INSS. Atendimento online em todo o Brasil e no exterior.",
   oab: "OAB/GO nº 73.463",
   area: "Direito Previdenciário",
 
