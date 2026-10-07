@@ -1,0 +1,31 @@
+---
+import Icon from "@components/common/Icon.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+
+interface Props {
+  itens: string[]
+}
+
+const { itens } = Astro.props
+---
+
+<Section id="analise" tone="alt" class="grid gap-9 lg:grid-cols-12 lg:gap-14">
+  <SectionHeading
+    size="md"
+    eyebrow="Na análise do caso"
+    title="O que a advogada confere no seu caso"
+    lead="Pontos que costumam pesar na análise. Cada um depende do seu histórico, e é na conversa que eles são avaliados."
+    class="lg:col-span-5"
+  />
+  <ul class="grid gap-3 lg:col-span-7">
+    {itens.map((item) => (
+      <li class="flex items-center gap-4 rounded-sm border border-ink/8 bg-surface p-4 md:p-5">
+        <span class="inline-flex size-9 flex-none items-center justify-center rounded-full border border-primary/45 bg-primary/12 text-primary">
+          <Icon name="check" class="size-5" />
+        </span>
+        <span class="text-base text-ink">{item}</span>
+      </li>
+    ))}
+  </ul>
+</Section>

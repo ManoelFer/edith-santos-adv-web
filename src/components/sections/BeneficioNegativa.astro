@@ -1,0 +1,33 @@
+---
+import CtaWhatsApp from "@components/common/CtaWhatsApp.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+
+interface Props {
+  texto: string
+  assunto: string
+  slug: string
+}
+
+const { texto, assunto, slug } = Astro.props
+---
+
+<Section id="negativa" class="grid gap-9 lg:grid-cols-12 lg:gap-14">
+  <SectionHeading
+    size="md"
+    eyebrow="Pedido negado"
+    title="O INSS negou ou demorou?"
+    class="lg:col-span-5"
+  />
+  <div class="lg:col-span-7">
+    <p class="mb-6 max-w-2xl text-lg text-ink-soft">{texto}</p>
+    <CtaWhatsApp
+      assunto={assunto}
+      origem="negativa"
+      beneficio={slug}
+      semMargem
+      titulo="Recebeu uma negativa?"
+      texto="Os prazos correm desde a data da carta. Entre em contato para agendar uma análise do seu caso."
+    />
+  </div>
+</Section>

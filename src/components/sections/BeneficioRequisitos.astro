@@ -17,7 +17,7 @@ const { itens, eyebrow, titulo, lead } = Astro.props
 
 <Section id="requisitos">
   <SectionHeading eyebrow={eyebrow} title={titulo} lead={lead} />
-  <ul class="mt-9 grid gap-3.5 md:grid-cols-2 lg:mt-12">
+  <ul class="mt-8 grid gap-3.5 md:grid-cols-2 lg:mt-10">
     {itens.map(({ titulo, texto }) => (
       <Card as="li" variant="gradient" class="flex gap-4">
         <span class="inline-flex size-9 flex-none items-center justify-center rounded-full border border-primary/45 bg-primary/12 text-primary">

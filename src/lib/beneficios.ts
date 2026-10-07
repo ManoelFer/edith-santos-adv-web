@@ -45,17 +45,7 @@ export function secaoRequisitosDe({ data }: Beneficio) {
     data.secaoRequisitos ?? {
       eyebrow: "Requisitos",
       titulo: "Quem tem direito",
-      lead: "Em linhas gerais, estas são as condições que o INSS confere. Cada uma tem exceções e detalhes que dependem da análise dos documentos.",
-    }
-  )
-}
-
-/** Título e texto do passo a passo: o padrão serve aos pedidos comuns ao INSS. */
-export function secaoPassosDe({ data }: Beneficio) {
-  return (
-    data.secaoPassos ?? {
-      titulo: "Como o pedido funciona",
-      lead: "A ordem mais comum de um pedido no INSS. Prazos e exigências variam conforme o caso e a agência.",
+      lead: "Em linhas gerais, estas são as condições. Os detalhes dependem do seu histórico e só a análise do caso mostra onde você se encaixa.",
     }
   )
 }

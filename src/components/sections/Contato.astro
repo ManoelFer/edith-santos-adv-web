@@ -11,9 +11,11 @@ interface Props {
   beneficio?: string
   /** Mensagem pronta do WhatsApp (padrão: a mensagem geral). */
   mensagem?: string
+  /** Só nome, WhatsApp e autorização (páginas de benefício). */
+  compacto?: boolean
 }
 
-const { beneficio, mensagem } = Astro.props
+const { beneficio, mensagem, compacto = false } = Astro.props
 
 const canais = [
   {
@@ -36,10 +38,18 @@ const canais = [
     <SectionHeading
       eyebrow="Contato"
       title="Conte o que aconteceu. Eu respondo explicando."
-      lead="Você pode escrever pelo formulário ou falar direto pelo WhatsApp. Se tiver a carta de indeferimento ou o extrato do CNIS em mãos, já ajuda. Se não tiver, eu explico como conseguir."
+      lead={
+        compacto
+          ? "Deixe seu nome e WhatsApp, ou fale direto pelo botão abaixo. Eu respondo em dias úteis, no horário de atendimento."
+          : "Você pode escrever pelo formulário ou falar direto pelo WhatsApp. Se tiver a carta de indeferimento ou o extrato do CNIS em mãos, já ajuda. Se não tiver, eu explico como conseguir."
+      }
     />
     <InfoList itens={canais} size="lg" class="mt-8" />
   </div>
 
-  <FormularioContato beneficio={beneficio} class="lg:col-span-7" />
+  <FormularioContato
+    beneficio={beneficio}
+    compacto={compacto}
+    class="lg:col-span-7"
+  />
 </Section>

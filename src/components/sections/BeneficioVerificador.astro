@@ -1,0 +1,110 @@
+---
+import Button from "@components/common/Button.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import { resultadoVerificador } from "@lib/verificador"
+import { whatsappUrl } from "@lib/whatsapp"
+
+interface Props {
+  perguntas: string[]
+  /** Nome do benefício no meio de uma frase (mensagem do WhatsApp). */
+  assunto: string
+  /** Slug do benefício, para medir qual página converte. */
+  slug: string
+}
+
+const { perguntas, assunto, slug } = Astro.props
+const inicial = resultadoVerificador(assunto, 0, 0, perguntas.length)
+---
+
+<Section id="seu-caso" tone="alt">
+  <div
+    data-verificador
+    data-assunto={assunto}
+    data-total={perguntas.length}
+    class="grid gap-9 lg:grid-cols-12 lg:gap-14"
+  >
+    <SectionHeading
+      size="md"
+      eyebrow="Seu caso"
+      title="Seu caso se parece com o de quem tem direito?"
+      lead="Responda com sim ou não. É só uma primeira olhada: a análise de verdade depende do seu histórico."
+      class="lg:col-span-5"
+    />
+
+    <div class="lg:col-span-7">
+      <div class="grid gap-3.5">
+        {perguntas.map((pergunta, i) => (
+          <fieldset class="rounded-sm border border-ink/10 bg-surface p-4 md:p-5">
+            <legend class="sr-only">Pergunta {i + 1}</legend>
+            <p class="mb-3.5 text-base text-ink">{pergunta}</p>
+            <div class="flex gap-3">
+              {["sim", "nao"].map((valor) => (
+                <label class="relative flex-1 cursor-pointer">
+                  <input
+                    type="radio"
+                    name={`sinal-${i}`}
+                    value={valor}
+                    class="peer sr-only"
+                  />
+                  <span class="flex min-h-12 items-center justify-center rounded-sm border border-ink/20 text-base text-ink-soft transition-colors peer-checked:border-primary peer-checked:bg-primary/12 peer-checked:text-ink peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary hover:border-ink/45">
+                    {valor === "sim" ? "Sim" : "Não"}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        ))}
+      </div>
+
+      <div class="mt-5 rounded-md border border-ink/10 border-l-2 border-l-primary bg-surface-2 p-5 md:p-6">
+        <div aria-live="polite">
+          <p data-resultado-titulo class="mb-2 text-lg font-semibold text-ink">
+            {inicial.titulo}
+          </p>
+          <p data-resultado-texto class="mb-5 text-ink-soft">
+            {inicial.texto}
+          </p>
+        </div>
+        <Button
+          href={whatsappUrl(inicial.mensagem)}
+          event="whatsapp_click"
+          data-origem="verificador"
+          data-beneficio={slug}
+          data-resultado-botao
+          class="w-full sm:w-auto"
+        >
+          Agendar análise do meu caso
+        </Button>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<script>
+  import { resultadoVerificador } from "@lib/verificador"
+  import { whatsappUrl } from "@lib/whatsapp"
+
+  document
+    .querySelectorAll<HTMLElement>("[data-verificador]")
+    .forEach((bloco) => {
+      const assunto = bloco.dataset.assunto ?? ""
+      const total = Number(bloco.dataset.total)
+      const titulo = bloco.querySelector("[data-resultado-titulo]")
+      const texto = bloco.querySelector("[data-resultado-texto]")
+      const botao = bloco.querySelector<HTMLAnchorElement>(
+        "[data-resultado-botao]",
+      )
+
+      bloco.addEventListener("change", () => {
+        const marcadas = bloco.querySelectorAll<HTMLInputElement>(
+          "input[type=radio]:checked",
+        )
+        const sims = [...marcadas].filter((r) => r.value === "sim").length
+        const r = resultadoVerificador(assunto, marcadas.length, sims, total)
+        if (titulo) titulo.textContent = r.titulo
+        if (texto) texto.textContent = r.texto
+        if (botao) botao.href = whatsappUrl(r.mensagem)
+      })
+    })
+</script>

@@ -13,6 +13,9 @@ interface Props {
   texto?: string
   /** Sem a margem de cima e de baixo (quando a seção já dá o espaço). */
   semMargem?: boolean
+  /** Qual chamada é esta e de qual benefício, para medir o que converte. */
+  origem?: string
+  beneficio?: string
 }
 
 const {
@@ -20,6 +23,8 @@ const {
   titulo = "Quer saber se o seu caso se enquadra?",
   texto = "Me conte a sua situação pelo WhatsApp. Eu explico, com base nos documentos, quais são as possibilidades do seu caso.",
   semMargem = false,
+  origem,
+  beneficio,
 } = Astro.props
 ---
 
@@ -35,6 +40,8 @@ const {
   <Button
     href={whatsappUrl(mensagemSobre(assunto))}
     event="whatsapp_click"
+    data-origem={origem}
+    data-beneficio={beneficio}
     class="w-full sm:w-auto"
   >
     Falar com a advogada no WhatsApp

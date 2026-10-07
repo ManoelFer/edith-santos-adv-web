@@ -7,10 +7,14 @@ import { limiteMensagem } from "@lib/contato"
 interface Props {
   /** Valor do benefício já escolhido (vindo da página do benefício). */
   beneficio?: string
+  /** Esconde cidade, benefício e mensagem: o benefício vem da página. */
+  compacto?: boolean
   class?: string
 }
 
-const { beneficio, class: className } = Astro.props
+const { beneficio, compacto = false, class: className } = Astro.props
+const rotuloBeneficio =
+  beneficios.find(({ valor }) => valor === beneficio)?.rotulo ?? ""
 ---
 
 <form
@@ -23,7 +27,7 @@ const { beneficio, class: className } = Astro.props
 >
   <FormField id="f-nome" name="nome" label="Seu nome" autocomplete="name" />
 
-  <div class="grid gap-5.5 sm:grid-cols-2">
+  <div class:list={["grid gap-5.5", !compacto && "sm:grid-cols-2"]}>
     <FormField
       id="f-whatsapp"
       name="whatsapp"
@@ -34,33 +38,46 @@ const { beneficio, class: className } = Astro.props
       placeholder="(00) 90000-0000"
       hint="É por aqui que eu respondo. Se mora fora do Brasil, inclua o código do país."
     />
-    <FormField
-      id="f-cidade"
-      name="cidade"
-      label="Cidade e estado (ou país)"
-      autocomplete="address-level2"
-      placeholder="Iporá / GO"
-    />
+    {!compacto && (
+      <FormField
+        id="f-cidade"
+        name="cidade"
+        label="Cidade e estado (ou país)"
+        autocomplete="address-level2"
+        placeholder="Iporá / GO"
+      />
+    )}
   </div>
 
-  <FormField
-    id="f-beneficio"
-    name="beneficio"
-    label="Sobre qual benefício você quer falar"
-    as="select"
-    options={beneficios}
-    value={beneficio}
-    placeholder="Escolha uma opção"
-  />
+  {compacto ? (
+    <input
+      type="hidden"
+      name="beneficio"
+      data-campo="beneficio"
+      data-rotulo={rotuloBeneficio}
+    />
+  ) : (
+    <>
+      <FormField
+        id="f-beneficio"
+        name="beneficio"
+        label="Sobre qual benefício você quer falar"
+        as="select"
+        options={beneficios}
+        value={beneficio}
+        placeholder="Escolha uma opção"
+      />
 
-  <FormField
-    id="f-mensagem"
-    name="mensagem"
-    label="Mensagem (opcional)"
-    as="textarea"
-    maxlength={limiteMensagem}
-    placeholder="Conte em poucas palavras o que aconteceu."
-  />
+      <FormField
+        id="f-mensagem"
+        name="mensagem"
+        label="Mensagem (opcional)"
+        as="textarea"
+        maxlength={limiteMensagem}
+        placeholder="Conte em poucas palavras o que aconteceu."
+      />
+    </>
+  )}
 
   <div class="border-t border-ink/8 pt-5">
     <label
@@ -163,7 +180,9 @@ const { beneficio, class: className } = Astro.props
           beneficio:
             beneficio instanceof HTMLSelectElement && beneficio.value
               ? (beneficio.selectedOptions[0]?.text ?? "")
-              : "",
+              : beneficio instanceof HTMLInputElement
+                ? (beneficio.dataset.rotulo ?? "")
+                : "",
           mensagem: texto("mensagem"),
           lgpd: dados.get("lgpd") !== null,
         }

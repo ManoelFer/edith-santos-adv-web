@@ -58,25 +58,36 @@ const beneficios = defineCollection({
       eyebrow: z.string(),
       /** Nome oficial, quando o público usa outro (selo "nome antigo, nome novo"). */
       nomeOficial: z.string().optional(),
-      /** Resposta direta à busca, 40 a 60 palavras. */
+      /** Resposta direta à busca, em até ~30 palavras. */
       resumo: z.string(),
       /** Valor da opção no formulário (src/data/beneficios.ts). */
       beneficio: z.string(),
       imagem: image(),
       imagemAlt: z.string(),
-      requisitos: z.array(topico).min(1),
+      requisitos: z.array(topico).min(1).max(4),
       /** Títulos da seção de requisitos quando não é "Quem tem direito" (planejamento, revisão). */
       secaoRequisitos: z
         .object({ eyebrow: z.string(), titulo: z.string(), lead: z.string() })
         .optional(),
-      passos: z.array(topico).min(3),
-      /** Título e texto do passo a passo quando não é um pedido comum ao INSS. */
-      secaoPassos: z
-        .object({ titulo: z.string(), lead: z.string() })
-        .optional(),
-      documentos: z.array(z.string()).min(3),
-      faq: z.array(z.object({ pergunta: z.string(), resposta: z.string() })),
-      fontes: z.array(z.object({ rotulo: z.string(), url: z.url() })).min(1),
+      /**
+       * Perguntas sim/não do checklist "seu caso se parece...?". Nada de dado
+       * de saúde: só situação de vida. O resultado nunca diz "você tem direito".
+       */
+      sinais: z.array(z.string()).min(3).max(4),
+      /**
+       * "O que a advogada confere": só o NOME de cada ponto, sem explicar como
+       * resolver. Mostra domínio sem entregar o método.
+       */
+      confere: z.array(z.string()).min(4).max(5),
+      /** "O INSS negou?": 2 a 3 frases, sem detalhar recurso nem ação judicial. */
+      negativa: z.string(),
+      faq: z
+        .array(z.object({ pergunta: z.string(), resposta: z.string() }))
+        .max(3),
+      fontes: z
+        .array(z.object({ rotulo: z.string(), url: z.url() }))
+        .min(1)
+        .max(5),
       relacionados: z.array(z.string()).default([]),
       revisado: z.coerce.date(),
       draft: z.boolean().default(false),

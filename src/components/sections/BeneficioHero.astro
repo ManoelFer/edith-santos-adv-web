@@ -6,6 +6,8 @@ import Button from "@components/common/Button.astro"
 import Container from "@components/common/Container.astro"
 import Eyebrow from "@components/common/Eyebrow.astro"
 import Glow from "@components/common/Glow.astro"
+import Icon from "@components/common/Icon.astro"
+import { avaliacoesGoogle } from "@data/avaliacoesGoogle"
 import { site } from "@data/site"
 import type { Beneficio } from "@lib/beneficios"
 import { formatarData } from "@lib/formatarData"
@@ -17,13 +19,14 @@ interface Props {
   trilha: ItemTrilha[]
   /** Nome curto do benefício, usado na mensagem do WhatsApp. */
   assunto: string
-  /** Título da seção de requisitos, para o botão que leva até ela. */
-  tituloRequisitos: string
 }
 
-const { beneficio, trilha, assunto, tituloRequisitos } = Astro.props
+const { beneficio, trilha, assunto } = Astro.props
 const { h1, eyebrow, nomeOficial, resumo, imagem, imagemAlt, revisado } =
   beneficio.data
+
+const { nota, total } = avaliacoesGoogle
+const mostrarNota = site.features.avaliacoesGoogle && total > 0
 ---
 
 <section class="relative overflow-hidden border-b border-ink/8">
@@ -66,28 +69,34 @@ const { h1, eyebrow, nomeOficial, resumo, imagem, imagemAlt, revisado } =
           <p class="text-lg leading-relaxed text-ink-soft">{resumo}</p>
         </div>
 
-        <p class="mt-5 text-sm text-subtle">
+        <div class="mt-7">
+          <Button
+            href={whatsappUrl(mensagemSobre(assunto))}
+            size="lg"
+            event="whatsapp_click"
+            data-origem="hero"
+            data-beneficio={beneficio.id}
+            class="w-full sm:w-auto"
+          >
+            Analisar meu caso pelo WhatsApp
+          </Button>
+          {mostrarNota && (
+            <p class="mt-4 flex flex-wrap items-center gap-x-2 text-sm text-subtle">
+              <Icon name="estrela" class="size-4 text-primary" />
+              <span>
+                {nota.toLocaleString("pt-BR", { minimumFractionDigits: 1 })} no
+                Google · {total} {total === 1 ? "avaliação" : "avaliações"}
+              </span>
+            </p>
+          )}
+        </div>
+        <p class="mt-6 text-sm text-subtle">
           Por <a href="/#sobre">{site.nomeCompleto}</a>, {site.oab} · Revisado
           em{" "}
           <time datetime={revisado.toISOString()}>
             {formatarData(revisado)}
           </time>
         </p>
-
-        <div class="mt-7 grid gap-2.5 sm:flex sm:flex-wrap sm:gap-3.5">
-          <Button
-            href={whatsappUrl(mensagemSobre(assunto))}
-            size="lg"
-            event="whatsapp_click"
-          >
-            Agendar uma análise do caso
-          </Button>
-          <Button href="#requisitos" variant="outline" size="lg">
-            Ver{" "}
-            {tituloRequisitos.charAt(0).toLowerCase() +
-              tituloRequisitos.slice(1)}
-          </Button>
-        </div>
       </div>
     </div>
   </Container>
