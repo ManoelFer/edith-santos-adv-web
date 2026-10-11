@@ -48,9 +48,7 @@ const ano = new Date().getFullYear()
       </div>
 
       <div>
-        <Eyebrow line={false} class="mb-3">
-          Canais oficiais
-        </Eyebrow>
+        <Eyebrow class="mb-3">Canais oficiais</Eyebrow>
         <ul class="grid text-base">
           {canais.map(({ label, href, event }) => (
             <li>
@@ -71,9 +69,7 @@ const ano = new Date().getFullYear()
       </div>
 
       <div>
-        <Eyebrow line={false} class="mb-3">
-          Atendimento
-        </Eyebrow>
+        <Eyebrow class="mb-3">Atendimento</Eyebrow>
         <p class="text-base text-muted">
           {site.atendimento}.<br />
           Base em {site.base}.
@@ -82,9 +78,7 @@ const ano = new Date().getFullYear()
 
       {beneficios.length > 0 && (
         <div>
-          <Eyebrow line={false} class="mb-3">
-            Benefícios
-          </Eyebrow>
+          <Eyebrow class="mb-3">Benefícios</Eyebrow>
           <ul class="grid text-base">
             {beneficios.map(({ label, href }) => (
               <li>
@@ -98,9 +92,7 @@ const ano = new Date().getFullYear()
       )}
 
       <div>
-        <Eyebrow line={false} class="mb-3">
-          Institucional
-        </Eyebrow>
+        <Eyebrow class="mb-3">Institucional</Eyebrow>
         <ul class="grid text-base">
           {site.institucional.map(({ label, href }) => (
             <li>
