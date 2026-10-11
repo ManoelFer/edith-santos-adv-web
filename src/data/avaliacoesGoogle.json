@@ -1,9 +1,16 @@
 {
   "placeId": "ChIJH6oH5BXxXpMRjNjTL9x_rhE",
   "nota": 5,
-  "total": 4,
-  "atualizadoEm": "2026-10-01",
+  "total": 5,
+  "atualizadoEm": "2026-10-11",
   "avaliacoes": [
+    {
+      "id": "Ci9DQUlRQUNvZENodHljRjlvT25KemRWUkVjemxTWXpWaVltNVFTV05UZURCVk1YYxAB",
+      "autor": "thiago marques",
+      "texto": "Eu gostei muito do seu trabalho caso eu precise dele ainda eu entro em contato com vc obrigado mesmo",
+      "data": "2026-10-08",
+      "exibir": false
+    },
     {
       "id": "Ci9DQUlRQUNvZENodHljRjlvT2pOUGQwMTZlQzFFYUVnNVQwRnhTRzV5VWxkVlpVRRAB",
       "autor": "Shirley Nominato",
