@@ -188,6 +188,18 @@
     color: var(--color-primary-hover);
   }
 
+  /* O Tailwind v4 zera o cursor de button para "default"; devolve a mãozinha em
+     tudo que clica (botão desabilitado fica com o cursor próprio) */
+  a[href],
+  button:not(:disabled),
+  summary,
+  select,
+  input[type="checkbox"],
+  input[type="radio"],
+  label[for] {
+    cursor: pointer;
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 3px;

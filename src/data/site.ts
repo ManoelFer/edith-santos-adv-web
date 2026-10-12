@@ -79,6 +79,7 @@ export const site = {
     { label: "Atendimento", href: "/#atendimento" },
     { label: "Fases", href: "/#fases" },
     { label: "Sobre", href: "/#sobre" },
+    { label: "Avaliações", href: "/#avaliacoes" },
     { label: "Dúvidas", href: "/#duvidas" },
   ] satisfies LinkNav[],
 

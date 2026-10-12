@@ -2,8 +2,7 @@
 // 5 estrelas do Perfil da Empresa no Google (Places API New). Rode: yarn avaliacoes
 // A API devolve só até 5 avaliações por consulta; por isso as já guardadas no
 // JSON são mantidas e as novas somam, da mais recente para a mais antiga.
-// Avaliação nova entra com "exibir": false: só aparece no site depois que a
-// advogada revisar o texto (Provimento 205/2021) e mudar para true no JSON.
+// O site mostra as 20 mais recentes que têm comentário (ver avaliacoesGoogle.ts).
 // Requer GOOGLE_PLACES_API_KEY no .env (nunca versionado).
 import { readFile, writeFile } from "node:fs/promises"
 
@@ -37,10 +36,6 @@ if (!resposta.ok) {
 
 const { rating = 0, userRatingCount = 0, reviews = [] } = await resposta.json()
 
-const anteriores = new Map(
-  (atual.avaliacoes ?? []).map((item) => [item.id, item]),
-)
-
 // Só 5 estrelas e com texto; o texto vai como o cliente escreveu, sem edição
 const recebidas = reviews
   .filter((r) => r.rating === 5 && (r.originalText?.text ?? r.text?.text))
@@ -51,7 +46,6 @@ const recebidas = reviews
       autor: r.authorAttribution?.displayName ?? "Cliente",
       texto: (r.originalText?.text ?? r.text.text).trim(),
       data: r.publishTime?.slice(0, 10) ?? "",
-      exibir: anteriores.get(id)?.exibir ?? false,
     }
   })
 
