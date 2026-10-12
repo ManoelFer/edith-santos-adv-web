@@ -103,10 +103,13 @@ const classesChip = [
   "motion-safe:active:scale-98",
   "before:pointer-events-none before:absolute before:inset-y-0 before:left-0 before:w-1/3 before:-translate-x-full before:-skew-x-12 before:bg-linear-to-r before:from-transparent before:via-primary/20 before:to-transparent before:transition-transform before:duration-700 before:ease-suave",
   "motion-safe:hover:before:translate-x-[300%]",
-  "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-500 after:ease-suave hover:after:scale-x-100 peer-checked:after:scale-x-100",
   "peer-checked:border-primary peer-checked:bg-primary/12 peer-checked:text-ink peer-checked:shadow-lg peer-checked:shadow-primary/15",
   "peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary",
 ]
+
+// Linha dourada na base: só nas opções (o link "todos os benefícios" não leva).
+const classesLinha =
+  "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-500 after:ease-suave hover:after:scale-x-100 peer-checked:after:scale-x-100"
 
 const publicados = new Map(
   (await beneficiosPublicados()).map((beneficio) => [beneficio.id, beneficio]),
@@ -173,7 +176,7 @@ const itens = opcoes.map(({ rotulo, tema, slug, assunto, descricao }) => {
             cresce na base ao passar o mouse e fica fixa no chip marcado. O reflexo (before:) começa fora do chip à esquerda e vai
             até depois da borda direita (300% da própria largura).
           -->
-          <span class:list={classesChip}>{item.rotulo}</span>
+          <span class:list={[...classesChip, classesLinha]}>{item.rotulo}</span>
         </label>
       ))}
       <a

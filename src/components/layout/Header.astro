@@ -54,7 +54,10 @@ const idMenu = "menu-mobile"
           <li>
             <a
               href={href}
-              class="inline-flex min-h-11 items-center px-1 text-base text-muted no-underline transition-colors hover:text-ink"
+              class:list={[
+                "relative inline-flex min-h-11 items-center px-1 text-base text-muted no-underline transition-colors duration-300 hover:text-primary",
+                "after:absolute after:inset-x-1 after:bottom-1.5 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-500 after:ease-suave hover:after:scale-x-100 focus-visible:after:scale-x-100",
+              ]}
             >
               {label}
             </a>
