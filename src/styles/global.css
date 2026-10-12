@@ -57,6 +57,7 @@
   --animate-entrada: entrada 0.7s var(--ease-suave) backwards;
   --animate-surgir: surgir 0.9s var(--ease-suave) backwards;
   --animate-brilho: brilho 1.6s ease-out backwards;
+  --animate-resposta: resposta 0.6s var(--ease-suave) 0.08s backwards;
 
   @keyframes entrada {
     from {
@@ -70,6 +71,13 @@
       opacity: 0.2;
       translate: 0 0.75rem;
       scale: 0.98;
+    }
+  }
+
+  @keyframes resposta {
+    from {
+      opacity: 0;
+      translate: 0 -0.5rem;
     }
   }
 
