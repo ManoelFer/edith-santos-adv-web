@@ -7,10 +7,10 @@ import CtaWhatsApp from "@components/common/CtaWhatsApp.astro"
 import Section from "@components/common/Section.astro"
 import SectionHeading from "@components/common/SectionHeading.astro"
 import BaseLayout from "@layouts/BaseLayout.astro"
-import { beneficiosPublicados } from "@lib/beneficios"
+import { beneficiosPublicados, urlBeneficios } from "@lib/beneficios"
 import { breadcrumbSchema } from "@lib/schema"
 
-// Rota de resto em vez de index.astro: /beneficios/ só é gerada quando existe
+// Rota de resto em vez de index.astro: /beneficios-do-inss/ só é gerada quando existe
 // pelo menos um benefício publicado (evita página vazia no Google).
 export async function getStaticPaths() {
   const beneficios = await beneficiosPublicados()
@@ -23,7 +23,7 @@ const { beneficios } = Astro.props
 
 const schema = breadcrumbSchema([
   { nome: "Início", caminho: "/" },
-  { nome: "Benefícios", caminho: "/beneficios/" },
+  { nome: "Benefícios", caminho: urlBeneficios },
 ])
 ---
 

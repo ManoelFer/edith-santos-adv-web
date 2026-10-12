@@ -7,6 +7,7 @@ nomeOficial: "Benefício de Prestação Continuada (BPC)"
 resumo: "O BPC/LOAS paga um salário mínimo por mês a idosos com 65 anos ou mais e a pessoas com deficiência, de baixa renda. Não precisa ter contribuído para o INSS."
 beneficio: "bpc"
 imagem: "../../assets/beneficios/bpc-loas.svg"
+icone: "../../assets/beneficios/icones/bpc-loas.svg"
 imagemAlt: "Ilustração de uma pessoa idosa com bengala e de uma pessoa em cadeira de rodas sob um grande arco de proteção, com um coração acima, representando o amparo da assistência social"
 requisitos:
   - titulo: "65 anos ou mais, ou deficiência de longo prazo"

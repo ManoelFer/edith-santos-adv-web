@@ -6,6 +6,7 @@ eyebrow: "Aposentadoria"
 resumo: "A aposentadoria por idade é paga pelo INSS a quem atinge a idade mínima e tem tempo de contribuição, na cidade ou no campo. Quem parou de contribuir pode ter direito."
 beneficio: "idade"
 imagem: "../../assets/beneficios/aposentadoria-por-idade.svg"
+icone: "../../assets/beneficios/icones/aposentadoria-por-idade.svg"
 imagemAlt: "Ilustração de uma ampulheta ao lado de anéis concêntricos, como os de um tronco de árvore, representando o tempo até a aposentadoria"
 requisitos:
   - titulo: "Idade mínima"

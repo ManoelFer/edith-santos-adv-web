@@ -7,6 +7,7 @@ nomeOficial: "aposentadoria por incapacidade permanente"
 resumo: "A aposentadoria por invalidez, hoje chamada de incapacidade permanente, é paga a quem contribui para o INSS e não consegue mais trabalhar de forma definitiva."
 beneficio: "incapacidade-permanente"
 imagem: "../../assets/beneficios/aposentadoria-por-invalidez.svg"
+icone: "../../assets/beneficios/icones/aposentadoria-por-invalidez.svg"
 imagemAlt: "Ilustração de uma poltrona diante de uma janela e de uma linha de batimentos cardíacos, representando o afastamento definitivo do trabalho"
 requisitos:
   - titulo: "Ligação com o INSS"

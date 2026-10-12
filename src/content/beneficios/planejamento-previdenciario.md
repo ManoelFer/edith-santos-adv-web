@@ -6,6 +6,7 @@ eyebrow: "Planejamento"
 resumo: "Planejamento previdenciário é a análise do seu histórico no INSS antes de pedir a aposentadoria, que não pode ser desfeita depois do primeiro pagamento."
 beneficio: "planejamento"
 imagem: "../../assets/beneficios/planejamento-previdenciario.svg"
+icone: "../../assets/beneficios/icones/planejamento-previdenciario.svg"
 imagemAlt: "Ilustração de um caminho com marcos que sobe até uma bandeira, ao lado de uma bússola, representando o planejamento do melhor momento para se aposentar"
 secaoRequisitos:
   eyebrow: "Para quem é"

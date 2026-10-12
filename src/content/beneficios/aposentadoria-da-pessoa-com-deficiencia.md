@@ -7,6 +7,7 @@ nomeOficial: "aposentadoria da pessoa com deficiência (LC 142/2013)"
 resumo: "Quem tem deficiência e contribui para o INSS pode se aposentar mais cedo, por tempo de contribuição ou por idade. O grau da deficiência é avaliado pelo INSS."
 beneficio: "pcd"
 imagem: "../../assets/beneficios/aposentadoria-da-pessoa-com-deficiencia.svg"
+icone: "../../assets/beneficios/icones/aposentadoria-da-pessoa-com-deficiencia.svg"
 imagemAlt: "Ilustração de uma escada ao lado de uma rampa por onde uma pessoa em cadeira de rodas sobe até uma porta iluminada, representando um caminho adaptado para a aposentadoria"
 requisitos:
   - titulo: "Contribuir para o INSS"

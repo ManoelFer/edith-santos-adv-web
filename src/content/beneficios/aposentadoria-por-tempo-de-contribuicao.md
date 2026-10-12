@@ -7,6 +7,7 @@ nomeOficial: "regras de transição da Reforma da Previdência"
 resumo: "Quem já contribuía para o INSS até 13 de novembro de 2019 ainda pode se aposentar por tempo de contribuição, pelas regras de transição."
 beneficio: "tempo"
 imagem: "../../assets/beneficios/aposentadoria-por-tempo-de-contribuicao.svg"
+icone: "../../assets/beneficios/icones/aposentadoria-por-tempo-de-contribuicao.svg"
 imagemAlt: "Ilustração de uma carteira de trabalho ao lado de uma linha do tempo de contribuições que termina em um sinal de confirmado"
 requisitos:
   - titulo: "Contribuir desde antes da Reforma"

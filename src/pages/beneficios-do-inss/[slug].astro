@@ -20,6 +20,7 @@ import {
   rotuloDe,
   secaoRequisitosDe,
   urlBeneficio,
+  urlBeneficios,
 } from "@lib/beneficios"
 import {
   beneficioSchema,
@@ -51,7 +52,7 @@ const secaoRequisitos = secaoRequisitosDe(beneficio)
 
 const trilha: ItemTrilha[] = [
   { nome: "Início", caminho: "/" },
-  { nome: "Benefícios", caminho: "/beneficios/" },
+  { nome: "Benefícios", caminho: urlBeneficios },
   { nome: nomeCurto(beneficio), caminho: urlBeneficio(beneficio.id) },
 ]
 

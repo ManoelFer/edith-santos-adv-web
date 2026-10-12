@@ -1,7 +1,7 @@
 ---
 import BeneficioCard from "@components/common/BeneficioCard.astro"
 import Section from "@components/common/Section.astro"
-import type { Beneficio } from "@lib/beneficios"
+import { type Beneficio, urlBeneficios } from "@lib/beneficios"
 
 interface Props {
   beneficios: Beneficio[]
@@ -17,7 +17,7 @@ const { beneficios } = Astro.props
         Outros benefícios do INSS
       </h2>
       <a
-        href="/beneficios/"
+        href={urlBeneficios}
         class="inline-flex min-h-11 items-center text-base"
       >
         Ver todos os benefícios

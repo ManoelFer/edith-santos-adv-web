@@ -8,3 +8,7 @@
 # 302 (temporário): o endereço do painel pode mudar e o navegador não deve guardar o destino.
 /admin https://cms.helloworldestudio.com.br 302
 /admin/ https://cms.helloworldestudio.com.br 302
+
+# A listagem de benefícios mudou de /beneficios/ para /beneficios-do-inss/ (palavra-chave na URL).
+/beneficios /beneficios-do-inss/ 301
+/beneficios/ /beneficios-do-inss/ 301

@@ -45,7 +45,7 @@ const artigos = defineCollection({
 
 const topico = z.object({ titulo: z.string(), texto: z.string() })
 
-// Páginas de benefício (/beneficios/<slug>/). Texto jurídico: `revisado` é a
+// Páginas de benefício (/beneficios-do-inss/<slug>/). Texto jurídico: `revisado` é a
 // data da última conferência com a lei, e `draft: true` até a advogada aprovar.
 const beneficios = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/beneficios" }),
@@ -64,6 +64,8 @@ const beneficios = defineCollection({
       beneficio: z.string(),
       imagem: image(),
       imagemAlt: z.string(),
+      /** Símbolo quadrado da miniatura do card no celular (um único objeto, legível em 80px). */
+      icone: image(),
       requisitos: z.array(topico).min(1).max(4),
       /** Títulos da seção de requisitos quando não é "Quem tem direito" (planejamento, revisão). */
       secaoRequisitos: z

@@ -20,7 +20,10 @@ export async function beneficiosPublicados(): Promise<Beneficio[]> {
   return paginas.sort((a, b) => a.data.title.localeCompare(b.data.title, "pt"))
 }
 
-export const urlBeneficio = (slug: string) => `/beneficios/${slug}/`
+/** Página que lista todos os benefícios (`/beneficios/` redireciona para ela; as páginas ficam em `/beneficios-do-inss/<slug>/`). */
+export const urlBeneficios = "/beneficios-do-inss/"
+
+export const urlBeneficio = (slug: string) => `${urlBeneficios}${slug}/`
 
 /** Nome curto para menus e trilha: o título até os dois-pontos. */
 export const nomeCurto = ({ data }: Beneficio) =>

@@ -58,7 +58,7 @@ export function faqPageSchema(itens: FaqItem[]): Schema {
 
 export interface ItemTrilha {
   nome: string
-  /** Caminho a partir da raiz (ex.: "/beneficios/"). */
+  /** Caminho a partir da raiz (ex.: "/beneficios-do-inss/"). */
   caminho: string
 }
 

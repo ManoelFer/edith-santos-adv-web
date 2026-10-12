@@ -6,7 +6,11 @@ import Button from "@components/common/Button.astro"
 import Icon from "@components/common/Icon.astro"
 import Section from "@components/common/Section.astro"
 import SectionHeading from "@components/common/SectionHeading.astro"
-import { beneficiosPublicados, urlBeneficio } from "@lib/beneficios"
+import {
+  beneficiosPublicados,
+  urlBeneficio,
+  urlBeneficios,
+} from "@lib/beneficios"
 import { whatsappUrl } from "@lib/whatsapp"
 
 // Cada chip leva ao painel com o tema, uma linha de explicação, o WhatsApp
@@ -181,7 +185,7 @@ const itens = opcoes.map(({ rotulo, tema, slug, assunto, descricao }) => {
       ))}
       <a
         data-chip
-        href="/beneficios/"
+        href={urlBeneficios}
         class="group relative block will-change-transform focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         <span
