@@ -168,6 +168,81 @@
   }
 }
 
+/*
+ * Linha do tempo de "Como funciona o atendimento" (src/lib/linhaDoTempo.ts).
+ * Cada etapa é uma linha de três colunas: número, eixo (ponto) e cartão.
+ * Com `data-linha` (posto pelo JS) o trilho aparece, `--topo`/`--altura` o
+ * posicionam entre o primeiro e o último ponto, `--preenche` é o trecho já
+ * percorrido, e o cartão só entra quando a etapa fica `data-ativo`.
+ */
+.linha-tempo {
+  --col-numero: 2.5rem;
+  --col-eixo: 1.5rem;
+  --vao: 0.75rem;
+  /* Altura do cabeçalho do cartão: número e ponto se centram nele, aberto ou fechado. */
+  --cabecalho: 4rem;
+
+  @media (min-width: 48rem) {
+    --col-numero: 4.5rem;
+    --col-eixo: 2rem;
+    --vao: 1rem;
+    --cabecalho: 4.5rem;
+  }
+}
+
+.linha-tempo > ol > li {
+  display: grid;
+  grid-template-columns: var(--col-numero) var(--col-eixo) minmax(0, 1fr);
+  column-gap: var(--vao);
+  align-items: start;
+}
+
+.linha-trilho {
+  display: none;
+  position: absolute;
+  top: var(--topo, 0);
+  left: calc(var(--col-numero) + var(--vao) + var(--col-eixo) / 2 - 1px);
+  width: 2px;
+  height: var(--altura, 0);
+  background-color: color-mix(in srgb, var(--color-ink) 14%, transparent);
+
+  .linha-tempo[data-linha] > & {
+    display: block;
+  }
+}
+
+.linha-trilho > span {
+  display: block;
+  width: 100%;
+  height: var(--preenche, 0);
+  background-color: var(--color-primary);
+}
+
+/*
+ * Painel do cartão: com JS, só a etapa em foco fica aberta. A altura recolhe
+ * junto com o efeito de impressão (grid 1fr -> 0fr), sem saltos na página.
+ */
+.linha-tempo {
+  overflow-anchor: none;
+}
+
+.linha-painel {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition:
+    grid-template-rows 0.6s cubic-bezier(0.45, 0, 0.25, 1),
+    visibility 0.6s;
+}
+
+.linha-tempo[data-linha] > ol > li:not([data-aberto]) .linha-painel {
+  grid-template-rows: 0fr;
+  visibility: hidden;
+}
+
+.linha-tempo[data-linha] > ol > li:not([data-ativo]) .linha-card {
+  opacity: 0;
+}
+
 /* Mesma sequência, mas ao abrir a página (listas no topo, sem reveal) */
 @utility entrada-itens {
   @media (prefers-reduced-motion: no-preference) {
