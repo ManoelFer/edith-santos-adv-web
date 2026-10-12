@@ -20,6 +20,7 @@ import {
   rotuloDe,
   secaoRequisitosDe,
   urlBeneficio,
+  urlBeneficios,
 } from "@lib/beneficios"
 import {
   beneficioSchema,
@@ -51,7 +52,7 @@ const secaoRequisitos = secaoRequisitosDe(beneficio)
 
 const trilha: ItemTrilha[] = [
   { nome: "Início", caminho: "/" },
-  { nome: "Benefícios", caminho: "/beneficios/" },
+  { nome: "Benefícios", caminho: urlBeneficios },
   { nome: nomeCurto(beneficio), caminho: urlBeneficio(beneficio.id) },
 ]
 
@@ -98,7 +99,13 @@ const schemas = [
     slug={beneficio.id}
   />
   {dados.faq.length > 0 && (
-    <Faq itens={dados.faq} titulo={`Dúvidas sobre ${assunto}`} tone="alt" />
+    <Faq
+      itens={dados.faq}
+      titulo={`Dúvidas sobre ${assunto}`}
+      tone="alt"
+      assunto={assunto}
+      beneficio={beneficio.id}
+    />
   )}
   <Contato
     beneficio={dados.beneficio}

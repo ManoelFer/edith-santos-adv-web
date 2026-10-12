@@ -6,6 +6,7 @@ eyebrow: "Benefício para a família"
 resumo: "A pensão por morte é paga pelo INSS à família de quem faleceu e estava ligado à Previdência. Não há tempo mínimo de contribuição."
 beneficio: "pensao"
 imagem: "../../assets/beneficios/pensao-por-morte.svg"
+icone: "../../assets/beneficios/icones/pensao-por-morte.svg"
 imagemAlt: "Ilustração de uma família de mãos dadas ao lado do contorno tracejado de uma pessoa que partiu, diante de um sol no horizonte, representando a proteção que continua para a família"
 requisitos:
   - titulo: "Vínculo com o INSS"

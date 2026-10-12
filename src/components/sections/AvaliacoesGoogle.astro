@@ -31,7 +31,19 @@ const centralizar = exibidas.length <= 3
 ---
 
 {total > 0 && (
-  <Section tone="alt" glow="avaliacoes" aria-label="Avaliações no Google">
+  <Section
+    id="avaliacoes"
+    tone="alt"
+    glow="avaliacoes"
+    aria-label="Avaliações no Google"
+  >
+    {/* Timbre: aspas grandes em serifada, no fundo da seção. */}
+    <span
+      class="pointer-events-none absolute top-4 left-2 font-serif text-[16rem] leading-none text-primary opacity-5 select-none md:top-4 md:left-8 md:text-[24rem] lg:left-16 lg:text-[32rem]"
+      aria-hidden="true"
+    >
+      &ldquo;
+    </span>
     <SectionHeading
       align="center"
       eyebrow="Avaliações no Google"
@@ -96,10 +108,19 @@ const centralizar = exibidas.length <= 3
                     <Icon name="estrela" class="size-5 fill-current" />
                   ))}
                 </div>
-                <blockquote class="flex-1 text-base text-ink-soft">
-                  <span class="sr-only">Avaliação com 5 estrelas. </span>
-                  {texto}
-                </blockquote>
+                {texto.trim() ? (
+                  <blockquote class="flex-1 text-base text-ink-soft">
+                    <span class="sr-only">Avaliação com 5 estrelas. </span>
+                    {texto}
+                  </blockquote>
+                ) : (
+                  <div class="flex flex-1 items-center justify-center py-4 text-primary/60">
+                    <Icon name="semComentario" class="size-16" />
+                    <span class="sr-only">
+                      Avaliação com 5 estrelas, sem comentário.
+                    </span>
+                  </div>
+                )}
                 <figcaption class="mt-6 flex items-center gap-3">
                   <span
                     class="flex size-10 flex-none items-center justify-center rounded-full bg-primary/15 font-serif text-xl text-primary"
@@ -123,7 +144,7 @@ const centralizar = exibidas.length <= 3
         </ul>
 
         <div
-          class="mt-4 hidden flex-wrap items-center justify-center"
+          class="mt-4 hidden flex-wrap items-center justify-center lg:hidden!"
           data-pontos
           role="group"
           aria-label="Escolher avaliação"
@@ -133,11 +154,30 @@ const centralizar = exibidas.length <= 3
               type="button"
               data-ponto
               aria-label={`Ir para a avaliação ${i + 1} de ${exibidas.length}, de ${autor}`}
-              class="group flex size-11 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              class="group flex size-11 cursor-pointer items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               <span class="block h-2 w-2 rounded-full bg-ink/25 transition-all duration-300 ease-suave group-hover:bg-ink/50 group-aria-current:w-6 group-aria-current:bg-primary" />
             </button>
           ))}
+        </div>
+
+        <div class="mt-6 hidden items-center justify-center gap-3" data-setas>
+          <button
+            type="button"
+            data-seta="anterior"
+            aria-label="Avaliação anterior"
+            class="flex size-11 cursor-pointer items-center justify-center rounded-full border border-ink/15 text-ink-strong transition hover:border-primary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-30"
+          >
+            <Icon name="chevron" class="size-5 rotate-90" />
+          </button>
+          <button
+            type="button"
+            data-seta="proxima"
+            aria-label="Próxima avaliação"
+            class="flex size-11 cursor-pointer items-center justify-center rounded-full border border-ink/15 text-ink-strong transition hover:border-primary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-30"
+          >
+            <Icon name="chevron" class="size-5 -rotate-90" />
+          </button>
         </div>
       </div>
     )}
@@ -167,8 +207,15 @@ const centralizar = exibidas.length <= 3
 <script>
   const lista = document.querySelector<HTMLElement>("[data-carrossel]")
   const pontos = document.querySelector<HTMLElement>("[data-pontos]")
+  const setas = document.querySelector<HTMLElement>("[data-setas]")
 
-  if (lista && pontos) {
+  if (lista && pontos && setas) {
+    const anterior = setas.querySelector<HTMLButtonElement>(
+      "[data-seta=anterior]",
+    )!
+    const proxima = setas.querySelector<HTMLButtonElement>(
+      "[data-seta=proxima]",
+    )!
     const itens = Array.from(lista.children) as HTMLElement[]
     const botoes = Array.from(
       pontos.querySelectorAll<HTMLButtonElement>("[data-ponto]"),
@@ -179,6 +226,10 @@ const centralizar = exibidas.length <= 3
       const transborda = scrollWidth > clientWidth + 1
       pontos.classList.toggle("hidden", !transborda)
       pontos.classList.toggle("flex", transborda)
+      // Setas só no desktop (lg); no celular ficam os pontos e o toque
+      setas.classList.toggle("lg:flex", transborda)
+      anterior.disabled = scrollLeft <= 1
+      proxima.disabled = scrollLeft + clientWidth >= scrollWidth - 1
 
       // Slide atual: o card mais perto do início; no fim da rolagem, o último
       const noFim = scrollLeft + clientWidth >= scrollWidth - 1
@@ -243,6 +294,10 @@ const centralizar = exibidas.length <= 3
         irPara(itens[i].offsetLeft - lista.offsetLeft),
       ),
     )
+    // Cada clique avança um card inteiro
+    const passo = () => itens[1].offsetLeft - itens[0].offsetLeft
+    anterior.addEventListener("click", () => irPara(lista.scrollLeft - passo()))
+    proxima.addEventListener("click", () => irPara(lista.scrollLeft + passo()))
     lista.addEventListener("scroll", atualizar, { passive: true })
     new ResizeObserver(atualizar).observe(lista)
 

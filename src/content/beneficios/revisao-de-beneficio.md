@@ -6,6 +6,7 @@ eyebrow: "Revisão"
 resumo: "A revisão é o pedido para o INSS analisar de novo um benefício já concedido ou negado e corrigir erros, como períodos ou salários que ficaram de fora."
 beneficio: "revisao"
 imagem: "../../assets/beneficios/revisao-de-beneficio.svg"
+icone: "../../assets/beneficios/icones/revisao-de-beneficio.svg"
 imagemAlt: "Ilustração de um documento examinado por uma lupa ao lado de um relógio com seta circular, representando a conferência e o recálculo de um benefício"
 secaoRequisitos:
   eyebrow: "Requisitos"

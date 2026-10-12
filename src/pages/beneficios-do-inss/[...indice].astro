@@ -1,13 +1,16 @@
 ---
+import { Image } from "astro:assets"
+
+import monograma from "@assets/logo-monograma.png"
 import BeneficioCard from "@components/common/BeneficioCard.astro"
 import CtaWhatsApp from "@components/common/CtaWhatsApp.astro"
 import Section from "@components/common/Section.astro"
 import SectionHeading from "@components/common/SectionHeading.astro"
 import BaseLayout from "@layouts/BaseLayout.astro"
-import { beneficiosPublicados } from "@lib/beneficios"
+import { beneficiosPublicados, urlBeneficios } from "@lib/beneficios"
 import { breadcrumbSchema } from "@lib/schema"
 
-// Rota de resto em vez de index.astro: /beneficios/ só é gerada quando existe
+// Rota de resto em vez de index.astro: /beneficios-do-inss/ só é gerada quando existe
 // pelo menos um benefício publicado (evita página vazia no Google).
 export async function getStaticPaths() {
   const beneficios = await beneficiosPublicados()
@@ -20,7 +23,7 @@ const { beneficios } = Astro.props
 
 const schema = breadcrumbSchema([
   { nome: "Início", caminho: "/" },
-  { nome: "Benefícios", caminho: "/beneficios/" },
+  { nome: "Benefícios", caminho: urlBeneficios },
 ])
 ---
 
@@ -30,11 +33,27 @@ const schema = breadcrumbSchema([
   schemas={[schema]}
 >
   <Section reveal={false} glow="hero">
+    {/* Timbre de fundo: monograma da logo, como na seção Sobre. */}
+    <div
+      slot="fundo"
+      class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      aria-hidden="true"
+    >
+      <Image
+        src={monograma}
+        alt=""
+        width={640}
+        densities={[1, 2]}
+        format="webp"
+        loading="lazy"
+        class="absolute -top-8 -right-24 h-auto w-80 opacity-5 md:-top-12 md:-right-20 md:w-112 lg:right-0 lg:w-160"
+      />
+    </div>
     <SectionHeading
       as="h1"
       eyebrow="Benefícios do INSS"
       title="Qual benefício combina com a sua situação?"
-      lead="Escolha o benefício e veja, em poucas perguntas, se o seu caso merece uma análise. Conteúdo informativo, revisado pela advogada."
+      lead="Escolha o benefício e veja, em poucas perguntas, se o seu caso merece uma análise. Conteúdo informativo, revisado por mim."
     />
     <div class="entrada-itens mt-10 grid gap-4 md:grid-cols-2 lg:mt-14 xl:grid-cols-4">
       {beneficios.map((beneficio) => (
@@ -46,7 +65,7 @@ const schema = breadcrumbSchema([
         assunto="benefícios do INSS"
         origem="indice"
         titulo="Não sabe qual é o seu caso?"
-        texto="Conte a sua situação pelo WhatsApp. A advogada indica o caminho e agenda uma análise."
+        texto="Conte a sua situação pelo WhatsApp. Eu indico o caminho e agendo uma análise."
         semMargem
       />
     </div>

@@ -1,0 +1,44 @@
+---
+import { beneficiosPublicados, nomeCurto, urlBeneficio } from "@lib/beneficios"
+
+const paginas = await beneficiosPublicados()
+const areas = paginas.map((pagina) => ({
+  nome: nomeCurto(pagina),
+  href: urlBeneficio(pagina.id),
+}))
+---
+
+{areas.length > 0 && (
+  <section
+    aria-label="Áreas de atuação"
+    class="group/faixa relative overflow-hidden border-b border-primary bg-primary py-0.5"
+  >
+    {/* Rolagem manual quando o movimento é reduzido; senão a faixa corre sozinha. */}
+    <div class="mask-x-from-90% mask-x-to-100% motion-reduce:overflow-x-auto">
+      <div class="flex w-max animate-faixa motion-reduce:animate-none group-hover/faixa:paused group-focus-within/faixa:paused">
+        {[false, true].map((copia) => (
+          <ul
+            class="flex flex-none items-center"
+            aria-hidden={copia ? "true" : undefined}
+            inert={copia}
+          >
+            {areas.map(({ nome, href }) => (
+              <li class="flex items-center">
+                <a
+                  href={href}
+                  class="inline-flex min-h-11 items-center px-5 font-serif text-lg whitespace-nowrap text-page transition hover:text-page/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-page md:px-7 md:text-xl"
+                >
+                  {nome}
+                </a>
+                <span
+                  aria-hidden="true"
+                  class="size-1.5 rotate-45 bg-page/50"
+                />
+              </li>
+            ))}
+          </ul>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

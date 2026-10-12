@@ -1,6 +1,7 @@
 ---
 import ArticleCard from "@components/common/ArticleCard.astro"
 import Eyebrow from "@components/common/Eyebrow.astro"
+import Icon from "@components/common/Icon.astro"
 import Section from "@components/common/Section.astro"
 import { artigosPublicados } from "@lib/artigos"
 
@@ -10,6 +11,21 @@ const [destaque, ...demais] = (await artigosPublicados()).slice(0, 3)
 
 {destaque && (
   <Section tone="alt" id="artigos">
+    {/* Timbre de fundo: livro dourado à esquerda e caneta à direita. */}
+    <div
+      slot="fundo"
+      class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      aria-hidden="true"
+    >
+      <Icon
+        name="livro"
+        class="absolute top-4 -left-24 size-80 stroke-[0.5] text-primary opacity-10 md:top-4 md:-left-20 md:size-112 lg:top-4 lg:-left-16 lg:size-160"
+      />
+      <Icon
+        name="caneta"
+        class="absolute -right-24 bottom-4 size-80 stroke-[0.5] text-primary opacity-10 md:-right-20 md:size-112 lg:-right-16 lg:size-160"
+      />
+    </div>
     <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4 border-b border-ink/10 pb-6">
       <div class="max-w-2xl">
         <Eyebrow class="mb-4 md:mb-5">Artigos</Eyebrow>

@@ -45,7 +45,7 @@ export function resultadoVerificador(
         : "Vale conversar mesmo assim",
     texto:
       respondidas < total
-        ? "Faltam algumas perguntas. Ou, se preferir, fale direto com a advogada."
+        ? "Faltam algumas perguntas. Ou, se preferir, fale direto comigo."
         : "Cada caso tem detalhes que um checklist não alcança. Entre em contato para agendar uma análise do seu caso.",
     mensagem,
   }

@@ -1,15 +1,14 @@
 ---
 import Artigos from "@components/sections/Artigos.astro"
 import Atendimento from "@components/sections/Atendimento.astro"
-import Atuacao from "@components/sections/Atuacao.astro"
 import AvaliacoesGoogle from "@components/sections/AvaliacoesGoogle.astro"
 import Confianca from "@components/sections/Confianca.astro"
 import Contato from "@components/sections/Contato.astro"
+import FaixaAreas from "@components/sections/FaixaAreas.astro"
 import Faq from "@components/sections/Faq.astro"
-import Fases from "@components/sections/Fases.astro"
 import Hero from "@components/sections/Hero.astro"
-import Situacoes from "@components/sections/Situacoes.astro"
 import Sobre from "@components/sections/Sobre.astro"
+import Triagem from "@components/sections/Triagem.astro"
 import { faq } from "@data/faq"
 import { site } from "@data/site"
 import BaseLayout from "@layouts/BaseLayout.astro"
@@ -22,14 +21,13 @@ import { faqPageSchema } from "@lib/schema"
   schemas={[faqPageSchema(faq)]}
 >
   <Hero />
-  <Situacoes />
-  <Atuacao />
+  <FaixaAreas />
+  <Triagem />
   <Atendimento />
-  <Fases />
   <Sobre />
   {site.features.avaliacoesGoogle && <AvaliacoesGoogle />}
   <Confianca />
   <Faq />
-  <Artigos />
   <Contato />
+  <Artigos />
 </BaseLayout>

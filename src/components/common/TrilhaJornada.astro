@@ -1,0 +1,48 @@
+---
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+const trilha =
+  "M150 260C230 230 270 200 300 230S390 330 450 320S590 320 620 240S720 170 750 190S860 330 910 320S980 270 1050 260"
+const marcos = [
+  { x: 150, y: 260 },
+  { x: 450, y: 320 },
+  { x: 750, y: 190 },
+  { x: 1050, y: 260 },
+]
+---
+
+{/* Timbre decorativo, estático. */}
+<svg
+  viewBox="0 40 1200 320"
+  fill="none"
+  aria-hidden="true"
+  class={className}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <path
+      id="trilha-marco"
+      fill-rule="evenodd"
+      d="M0 0L-24-38A44 44 0 1 1 24-38Z M-17-75a17 17 0 1 0 34 0a17 17 0 1 0-34 0"
+    ></path>
+  </defs>
+  <path
+    d={trilha}
+    stroke="#C69C5D"
+    stroke-width="9"
+    stroke-linecap="round"
+    stroke-dasharray="0 22"
+  ></path>
+  <g fill="#C69C5D">
+    {marcos.map(({ x, y }) => (
+      <g>
+        <use href="#trilha-marco" x={x} y={y - 10} />
+        <circle cx={x} cy={y} r="7" />
+      </g>
+    ))}
+  </g>
+</svg>

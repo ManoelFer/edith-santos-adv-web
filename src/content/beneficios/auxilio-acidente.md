@@ -6,6 +6,7 @@ eyebrow: "Benefício por incapacidade"
 resumo: "O auxílio-acidente é uma indenização paga pelo INSS a quem ficou com sequela de um acidente que reduz a capacidade para o trabalho que fazia."
 beneficio: "acidente"
 imagem: "../../assets/beneficios/auxilio-acidente.svg"
+icone: "../../assets/beneficios/icones/auxilio-acidente.svg"
 imagemAlt: "Ilustração de uma pessoa de muletas, com uma perna enfaixada, ao lado de um medidor com o ponteiro abaixo do máximo, representando a capacidade de trabalho reduzida depois de um acidente"
 requisitos:
   - titulo: "Categoria com direito"

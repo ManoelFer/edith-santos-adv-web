@@ -7,6 +7,7 @@ nomeOficial: "auxílio por incapacidade temporária"
 resumo: "O auxílio-doença, hoje chamado auxílio por incapacidade temporária, é pago pelo INSS a quem fica sem condições de trabalhar por mais de 15 dias seguidos."
 beneficio: "incapacidade-temporaria"
 imagem: "../../assets/beneficios/auxilio-doenca.svg"
+icone: "../../assets/beneficios/icones/auxilio-doenca.svg"
 imagemAlt: "Ilustração de um calendário com dias de afastamento marcados, um sinal de saúde e uma seta até uma maleta de trabalho, representando o afastamento temporário e a volta ao trabalho"
 requisitos:
   - titulo: "Proteção do INSS"

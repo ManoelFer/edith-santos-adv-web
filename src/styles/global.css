@@ -13,6 +13,10 @@
   --color-primary: #c69c5d;
   --color-primary-hover: #d6b585;
 
+  /* Verde do WhatsApp (botão flutuante) */
+  --color-whatsapp: #1f7a4d;
+  --color-whatsapp-hover: #26925c;
+
   /* Texto, do mais forte ao mais apagado. `ink` também é a cor das bordas (com opacidade) */
   --color-ink-strong: #ffffff;
   --color-ink: #f4f1ec;
@@ -57,6 +61,17 @@
   --animate-entrada: entrada 0.7s var(--ease-suave) backwards;
   --animate-surgir: surgir 0.9s var(--ease-suave) backwards;
   --animate-brilho: brilho 1.6s ease-out backwards;
+  --animate-resposta: resposta 0.9s cubic-bezier(0.45, 0, 0.25, 1) backwards;
+  --animate-impressao: impressao 0.9s cubic-bezier(0.45, 0, 0.25, 1) backwards;
+
+  /* Faixa de áreas de atuação: corre uma cópia da lista (-50%) e recomeça sem corte. */
+  --animate-faixa: faixa 45s linear infinite;
+
+  @keyframes faixa {
+    to {
+      translate: -50% 0;
+    }
+  }
 
   @keyframes entrada {
     from {
@@ -73,11 +88,65 @@
     }
   }
 
+  /* Efeito "impressão": o painel é revelado da esquerda para a direita (wipe reveal), como papel saindo da impressora. */
+  @keyframes resposta {
+    from {
+      clip-path: inset(0 100% 0 0);
+      opacity: 0.4;
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+    }
+  }
+
+  /* Cabeça de impressão: linha dourada que acompanha a borda da revelação (mesma duração e curva do `resposta`). */
+  @keyframes impressao {
+    from {
+      left: 0;
+      opacity: 1;
+    }
+    to {
+      left: 100%;
+      opacity: 1;
+    }
+  }
+
   @keyframes brilho {
     from {
       opacity: 0;
     }
   }
+}
+
+/*
+ * Pilha de cartões da seção Sobre: só fixa (`sticky`) quando a tela tem largura
+ * e altura para o cartão inteiro caber. Fora disso, os cartões ficam em fluxo.
+ */
+@custom-variant pilha (@media (min-width: 48rem) and (min-height: 40rem));
+
+/*
+ * Pilha de cartões da seção Confiança: só fixa (`sticky`) quando a altura da
+ * tela comporta o cartão. Com zoom de texto alto a altura útil encolhe e os
+ * cartões voltam ao fluxo normal.
+ */
+@custom-variant empilha (@media (min-height: 38rem));
+
+/*
+ * Topo do cartão fixado: abaixo do Header (72px no celular, 96px no desktop),
+ * com `--i` degraus de 0.75rem para a borda dos cartões anteriores aparecer.
+ */
+@utility empilha-topo {
+  top: calc(5.5rem + var(--i, 0) * 0.75rem);
+
+  @media (min-width: 64rem) {
+    top: calc(7.5rem + var(--i, 0) * 0.75rem);
+  }
+}
+
+/* Posição do cartão na pilha (`--i`), sem `style` inline, que a CSP bloqueia */
+@utility empilha-i-* {
+  --i: --value(integer);
 }
 
 /* Atraso de animação em ms, para escalonar entradas: animate-delay-150 */
@@ -106,6 +175,81 @@
   [data-revealed] & > :nth-child(n + 5) {
     animation-delay: 320ms;
   }
+}
+
+/*
+ * Linha do tempo de "Como funciona o atendimento" (src/lib/linhaDoTempo.ts).
+ * Cada etapa é uma linha de três colunas: número, eixo (ponto) e cartão.
+ * Com `data-linha` (posto pelo JS) o trilho aparece, `--topo`/`--altura` o
+ * posicionam entre o primeiro e o último ponto, `--preenche` é o trecho já
+ * percorrido, e o cartão só entra quando a etapa fica `data-ativo`.
+ */
+.linha-tempo {
+  --col-numero: 2.5rem;
+  --col-eixo: 1.5rem;
+  --vao: 0.75rem;
+  /* Altura do cabeçalho do cartão: número e ponto se centram nele, aberto ou fechado. */
+  --cabecalho: 4rem;
+
+  @media (min-width: 48rem) {
+    --col-numero: 4.5rem;
+    --col-eixo: 2rem;
+    --vao: 1rem;
+    --cabecalho: 4.5rem;
+  }
+}
+
+.linha-tempo > ol > li {
+  display: grid;
+  grid-template-columns: var(--col-numero) var(--col-eixo) minmax(0, 1fr);
+  column-gap: var(--vao);
+  align-items: start;
+}
+
+.linha-trilho {
+  display: none;
+  position: absolute;
+  top: var(--topo, 0);
+  left: calc(var(--col-numero) + var(--vao) + var(--col-eixo) / 2 - 1px);
+  width: 2px;
+  height: var(--altura, 0);
+  background-color: color-mix(in srgb, var(--color-ink) 14%, transparent);
+
+  .linha-tempo[data-linha] > & {
+    display: block;
+  }
+}
+
+.linha-trilho > span {
+  display: block;
+  width: 100%;
+  height: var(--preenche, 0);
+  background-color: var(--color-primary);
+}
+
+/*
+ * Painel do cartão: com JS, só a etapa em foco fica aberta. A altura recolhe
+ * junto com o efeito de impressão (grid 1fr -> 0fr), sem saltos na página.
+ */
+.linha-tempo {
+  overflow-anchor: none;
+}
+
+.linha-painel {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition:
+    grid-template-rows 0.6s cubic-bezier(0.45, 0, 0.25, 1),
+    visibility 0.6s;
+}
+
+.linha-tempo[data-linha] > ol > li:not([data-aberto]) .linha-painel {
+  grid-template-rows: 0fr;
+  visibility: hidden;
+}
+
+.linha-tempo[data-linha] > ol > li:not([data-ativo]) .linha-card {
+  opacity: 0;
 }
 
 /* Mesma sequência, mas ao abrir a página (listas no topo, sem reveal) */
@@ -180,6 +324,18 @@
 
   a:hover {
     color: var(--color-primary-hover);
+  }
+
+  /* O Tailwind v4 zera o cursor de button para "default"; devolve a mãozinha em
+     tudo que clica (botão desabilitado fica com o cursor próprio) */
+  a[href],
+  button:not(:disabled),
+  summary,
+  select,
+  input[type="checkbox"],
+  input[type="radio"],
+  label[for] {
+    cursor: pointer;
   }
 
   :focus-visible {

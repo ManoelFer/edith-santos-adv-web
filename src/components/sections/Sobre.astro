@@ -1,70 +1,133 @@
 ---
-import InfoList from "@components/common/InfoList.astro"
-import Portrait from "@components/common/Portrait.astro"
-import Section from "@components/common/Section.astro"
-import SectionHeading from "@components/common/SectionHeading.astro"
-import { site } from "@data/site"
+import type { ImageMetadata } from "astro"
+import { Image, Picture } from "astro:assets"
 
-const ficha = [
-  {
-    rotulo: "Formação",
-    valor: "Bacharela em Direito, Universidade Estadual de Goiás",
-  },
-  { rotulo: "Pós-graduação", valor: "Aposentadoria Especial" },
-  { rotulo: "Inscrição", valor: site.oab },
-  { rotulo: "Atuação", valor: site.area },
-  { rotulo: "Atendimento", valor: `Online, ${site.abrangencia}` },
-  { rotulo: "Base", valor: site.base },
-]
+import monograma from "@assets/logo-monograma.png"
+import Eyebrow from "@components/common/Eyebrow.astro"
+import { sobreCartoes, sobreIntro } from "@data/sobre"
+
+// Fotos: `sobre-01-conhecimento`, `sobre-02-acolhimento` e
+// `sobre-03-responsabilidade` (.jpg, .png ou .webp) em src/assets/sobre/.
+// Sem o arquivo, o cartão fica só com o texto, sem imagem quebrada.
+const fotos = import.meta.glob<{ default: ImageMetadata }>(
+  "../../assets/sobre/*.{jpg,jpeg,png,webp}",
+  { eager: true },
+)
+const fotoDe = (nome: string) =>
+  Object.entries(fotos).find(
+    ([caminho]) => /\/([^/]+)\.\w+$/.exec(caminho)?.[1] === nome,
+  )?.[1].default
 ---
 
-<Section
-  id="sobre"
-  tone="alt"
-  glow="sobre"
-  class="grid gap-8 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-7"
->
-  <SectionHeading
-    eyebrow="Conheça a advogada"
-    title="Escolhi o previdenciário porque é onde a explicação faz mais falta"
-    class="lg:col-span-6 lg:self-end"
-  />
-
-  <Portrait
-    alt="Retrato de Edith Silva de Almeida Santos"
-    sizes="(min-width: 1024px) 560px, (min-width: 640px) 320px, 240px"
-    class="mx-auto w-full max-w-60 sm:max-w-80 lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:max-w-none lg:self-center"
-  />
-
-  <div class="max-w-2xl lg:col-span-6 lg:self-start">
-    <p class="mb-5 text-base text-ink-soft">
-      Sou natural de Iporá, em Goiás, e foi ainda durante a graduação que
-      encontrei no Direito Previdenciário a área em que queria construir minha
-      carreira. Comecei a estagiar em um escritório previdenciário em 2021 e,
-      desde então, venho me dedicando exclusivamente a essa área. Sou bacharela
-      em Direito pela Universidade Estadual de Goiás e advogada inscrita na
-      OAB/GO sob o nº 73.463. Também sou pós-graduada em Aposentadoria Especial,
-      área na qual aprofundei minha formação e atuação profissional.
-    </p>
-    <p class="mb-5 text-base text-ink-soft">
-      Grande parte das pessoas que chega até mim está diante de um indeferimento
-      que não conseguiu entender. Há um código, uma sigla, uma data ou uma
-      informação no CNIS, mas ninguém explicou o que aquilo realmente significa.
-      Por isso, antes de falar em processo, eu procuro entender o que aconteceu.
-      Analiso o histórico previdenciário no CNIS junto com o cliente, explico o
-      que cada informação representa e, a partir disso, avalio quais são os
-      caminhos possíveis, inclusive quando a orientação mais adequada é não
-      fazer um novo pedido naquele momento.
-    </p>
-    <p class="mb-5 text-base text-ink-soft">
-      Meu atendimento é feito por videochamada e WhatsApp, o que me permite
-      acompanhar casos de diferentes cidades do Brasil e também atender
-      brasileiros que vivem no exterior, sem a necessidade de deslocamento.
-    </p>
-    <p class="mb-8 text-base text-ink-soft">
-      Cada caso é analisado individualmente, e as informações e documentos
-      compartilhados comigo ficam sob sigilo profissional.
-    </p>
-    <InfoList itens={ficha} layout="split" />
+<!-- Sem `overflow`, `transform` nem `contain` nos ancestrais do pino: quebram o sticky. -->
+<section id="sobre" class="relative isolate border-b border-ink/8 bg-page-alt">
+  <!-- Timbre: marca d'água do logo. Irmão do pino (não ancestral), então o overflow não afeta o sticky. -->
+  <div
+    class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+    aria-hidden="true"
+  >
+    <Image
+      src={monograma}
+      alt=""
+      width={640}
+      densities={[1, 2]}
+      format="webp"
+      loading="lazy"
+      class="absolute -top-8 -right-24 h-auto w-80 opacity-5 md:-top-12 md:-right-20 md:w-112 lg:right-0 lg:w-160"
+    />
   </div>
-</Section>
+
+  <div class="mx-auto w-full max-w-7xl px-4 pt-12 pb-8 sm:px-6 md:pt-20 lg:px-16 lg:pt-28 lg:pb-12">
+    <header class="max-w-2xl">
+      <Eyebrow class="mb-4 md:mb-5">{sobreIntro.eyebrow}</Eyebrow>
+      <h2 class="font-serif text-3xl leading-display font-normal tracking-tight text-balance text-ink-strong md:text-4xl lg:text-5xl">
+        {sobreIntro.titulo}
+      </h2>
+      <p class="mt-4 text-muted md:mt-5">{sobreIntro.texto}</p>
+    </header>
+  </div>
+
+  <div data-sobre-palco class="group relative overflow-x-clip">
+    <div
+      data-pino
+      class="flex flex-col justify-center gap-4 group-data-preso:sticky"
+    >
+      <ol
+        data-trilho
+        class="flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 sm:gap-5 sm:px-6 lg:px-16 group-data-preso:snap-none group-data-preso:overflow-visible group-data-preso:pb-0 group-data-preso:will-change-transform group-data-preso:translate-x-(--sobre-x)"
+      >
+        {sobreCartoes.map((cartao) => {
+          const foto = fotoDe(cartao.foto)
+          const [numero, etiqueta] = cartao.identificador.split(" / ")
+          return (
+            <li
+              data-cartao
+              class="flex w-11/12 flex-none snap-center overflow-hidden rounded-sm border border-ink/10 border-t-primary/55 bg-surface shadow-2xl shadow-black/40 transition duration-700 ease-suave group-data-preso:scale-97 group-data-preso:opacity-50 group-data-preso:data-ativo:scale-100 group-data-preso:data-ativo:opacity-100 md:w-4/5 lg:min-h-96 lg:w-2/3 xl:min-h-120 2xl:min-h-152 2xl:w-3/5"
+            >
+              <article class="flex w-full flex-col md:flex-row">
+                {foto && (
+                  <div class="relative h-44 flex-none group-data-preso:h-40 md:h-auto md:min-h-72 md:w-2/5 group-data-preso:md:h-auto group-data-preso:md:min-h-0">
+                    <Picture
+                      src={foto}
+                      alt={cartao.alt}
+                      formats={["avif"]}
+                      fallbackFormat="webp"
+                      widths={[480, 720, 960, 1280]}
+                      sizes="(min-width: 1024px) 34vw, (min-width: 768px) 32vw, 92vw"
+                      loading="lazy"
+                      class:list={[
+                        "absolute inset-0 size-full object-cover",
+                        cartao.enquadramento,
+                      ]}
+                    />
+                    <div
+                      class="absolute inset-0 bg-linear-to-t from-surface via-transparent to-page/30 md:bg-linear-to-r md:from-transparent md:via-transparent md:to-surface/90"
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+                <div class="relative flex flex-none flex-col justify-center p-5 sm:p-7 md:flex-1 lg:p-12 xl:p-16 2xl:p-20">
+                  <span
+                    data-numero={numero}
+                    class="pointer-events-none absolute top-1 right-4 font-serif text-7xl leading-none text-primary/15 select-none before:content-[attr(data-numero)] md:top-4 md:right-8 md:text-9xl"
+                    aria-hidden="true"
+                  ></span>
+                  <Eyebrow class="relative mb-3 md:mb-4">
+                    {numero} / {etiqueta}
+                  </Eyebrow>
+                  <h3 class="relative mb-4 font-serif text-2xl leading-display font-normal text-balance text-ink-strong md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">
+                    {cartao.titulo}
+                  </h3>
+                  <div class="relative space-y-3 text-base text-ink-soft md:space-y-4 xl:text-lg 2xl:space-y-6 2xl:text-xl">
+                    {cartao.paragrafos.map((p) => (
+                      <p>{p}</p>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            </li>
+          )
+        })}
+      </ol>
+
+      <div
+        class="hidden items-center gap-4 px-4 group-data-preso:flex sm:px-6 lg:px-16"
+        aria-hidden="true"
+      >
+        <span class="text-xs tracking-eyebrow text-subtle uppercase">
+          Role para continuar
+        </span>
+        <span class="relative h-px flex-1 bg-ink/15">
+          <span class="absolute inset-y-0 left-0 w-full origin-left bg-primary will-change-transform scale-x-(--sobre-p,0)"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { iniciarRolagemHorizontal } from "@lib/rolagemHorizontal"
+
+  const palco = document.querySelector<HTMLElement>("[data-sobre-palco]")
+  if (palco) iniciarRolagemHorizontal(palco)
+</script>

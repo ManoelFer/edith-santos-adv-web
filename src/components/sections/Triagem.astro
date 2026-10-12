@@ -1,0 +1,374 @@
+---
+import { Image } from "astro:assets"
+
+import balanca from "@assets/balanca-justica.png"
+import Button from "@components/common/Button.astro"
+import Icon from "@components/common/Icon.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import {
+  beneficiosPublicados,
+  urlBeneficio,
+  urlBeneficios,
+} from "@lib/beneficios"
+import { whatsappUrl } from "@lib/whatsapp"
+
+// Cada chip leva ao painel com o tema, uma linha de explicação, o WhatsApp
+// com a mensagem pronta e, se estiver publicada, a página do benefício.
+// Sem dado sensível e sem dizer "você tem direito".
+const opcoes = [
+  {
+    rotulo: "O INSS negou meu pedido",
+    tema: "Revisão de benefício",
+    slug: "revisao-de-beneficio",
+    assunto: "um pedido negado pelo INSS",
+    descricao:
+      "Correção de erros em benefício negado ou concedido, como empregos e salários que ficaram de fora.",
+  },
+  {
+    rotulo: "Meu benefício foi cortado",
+    tema: "Auxílio por incapacidade temporária",
+    slug: "auxilio-doenca",
+    assunto: "um benefício cortado pelo INSS",
+    descricao:
+      "Pedidos, prorrogações e recursos quando o auxílio por incapacidade é negado ou cessado.",
+  },
+  {
+    rotulo: "Doença me impede de trabalhar",
+    tema: "Auxílio ou aposentadoria por incapacidade",
+    slug: "auxilio-doenca",
+    assunto: "incapacidade para o trabalho por doença",
+    descricao:
+      "Auxílio por incapacidade temporária ou aposentadoria por incapacidade permanente.",
+  },
+  {
+    rotulo: "Quero saber quando me aposentar",
+    tema: "Planejamento previdenciário",
+    slug: "planejamento-previdenciario",
+    assunto: "quando posso me aposentar",
+    descricao:
+      "Análise do histórico antes do pedido, para saber em qual regra você se encaixa e o melhor momento.",
+  },
+  {
+    rotulo: "Trabalhei sem registro",
+    tema: "Aposentadoria por idade ou tempo de contribuição",
+    slug: "aposentadoria-por-idade",
+    assunto: "aposentadoria com tempo sem registro",
+    descricao:
+      "Aposentadoria por idade ou por tempo de contribuição, com análise do que pode ser comprovado.",
+  },
+  {
+    rotulo: "Perdi meu cônjuge ou familiar",
+    tema: "Pensão por morte",
+    slug: "pensao-por-morte",
+    assunto: "pensão por morte",
+    descricao:
+      "Pensão para a família de quem faleceu, com análise de quem pode pedir e por quanto tempo.",
+  },
+  {
+    rotulo: "Idoso ou com deficiência e renda baixa",
+    tema: "BPC / LOAS",
+    slug: "bpc-loas",
+    assunto: "BPC / LOAS",
+    descricao:
+      "Benefício assistencial para idosos e pessoas com deficiência em situação de baixa renda.",
+  },
+  {
+    rotulo: "Tenho deficiência e quero me aposentar",
+    tema: "Aposentadoria da pessoa com deficiência",
+    slug: "aposentadoria-da-pessoa-com-deficiencia",
+    assunto: "aposentadoria da pessoa com deficiência",
+    descricao:
+      "Verificação dos requisitos específicos e da documentação necessária.",
+  },
+  {
+    rotulo: "Sofri um acidente com sequela",
+    tema: "Auxílio-acidente",
+    slug: "auxilio-acidente",
+    assunto: "auxílio-acidente",
+    descricao:
+      "Indenização para quem ficou com sequela que reduz a capacidade para o trabalho.",
+  },
+  {
+    rotulo: "Estou grávida ou tive filho",
+    tema: "Salário-maternidade",
+    slug: "salario-maternidade",
+    assunto: "salário-maternidade",
+    descricao:
+      "Renda para quem se afasta do trabalho por parto, adoção ou guarda para adoção.",
+  },
+]
+
+// Aparência do chip, igual para as opções e para o link "todos os benefícios".
+const classesChip = [
+  "relative flex h-full min-h-14 items-center overflow-hidden rounded-sm border border-ink/20 px-3 py-2 text-base leading-snug text-ink-soft",
+  "transition duration-300 ease-suave",
+  "hover:-translate-y-0.5 hover:border-primary/60 hover:bg-primary/6 hover:text-ink hover:shadow-lg hover:shadow-primary/10",
+  "motion-safe:active:scale-98",
+  "before:pointer-events-none before:absolute before:inset-y-0 before:left-0 before:w-1/3 before:-translate-x-full before:-skew-x-12 before:bg-linear-to-r before:from-transparent before:via-primary/20 before:to-transparent before:transition-transform before:duration-700 before:ease-suave",
+  "motion-safe:hover:before:translate-x-[300%]",
+  "peer-checked:border-primary peer-checked:bg-primary/12 peer-checked:text-ink peer-checked:shadow-lg peer-checked:shadow-primary/15",
+  "peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary",
+]
+
+// Linha dourada na base: só nas opções (o link "todos os benefícios" não leva).
+const classesLinha =
+  "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-500 after:ease-suave hover:after:scale-x-100 peer-checked:after:scale-x-100"
+
+const publicados = new Map(
+  (await beneficiosPublicados()).map((beneficio) => [beneficio.id, beneficio]),
+)
+const itens = opcoes.map(({ rotulo, tema, slug, assunto, descricao }) => {
+  const beneficio = publicados.get(slug)
+  return {
+    rotulo,
+    assunto,
+    descricao,
+    slug,
+    pagina: beneficio ? urlBeneficio(slug) : "",
+    tema,
+    whatsapp: whatsappUrl(
+      `Olá, vim pelo site e gostaria de agendar uma análise do meu caso sobre ${assunto}.`,
+    ),
+  }
+})
+---
+
+<Section id="triagem" aria-label="Escolha a sua situação">
+  <!-- Timbre de fundo: balança dourada, no canto esquerdo como o monograma das outras seções. -->
+  <div
+    slot="fundo"
+    class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+    aria-hidden="true"
+  >
+    <Image
+      src={balanca}
+      alt=""
+      widths={[480, 800, 1200]}
+      sizes="(min-width: 1024px) 640px, (min-width: 768px) 448px, 320px"
+      loading="lazy"
+      class="absolute top-12 -left-24 h-auto w-80 opacity-5 md:w-112 lg:top-24 lg:-left-20 lg:w-160"
+    />
+  </div>
+  <div data-triagem class="mx-auto max-w-4xl">
+    <SectionHeading
+      align="center"
+      size="md"
+      eyebrow="Comece por aqui"
+      title="Qual é a sua situação?"
+      lead="Toque na opção mais parecida com o seu caso. Não precisa informar documentos nem dados de saúde."
+    />
+
+    <fieldset
+      data-triagem-chips
+      class="mt-8 grid grid-cols-2 gap-2.5 md:grid-cols-3 lg:grid-cols-4"
+    >
+      <legend class="sr-only">Situação</legend>
+      {itens.map((item) => (
+        <label
+          data-chip
+          class="group relative cursor-pointer will-change-transform"
+        >
+          <input
+            type="radio"
+            name="situacao"
+            value={itens.indexOf(item)}
+            class="peer sr-only"
+          />
+          <!--
+            Hover: o chip sobe, ganha brilho dourado e um reflexo atravessa. Uma linha dourada
+            cresce na base ao passar o mouse e fica fixa no chip marcado. O reflexo (before:) começa fora do chip à esquerda e vai
+            até depois da borda direita (300% da própria largura).
+          -->
+          <span class:list={[...classesChip, classesLinha]}>{item.rotulo}</span>
+        </label>
+      ))}
+      <a
+        data-chip
+        href={urlBeneficios}
+        class="group relative block will-change-transform focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      >
+        <span
+          class:list={[
+            ...classesChip,
+            "justify-between gap-2 border-dashed border-primary/50 text-primary",
+          ]}
+        >
+          Visualizar todos os benefícios
+          <Icon name="chevron" class="size-4 -rotate-90" />
+        </span>
+      </a>
+    </fieldset>
+
+    <div
+      data-triagem-resultado
+      hidden
+      aria-live="polite"
+      class="relative mt-5 rounded-md border border-ink/10 border-l-2 border-l-primary bg-surface-2 p-5 md:p-6"
+    >
+      <span
+        data-triagem-linha
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-y-0 left-0 w-0.5 -translate-x-full bg-primary opacity-0 shadow-[0_0_12px_2px] shadow-primary/60"
+      ></span>
+      <p class="mb-1 text-xs tracking-eyebrow text-primary uppercase">
+        Costuma se encaixar em
+      </p>
+      <p
+        data-triagem-tema
+        class="mb-2 font-serif text-2xl leading-tight text-ink-strong"
+      ></p>
+      <p data-triagem-descricao class="mb-4 text-ink-soft"></p>
+      <p class="mb-4 text-base text-muted">
+        Cada caso é diferente: eu confiro o seu histórico antes de qualquer
+        orientação.
+      </p>
+      <div class="grid gap-2.5 sm:flex sm:flex-wrap sm:gap-3.5">
+        <Button
+          href="#"
+          event="whatsapp_click"
+          data-origem="triagem"
+          data-beneficio=""
+          data-triagem-whatsapp
+        >
+          Agendar análise do meu caso
+        </Button>
+        <Button href="#" variant="outline" data-triagem-pagina hidden>
+          Entender esse assunto
+        </Button>
+      </div>
+    </div>
+    <script
+      type="application/json"
+      id="triagem-dados"
+      set:html={JSON.stringify(itens)}
+    ></script>
+  </div>
+</Section>
+
+<script>
+  // Cartas em movimento: os chips chegam de baixo, inclinados e menores, e
+  // assentam conforme a rolagem (reversível). Cada coluna assenta um pouco
+  // depois da anterior, o que cria o efeito de cascata diagonal.
+  const grade = document.querySelector<HTMLElement>("[data-triagem-chips]")
+  const reduzido = matchMedia("(prefers-reduced-motion: reduce)")
+  if (grade && !reduzido.matches) {
+    const chips = [...grade.querySelectorAll<HTMLElement>("[data-chip]")]
+    let agendado = false
+
+    const atualizar = () => {
+      agendado = false
+      const colunas =
+        getComputedStyle(grade).gridTemplateColumns.split(" ").length
+      const topo = grade.getBoundingClientRect().top
+      const altura = innerHeight
+      chips.forEach((chip, i) => {
+        // offsetTop ignora transform: a posição não oscila com a animação
+        const centro = topo + chip.offsetTop + chip.offsetHeight / 2
+        const inicio = 0.96 - (i % colunas) * 0.04
+        const fim = inicio - 0.3
+        const bruto = (inicio - centro / altura) / (inicio - fim)
+        const p = Math.min(1, Math.max(0, bruto))
+        const suave = 1 - (1 - p) ** 3
+        const resto = 1 - suave
+        chip.style.opacity = String(0.15 + 0.85 * suave)
+        chip.style.transform =
+          resto < 0.001
+            ? ""
+            : `perspective(800px) translateY(${resto * 64}px) rotateX(${resto * 26}deg) scale(${0.9 + 0.1 * suave})`
+      })
+    }
+    const pedir = () => {
+      if (agendado) return
+      agendado = true
+      requestAnimationFrame(atualizar)
+    }
+
+    grade.style.transformStyle = "preserve-3d"
+    addEventListener("scroll", pedir, { passive: true })
+    addEventListener("resize", pedir)
+    atualizar()
+  }
+</script>
+
+<script>
+  interface Item {
+    slug: string
+    tema: string
+    descricao: string
+    pagina: string
+    whatsapp: string
+  }
+
+  const bloco = document.querySelector<HTMLElement>("[data-triagem]")
+  const dados = document.getElementById("triagem-dados")
+  if (bloco && dados?.textContent) {
+    const itens: Item[] = JSON.parse(dados.textContent)
+    const resultado = bloco.querySelector<HTMLElement>(
+      "[data-triagem-resultado]",
+    )
+    const tema = bloco.querySelector<HTMLElement>("[data-triagem-tema]")
+    const descricao = bloco.querySelector<HTMLElement>(
+      "[data-triagem-descricao]",
+    )
+    const whatsapp = bloco.querySelector<HTMLAnchorElement>(
+      "[data-triagem-whatsapp]",
+    )
+    const pagina = bloco.querySelector<HTMLAnchorElement>(
+      "[data-triagem-pagina]",
+    )
+    const linha = bloco.querySelector<HTMLElement>("[data-triagem-linha]")
+
+    // Clicar no chip focava o input escondido, e o navegador rolava a página
+    // para trazê-lo de volta à tela (para cima, se o chip estivesse cortado no
+    // topo), brigando com a rolagem até o painel. Por mouse/toque marcamos o
+    // input à mão, sem ativar o label e sem foco: a página só rola para o
+    // painel. O teclado age direto no input e não passa por aqui.
+    bloco.addEventListener("click", (e) => {
+      if (!(e.target instanceof Element)) return
+      const chip = e.target.closest("[data-chip]")
+      const input = chip?.querySelector("input")
+      if (!input || e.target === input) return
+      e.preventDefault()
+      if (input.checked) return
+      input.checked = true
+      input.dispatchEvent(new Event("change", { bubbles: true }))
+    })
+
+    bloco.addEventListener("change", (e) => {
+      const alvo = e.target
+      if (!(alvo instanceof HTMLInputElement)) return
+      const item = itens[Number(alvo.value)]
+      if (!item || !resultado || !tema || !descricao || !whatsapp || !pagina)
+        return
+      tema.textContent = item.tema
+      descricao.textContent = item.descricao
+      whatsapp.href = item.whatsapp
+      whatsapp.dataset.beneficio = item.slug
+      pagina.hidden = !item.pagina
+      if (item.pagina) pagina.href = item.pagina
+      resultado.hidden = false
+      // Mede o painel sem a animação (o transform dela distorce a medida) e
+      // só então reinicia a entrada.
+      resultado.classList.remove("motion-safe:animate-resposta")
+      linha?.classList.remove("motion-safe:animate-impressao")
+      const { top, bottom } = resultado.getBoundingClientRect()
+      resultado.classList.add("motion-safe:animate-resposta")
+      linha?.classList.add("motion-safe:animate-impressao")
+      // Só rola para baixo, e só se o painel não couber na tela: nunca sobe e
+      // fica parado quando já está visível. A folga embaixo é a da barra de
+      // contato fixa do celular; em cima, a do cabeçalho.
+      const folgaBaixo = matchMedia("(min-width: 768px)").matches ? 24 : 112
+      const folgaTopo = 88
+      const excesso = bottom - (innerHeight - folgaBaixo)
+      const desloca = Math.min(excesso, top - folgaTopo)
+      if (desloca > 0)
+        scrollBy({
+          top: desloca,
+          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth",
+        })
+    })
+  }
+</script>

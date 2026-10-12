@@ -6,6 +6,7 @@ eyebrow: "Benefício por maternidade"
 resumo: "Com apenas uma contribuição ao INSS antes do parto, você pode ter direito ao salário-maternidade. Este benefício é destinado em caso de gestação, adoção ou guarda judicial. Há prazo para pedir."
 beneficio: "maternidade"
 imagem: "../../assets/beneficios/salario-maternidade.svg"
+icone: "../../assets/beneficios/icones/salario-maternidade.svg"
 imagemAlt: "Ilustração de uma mãe segurando um bebê no colo, com um coração acima dos dois e um relógio ao lado, representando o cuidado com a família e o prazo do benefício"
 requisitos:
   - titulo: "Situação protegida"

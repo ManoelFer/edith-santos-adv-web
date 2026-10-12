@@ -1,8 +1,7 @@
 ---
-import Card from "@components/common/Card.astro"
-import NumberBadge from "@components/common/NumberBadge.astro"
 import Section from "@components/common/Section.astro"
 import SectionHeading from "@components/common/SectionHeading.astro"
+import TrilhaJornada from "@components/common/TrilhaJornada.astro"
 import { etapas } from "@data/etapas"
 ---
 
@@ -12,16 +11,63 @@ import { etapas } from "@data/etapas"
     title="Como funciona o atendimento"
     lead="Você sabe, desde o início, o que está sendo feito, o que falta e em que etapa está o seu processo."
   />
-  <ol class="mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-18 lg:grid-cols-4">
-    {etapas.map(({ numero, titulo, descricao }) => (
-      <Card as="li" accent="top">
-        <NumberBadge numero={numero} />
-        <h3 class="mt-5 mb-2 text-lg font-semibold text-ink">
-          <span class="sr-only">Etapa {numero}: </span>
-          {titulo}
-        </h3>
-        <p class="text-base text-muted">{descricao}</p>
-      </Card>
-    ))}
-  </ol>
+  <!-- Timbre de fundo: trilha dourada no canto superior direito, espelhando o das outras seções. -->
+  <div
+    slot="fundo"
+    class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+    aria-hidden="true"
+  >
+    <TrilhaJornada class="absolute top-12 -right-24 h-auto w-80 opacity-10 md:w-112 lg:top-24 lg:-right-20 lg:w-160" />
+  </div>
+  <!-- Linha do tempo: o trilho e os pontos acompanham a rolagem (ver global.css). -->
+  <div class="linha-tempo relative mx-auto mt-10 max-w-4xl lg:mt-18">
+    <span class="linha-trilho" aria-hidden="true">
+      <span></span>
+    </span>
+    <ol class="grid gap-6 md:gap-8">
+      {etapas.map(({ numero, titulo, descricao }) => (
+        <li class="group">
+          <span
+            class="flex h-(--cabecalho) items-center justify-end font-serif text-4xl leading-none text-subtle transition-colors duration-500 group-hover:text-primary group-data-ativo:text-primary md:text-5xl"
+            aria-hidden="true"
+          >
+            {numero}
+          </span>
+          <span class="flex h-(--cabecalho) items-center justify-center">
+            <span
+              class="linha-ponto relative z-10 size-3.5 rounded-full border-2 border-ink/25 bg-page-alt transition duration-500 group-hover:border-primary group-data-ativo:border-primary group-data-ativo:bg-primary group-data-ativo:shadow-lg group-data-ativo:shadow-primary/50"
+              aria-hidden="true"
+            />
+          </span>
+          <div
+            data-etapa-painel
+            class="linha-card relative rounded-sm border border-ink/8 border-t-primary/55 bg-surface transition duration-500 ease-suave hover:border-primary/45 hover:border-t-primary hover:bg-field motion-safe:hover:-translate-y-1"
+          >
+            <span
+              data-etapa-linha
+              aria-hidden="true"
+              class="pointer-events-none absolute inset-y-0 left-0 w-0.5 -translate-x-full bg-primary opacity-0 shadow-[0_0_12px_2px] shadow-primary/60"
+            />
+            <h3 class="flex h-(--cabecalho) items-center px-5 text-lg font-semibold text-ink md:px-6">
+              <span class="sr-only">Etapa {numero}: </span>
+              {titulo}
+            </h3>
+            <div class="linha-painel">
+              <div class="min-h-0 overflow-hidden">
+                <div class="px-5 pb-5 md:px-6 md:pb-6">
+                  <p class="text-base text-muted">{descricao}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
 </Section>
+
+<script>
+  import { iniciarLinhaDoTempo } from "@lib/linhaDoTempo"
+
+  iniciarLinhaDoTempo()
+</script>

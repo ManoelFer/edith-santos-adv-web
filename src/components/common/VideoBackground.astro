@@ -1,0 +1,87 @@
+---
+import { Image } from "astro:assets"
+
+import poster from "@assets/hero-poster.jpg"
+
+/**
+ * Vídeo decorativo de fundo. O pôster (imagem otimizada) é o elemento do LCP e
+ * já aparece sozinho; o vídeo só é baixado se o visitante aceita movimento e
+ * não está no modo de economia de dados, e pausa quando sai da tela.
+ */
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<div
+  class:list={["absolute inset-0 overflow-hidden", className]}
+  aria-hidden="true"
+>
+  <Image
+    src={poster}
+    alt=""
+    widths={[640, 960, 1280, 1600]}
+    sizes="100vw"
+    format="webp"
+    loading="eager"
+    fetchpriority="high"
+    class="size-full object-cover object-[68%_center]"
+  />
+  <video
+    data-video-fundo
+    class="absolute inset-0 size-full object-cover object-[68%_center] opacity-0 transition-opacity duration-1000"
+    width="1280"
+    height="675"
+    muted
+    loop
+    playsinline
+    preload="none"
+    tabindex="-1"
+    disablepictureinpicture
+  >
+    <source
+      data-src="/videos/hero-v1-mobile.webm"
+      type="video/webm"
+      media="(max-width: 767px)"
+    />
+    <source
+      data-src="/videos/hero-v1-mobile.mp4"
+      type="video/mp4"
+      media="(max-width: 767px)"
+    />
+    <source data-src="/videos/hero-v1.webm" type="video/webm" />
+    <source data-src="/videos/hero-v1.mp4" type="video/mp4" />
+  </video>
+</div>
+
+<script>
+  const video = document.querySelector<HTMLVideoElement>("[data-video-fundo]")
+  const conexao = (
+    navigator as Navigator & { connection?: { saveData?: boolean } }
+  ).connection
+  const semMovimento = matchMedia("(prefers-reduced-motion: reduce)").matches
+
+  if (video && !semMovimento && !conexao?.saveData) {
+    video
+      .querySelectorAll<HTMLSourceElement>("source[data-src]")
+      .forEach((s) => {
+        s.src = s.dataset.src ?? ""
+      })
+    video.load()
+    video.addEventListener(
+      "playing",
+      () => video.classList.remove("opacity-0"),
+      {
+        once: true,
+      },
+    )
+
+    // Só toca enquanto está visível: poupa bateria e CPU.
+    new IntersectionObserver(([entrada]) => {
+      if (entrada?.isIntersecting) void video.play().catch(() => {})
+      else video.pause()
+    }).observe(video)
+  }
+</script>

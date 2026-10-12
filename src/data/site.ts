@@ -25,7 +25,7 @@ export const site = {
   oab: "OAB/GO nº 73.463",
   /** Microtexto perto dos botões de contato: tira o medo de compromisso, sem falar em preço (Provimento 205/2021). */
   avisoContato:
-    "Sem compromisso. Conte o seu caso e a advogada explica os próximos passos.",
+    "Sem compromisso. Conte o seu caso e eu explico os próximos passos.",
   area: "Direito Previdenciário",
 
   // NAP: mesmo formato do Perfil da Empresa no Google e das redes
@@ -75,15 +75,16 @@ export const site = {
   },
 
   nav: [
-    { label: "Atuação", href: "/#atuacao" },
+    { label: "Atuação", href: "/#triagem" },
     { label: "Atendimento", href: "/#atendimento" },
-    { label: "Fases", href: "/#fases" },
     { label: "Sobre", href: "/#sobre" },
+    { label: "Avaliações", href: "/#avaliacoes" },
+    { label: "Segurança", href: "/#confianca" },
     { label: "Dúvidas", href: "/#duvidas" },
   ] satisfies LinkNav[],
 
   institucional: [
-    { label: "Áreas de atuação", href: "/#atuacao" },
+    { label: "Áreas de atuação", href: "/#triagem" },
     { label: "Política de Privacidade", href: "/politica-de-privacidade/" },
     { label: "Termos de uso", href: "/termos-de-uso/" },
   ] satisfies LinkNav[],

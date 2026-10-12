@@ -13,3 +13,7 @@
 # Arquivos gerados pelo Astro têm hash no nome: podem ficar em cache para sempre
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Vídeo do hero: nome versionado (hero-v1), troque o sufixo ao regravar
+/videos/*
+  Cache-Control: public, max-age=31536000, immutable

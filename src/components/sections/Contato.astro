@@ -1,4 +1,5 @@
 ---
+import Icon from "@components/common/Icon.astro"
 import InfoList from "@components/common/InfoList.astro"
 import Section from "@components/common/Section.astro"
 import SectionHeading from "@components/common/SectionHeading.astro"
@@ -23,8 +24,14 @@ const canais = [
     valor: site.telefone,
     href: whatsappUrl(mensagem),
     evento: "whatsapp_click" as const,
+    soDesktop: true,
   },
-  { rotulo: "E-mail", valor: site.email, href: `mailto:${site.email}` },
+  {
+    rotulo: "E-mail",
+    valor: site.email,
+    href: `mailto:${site.email}`,
+    soDesktop: true,
+  },
   { rotulo: "Atendimento", valor: site.horario.texto },
 ]
 ---
@@ -34,6 +41,17 @@ const canais = [
   glow="contato"
   class="grid items-start gap-10 lg:grid-cols-12 lg:gap-18"
 >
+  <!-- Timbre de fundo: telefone dourado no canto esquerdo, no mesmo padrão das outras seções. -->
+  <div
+    slot="fundo"
+    class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+    aria-hidden="true"
+  >
+    <Icon
+      name="telefone"
+      class="absolute top-4 -left-24 size-80 stroke-[0.5] text-primary opacity-10 md:top-4 md:-left-20 md:size-112 lg:top-4 lg:-left-16 lg:size-160"
+    />
+  </div>
   <div class="lg:col-span-5">
     <SectionHeading
       eyebrow="Contato"
@@ -43,6 +61,11 @@ const canais = [
           ? "Deixe seu nome e WhatsApp, ou fale direto pelo botão abaixo. Eu respondo em dias úteis, no horário de atendimento."
           : "Você pode escrever pelo formulário ou falar direto pelo WhatsApp. Se tiver a carta de indeferimento ou o extrato do CNIS em mãos, já ajuda. Se não tiver, eu explico como conseguir."
       } ${site.avisoContato}`}
+      leadMobile={
+        compacto
+          ? undefined
+          : `Você pode escrever pelo formulário ou falar direto pelo WhatsApp. Com a carta de indeferimento ou o CNIS em mãos, já ajuda. Sem eles, eu explico como conseguir. ${site.avisoContato}`
+      }
     />
     <InfoList itens={canais} size="lg" class="mt-8" />
   </div>

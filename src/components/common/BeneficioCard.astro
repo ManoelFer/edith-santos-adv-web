@@ -10,35 +10,43 @@ interface Props {
 }
 
 const { beneficio, nivel: Titulo = "h3" } = Astro.props
-const { h1, eyebrow, description, imagem } = beneficio.data
+const { h1, eyebrow, description, imagem, icone } = beneficio.data
 ---
 
 <!--
   Card inteiro clicável: o link é o título e o ::after cobre o card.
-  Alturas fixas de rótulo (2 linhas), título (3) e descrição (4): o "Ler sobre" fica
-  na mesma linha em todos os cards.
+  Celular: linha compacta (ícone quadrado, um símbolo por benefício, + eyebrow, título e 2 linhas de descrição),
+  para ver vários benefícios por tela sem rolar muito. A partir do md vira card vertical
+  com ilustração grande e alturas fixas de rótulo (2 linhas), título (3) e descrição (4),
+  para o "Ler sobre" ficar na mesma linha em todos os cards.
 -->
 <article
   class:list={[
-    "group relative flex flex-col overflow-hidden rounded-sm border border-ink/8 bg-surface",
+    "group relative grid grid-cols-[5rem_1fr] overflow-hidden rounded-sm border border-ink/8 bg-surface min-[400px]:grid-cols-[6rem_1fr] md:flex md:flex-col",
     "transition duration-300 ease-suave hover:border-primary/45 hover:bg-field",
     "motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-xl motion-safe:hover:shadow-black/40 motion-safe:active:scale-98",
     "has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary",
   ]}
 >
-  <div class="overflow-hidden border-b border-ink/8">
+  <div class="overflow-hidden border-r border-ink/8 md:border-r-0 md:border-b">
+    <Image
+      src={icone}
+      alt=""
+      format="svg"
+      class="size-full object-cover md:hidden"
+    />
     <Image
       src={imagem}
       alt=""
       format="svg"
-      class="aspect-16/10 h-auto w-full object-cover transition duration-700 ease-suave motion-safe:group-hover:scale-105"
+      class="hidden aspect-16/10 h-auto w-full object-cover transition duration-700 ease-suave motion-safe:group-hover:scale-105 md:block"
     />
   </div>
-  <div class="flex flex-1 flex-col p-5 md:p-6">
-    <p class="mb-2.5 text-xs tracking-eyebrow text-primary uppercase md:min-h-8">
+  <div class="flex min-w-0 flex-1 flex-col justify-center p-4 md:justify-start md:p-6">
+    <p class="mb-1 text-xs tracking-eyebrow text-primary uppercase md:mb-2.5 md:min-h-8">
       {eyebrow}
     </p>
-    <Titulo class="mb-3 font-serif text-2xl leading-tight font-normal text-ink-strong md:min-h-22.5">
+    <Titulo class="font-serif text-xl leading-tight font-normal text-ink-strong md:mb-3 md:min-h-22.5 md:text-2xl">
       <a
         href={urlBeneficio(beneficio.id)}
         class="text-ink-strong no-underline after:absolute after:inset-0 focus-visible:outline-none"
@@ -46,8 +54,13 @@ const { h1, eyebrow, description, imagem } = beneficio.data
         {h1}
       </a>
     </Titulo>
-    <p class="text-base text-muted md:min-h-24">{description}</p>
-    <p class="mt-auto pt-4 text-base text-primary" aria-hidden="true">
+    <p class="mt-1.5 line-clamp-2 text-base text-muted md:mt-0 md:line-clamp-none md:min-h-24">
+      {description}
+    </p>
+    <p
+      class="mt-auto hidden pt-4 text-base text-primary md:block"
+      aria-hidden="true"
+    >
       Ler sobre o benefício{" "}
       <span class="inline-block transition duration-300 ease-suave group-hover:translate-x-1">
         →

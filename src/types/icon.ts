@@ -8,3 +8,6 @@ export type IconName =
   | "check"
   | "externo"
   | "estrela"
+  | "semComentario"
+  | "livro"
+  | "caneta"

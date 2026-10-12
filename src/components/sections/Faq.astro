@@ -1,46 +1,131 @@
 ---
-import Section from "@components/common/Section.astro"
+import { Image } from "astro:assets"
+
+import monograma from "@assets/logo-monograma.png"
+import AvisoContato from "@components/common/AvisoContato.astro"
+import Button from "@components/common/Button.astro"
+import Container from "@components/common/Container.astro"
+import Icon from "@components/common/Icon.astro"
 import SectionHeading from "@components/common/SectionHeading.astro"
 import { faq } from "@data/faq"
+import { site } from "@data/site"
+import { mensagemSobre, whatsappUrl } from "@lib/whatsapp"
 import type { FaqItem } from "@typings/conteudo"
 
 interface Props {
   itens?: FaqItem[]
   titulo?: string
   tone?: "default" | "alt"
+  /** Página de benefício: a mensagem do WhatsApp cita o assunto e o clique leva o benefício. */
+  assunto?: string
+  beneficio?: string
 }
 
 const {
   itens = faq,
-  titulo = "Perguntas que chegam quase sempre",
-  tone,
+  titulo = "Perguntas que chegam com frequência",
+  tone = "default",
+  assunto,
+  beneficio,
 } = Astro.props
 ---
 
-<Section id="duvidas" tone={tone} class="grid gap-8 lg:grid-cols-12 lg:gap-14">
-  <SectionHeading
-    size="md"
-    eyebrow="Dúvidas frequentes"
-    title={titulo}
-    class="lg:col-span-4"
+<section
+  id="duvidas"
+  data-reveal
+  class:list={[
+    "relative isolate overflow-hidden border-b border-ink/8 transition duration-700 ease-suave data-pending:translate-y-6 data-pending:opacity-0",
+    tone === "alt" && "bg-page-alt",
+  ]}
+>
+  <!-- Timbre de fundo: marca d'água do logo. -->
+  <Image
+    src={monograma}
+    alt=""
+    width={640}
+    densities={[1, 2]}
+    format="webp"
+    loading="lazy"
+    aria-hidden="true"
+    class="pointer-events-none absolute top-4 -right-24 -z-10 h-auto w-80 opacity-5 select-none md:right-0 md:w-112 lg:right-16 lg:w-160"
   />
-  <div class="border-t border-ink/14 lg:col-span-8">
-    {itens.map(({ pergunta, resposta }, i) => (
-      <details name="faq" open={i === 0} class="group border-b border-ink/14">
-        <summary class="flex min-h-16 cursor-pointer list-none items-baseline justify-between gap-5 py-5 text-ink-soft transition-colors group-open:text-ink-strong hover:text-ink-strong [&::-webkit-details-marker]:hidden">
-          <h3 class="font-serif text-xl leading-snug font-normal lg:text-2xl">
-            {pergunta}
-          </h3>
-          <span
-            class="flex-none text-xl leading-none text-primary"
-            aria-hidden="true"
-          >
-            <span class="group-open:hidden">+</span>
-            <span class="hidden group-open:inline">−</span>
-          </span>
-        </summary>
-        <p class="max-w-3xl pb-6.5 text-muted">{resposta}</p>
-      </details>
-    ))}
-  </div>
-</Section>
+
+  <Container class="py-12 md:py-20 lg:py-28">
+    <SectionHeading
+      align="center"
+      eyebrow="Dúvidas frequentes"
+      title={titulo}
+    />
+
+    <ol class="mx-auto mt-10 max-w-3xl overflow-hidden rounded-md border border-ink/10 bg-surface shadow-2xl shadow-black/30 lg:mt-14">
+      {itens.map(({ pergunta, resposta }, i) => (
+        <li class="border-b border-ink/8 last:border-b-0">
+          <details name="faq" open={i === 0} class="group">
+            <summary class="flex min-h-16 cursor-pointer list-none items-center gap-3 px-4 py-4 text-ink-soft transition-colors duration-300 hover:bg-field/60 hover:text-ink-strong group-open:text-ink-strong sm:gap-5 sm:px-6 [&::-webkit-details-marker]:hidden">
+              <span
+                class="w-7 flex-none text-sm text-subtle tabular-nums transition-colors duration-300 group-open:text-primary"
+                aria-hidden="true"
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 class="flex-1 font-serif text-lg leading-snug font-normal text-balance sm:text-xl">
+                {pergunta}
+              </h3>
+              <span
+                class="relative flex size-8 flex-none items-center justify-center rounded-full border border-ink/20 text-primary transition duration-500 ease-suave group-open:rotate-180 group-open:border-primary group-open:bg-primary group-open:text-page"
+                aria-hidden="true"
+              >
+                <span class="absolute h-0.5 w-3 rounded-full bg-current" />
+                <span class="absolute h-3 w-0.5 rounded-full bg-current transition duration-500 ease-suave group-open:rotate-90" />
+              </span>
+            </summary>
+            <div class="px-4 pb-6 sm:pr-6 sm:pl-18">
+              <p class="animate-resposta border-l border-primary/45 pl-4 text-base text-muted">
+                {resposta}
+              </p>
+            </div>
+          </details>
+        </li>
+      ))}
+    </ol>
+
+    <aside
+      aria-labelledby="faq-contato"
+      class="mx-auto mt-6 flex max-w-3xl flex-col items-center rounded-md border border-ink/10 border-t-primary/55 bg-surface p-6 text-center shadow-2xl shadow-black/30 sm:p-8 lg:mt-8"
+    >
+      <span class="mb-4 flex size-12 items-center justify-center rounded-full border border-primary/35 bg-primary/8 text-primary">
+        <Icon name="whatsapp" class="size-6" />
+      </span>
+      <h3
+        id="faq-contato"
+        class="font-serif text-2xl leading-display font-normal text-ink-strong lg:text-3xl"
+      >
+        Ainda ficou com dúvida?
+      </h3>
+      <p class="mt-2 max-w-md text-base text-muted">
+        Me conte a sua situação e eu explico, com calma, os próximos passos do
+        seu caso.
+      </p>
+      <div class="mt-6 grid w-full gap-2.5 sm:flex sm:w-auto sm:flex-wrap sm:justify-center sm:gap-3.5">
+        <Button
+          href={whatsappUrl(assunto ? mensagemSobre(assunto) : undefined)}
+          event="whatsapp_click"
+          data-origem="faq"
+          data-beneficio={beneficio}
+        >
+          Falar pelo WhatsApp
+        </Button>
+        <Button
+          href={`tel:${site.telefoneE164}`}
+          variant="outline"
+          event="phone_click"
+          data-origem="faq"
+          data-beneficio={beneficio}
+        >
+          Ligar {site.telefone}
+        </Button>
+      </div>
+      <AvisoContato class="mt-4" />
+    </aside>
+  </Container>
+</section>
