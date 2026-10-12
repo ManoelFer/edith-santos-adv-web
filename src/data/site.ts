@@ -77,7 +77,6 @@ export const site = {
   nav: [
     { label: "Atuação", href: "/#triagem" },
     { label: "Atendimento", href: "/#atendimento" },
-    { label: "Fases", href: "/#fases" },
     { label: "Sobre", href: "/#sobre" },
     { label: "Avaliações", href: "/#avaliacoes" },
     { label: "Segurança", href: "/#confianca" },
