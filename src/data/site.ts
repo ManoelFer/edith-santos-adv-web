@@ -80,6 +80,7 @@ export const site = {
     { label: "Fases", href: "/#fases" },
     { label: "Sobre", href: "/#sobre" },
     { label: "Avaliações", href: "/#avaliacoes" },
+    { label: "Segurança", href: "/#confianca" },
     { label: "Dúvidas", href: "/#duvidas" },
   ] satisfies LinkNav[],
 

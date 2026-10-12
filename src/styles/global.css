@@ -86,6 +86,25 @@
  */
 @custom-variant pilha (@media (min-width: 48rem) and (min-height: 40rem));
 
+/*
+ * Pilha de cartões da seção Confiança: só fixa (`sticky`) quando a altura da
+ * tela comporta o cartão. Com zoom de texto alto a altura útil encolhe e os
+ * cartões voltam ao fluxo normal.
+ */
+@custom-variant empilha (@media (min-height: 38rem));
+
+/*
+ * Topo do cartão fixado: abaixo do Header (72px no celular, 96px no desktop),
+ * com `--i` degraus de 0.75rem para a borda dos cartões anteriores aparecer.
+ */
+@utility empilha-topo {
+  top: calc(5.5rem + var(--i, 0) * 0.75rem);
+
+  @media (min-width: 64rem) {
+    top: calc(7.5rem + var(--i, 0) * 0.75rem);
+  }
+}
+
 /* Atraso de animação em ms, para escalonar entradas: animate-delay-150 */
 @utility animate-delay-* {
   animation-delay: calc(--value(integer) * 1ms);

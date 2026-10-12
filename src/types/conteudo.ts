@@ -27,6 +27,8 @@ interface LinkTopico {
 
 export interface Credencial extends Topico {
   links?: LinkTopico[]
+  /** Dica de alerta (golpe): ganha o ícone e o destaque de aviso. */
+  alerta?: boolean
 }
 
 export interface Etapa extends Topico {
