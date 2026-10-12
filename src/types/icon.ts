@@ -9,3 +9,5 @@ export type IconName =
   | "externo"
   | "estrela"
   | "semComentario"
+  | "livro"
+  | "caneta"
