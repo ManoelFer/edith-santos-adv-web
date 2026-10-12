@@ -12,9 +12,9 @@ import { etapas } from "@data/etapas"
     title="Como funciona o atendimento"
     lead="Você sabe, desde o início, o que está sendo feito, o que falta e em que etapa está o seu processo."
   />
-  <ol class="mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-18 lg:grid-cols-4">
+  <ol class="-mx-4 mt-10 flex snap-x snap-mandatory gap-3.5 overflow-x-auto px-4 pb-3 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:mt-18 lg:grid-cols-4">
     {etapas.map(({ numero, titulo, descricao }) => (
-      <Card as="li" accent="top">
+      <Card as="li" accent="top" class="w-72 flex-none snap-center sm:w-auto">
         <NumberBadge numero={numero} />
         <h3 class="mt-5 mb-2 text-lg font-semibold text-ink">
           <span class="sr-only">Etapa {numero}: </span>
