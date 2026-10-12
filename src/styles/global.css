@@ -60,6 +60,15 @@
   --animate-resposta: resposta 0.9s cubic-bezier(0.45, 0, 0.25, 1) backwards;
   --animate-impressao: impressao 0.9s cubic-bezier(0.45, 0, 0.25, 1) backwards;
 
+  /* Faixa de áreas de atuação: corre uma cópia da lista (-50%) e recomeça sem corte. */
+  --animate-faixa: faixa 45s linear infinite;
+
+  @keyframes faixa {
+    to {
+      translate: -50% 0;
+    }
+  }
+
   @keyframes entrada {
     from {
       opacity: 0;

@@ -4,6 +4,7 @@ import Atendimento from "@components/sections/Atendimento.astro"
 import AvaliacoesGoogle from "@components/sections/AvaliacoesGoogle.astro"
 import Confianca from "@components/sections/Confianca.astro"
 import Contato from "@components/sections/Contato.astro"
+import FaixaAreas from "@components/sections/FaixaAreas.astro"
 import Faq from "@components/sections/Faq.astro"
 import Hero from "@components/sections/Hero.astro"
 import Sobre from "@components/sections/Sobre.astro"
@@ -20,6 +21,7 @@ import { faqPageSchema } from "@lib/schema"
   schemas={[faqPageSchema(faq)]}
 >
   <Hero />
+  <FaixaAreas />
   <Triagem />
   <Atendimento />
   <Sobre />
