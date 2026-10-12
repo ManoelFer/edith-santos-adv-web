@@ -7,6 +7,8 @@ interface InfoItem {
   href?: string
   /** Evento de conversão do link (ver src/lib/analytics.ts). */
   evento?: EventoConversao
+  /** Esconde o item no celular. */
+  soDesktop?: boolean
 }
 
 interface Props {
@@ -23,10 +25,11 @@ const valorSizes = { md: "text-base", lg: "text-lg" } as const
 ---
 
 <dl class:list={["border-t border-ink/10", className]}>
-  {itens.map(({ rotulo, valor, href, evento }) => (
+  {itens.map(({ rotulo, valor, href, evento, soDesktop }) => (
     <div
       class:list={[
-        "grid gap-0.5 border-b border-ink/6 py-3.5",
+        soDesktop ? "hidden md:grid" : "grid",
+        "gap-0.5 border-b border-ink/6 py-3.5",
         layout === "split" && "sm:flex sm:gap-4",
       ]}
     >
