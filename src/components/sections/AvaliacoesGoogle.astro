@@ -108,10 +108,19 @@ const centralizar = exibidas.length <= 3
                     <Icon name="estrela" class="size-5 fill-current" />
                   ))}
                 </div>
-                <blockquote class="flex-1 text-base text-ink-soft">
-                  <span class="sr-only">Avaliação com 5 estrelas. </span>
-                  {texto}
-                </blockquote>
+                {texto.trim() ? (
+                  <blockquote class="flex-1 text-base text-ink-soft">
+                    <span class="sr-only">Avaliação com 5 estrelas. </span>
+                    {texto}
+                  </blockquote>
+                ) : (
+                  <div class="flex flex-1 items-center justify-center py-4 text-primary/60">
+                    <Icon name="semComentario" class="size-16" />
+                    <span class="sr-only">
+                      Avaliação com 5 estrelas, sem comentário.
+                    </span>
+                  </div>
+                )}
                 <figcaption class="mt-6 flex items-center gap-3">
                   <span
                     class="flex size-10 flex-none items-center justify-center rounded-full bg-primary/15 font-serif text-xl text-primary"
