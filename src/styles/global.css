@@ -144,6 +144,11 @@
   }
 }
 
+/* Posição do cartão na pilha (`--i`), sem `style` inline, que a CSP bloqueia */
+@utility empilha-i-* {
+  --i: --value(integer);
+}
+
 /* Atraso de animação em ms, para escalonar entradas: animate-delay-150 */
 @utility animate-delay-* {
   animation-delay: calc(--value(integer) * 1ms);

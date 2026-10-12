@@ -88,11 +88,10 @@ const fotoDe = (nome: string) =>
                 )}
                 <div class="relative flex flex-none flex-col justify-center p-5 sm:p-7 md:flex-1 lg:p-12 xl:p-16 2xl:p-20">
                   <span
-                    class="pointer-events-none absolute top-1 right-4 font-serif text-7xl leading-none text-primary/15 select-none md:top-4 md:right-8 md:text-9xl"
+                    data-numero={numero}
+                    class="pointer-events-none absolute top-1 right-4 font-serif text-7xl leading-none text-primary/15 select-none before:content-[attr(data-numero)] md:top-4 md:right-8 md:text-9xl"
                     aria-hidden="true"
-                  >
-                    {numero}
-                  </span>
+                  ></span>
                   <Eyebrow class="relative mb-3 md:mb-4">
                     {numero} / {etiqueta}
                   </Eyebrow>

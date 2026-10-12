@@ -13,6 +13,22 @@ import { confiancaIntro, credenciais } from "@data/credenciais"
 // introdução cabe nela, para o cartão novo cobrir o anterior por inteiro.
 const cartao =
   "empilha:sticky empilha:empilha-topo relative isolate flex min-h-88 flex-col justify-center overflow-hidden rounded-sm border border-ink/10 border-t-primary/55 bg-surface p-5 shadow-2xl shadow-black/40 sm:p-7 lg:min-h-96 lg:p-10"
+
+// Classe inteira em cada item: o Tailwind só gera o que aparece por extenso.
+const posicaoNaPilha = [
+  "empilha-i-0",
+  "empilha-i-1",
+  "empilha-i-2",
+  "empilha-i-3",
+  "empilha-i-4",
+  "empilha-i-5",
+  "empilha-i-6",
+  "empilha-i-7",
+  "empilha-i-8",
+  "empilha-i-9",
+  "empilha-i-10",
+  "empilha-i-11",
+]
 ---
 
 <section
@@ -36,7 +52,7 @@ const cartao =
   </div>
   <Container class="py-12 md:py-20 lg:py-28">
     <ol class="grid gap-4 lg:gap-6">
-      <li style="--i: 0" class:list={cartao}>
+      <li class:list={[cartao, posicaoNaPilha[0]]}>
         <Image
           src={monograma}
           alt=""
@@ -57,9 +73,9 @@ const cartao =
 
       {credenciais.map(({ titulo, descricao, links, alerta }, indice) => (
         <li
-          style={`--i: ${indice + 1}`}
           class:list={[
             cartao,
+            posicaoNaPilha[indice + 1],
             "gap-4 sm:flex-row sm:items-center sm:justify-start sm:gap-8",
             alerta && "border-primary/60",
           ]}
