@@ -57,14 +57,15 @@ const semTags = (html) =>
     .replace(/\s+/g, " ")
     .trim()
 
-const paginas = listarHtml(DIST).map((arquivo) => {
-  const html = readFileSync(arquivo, "utf8")
-  return {
+// Páginas de redirecionamento do Astro (meta refresh) não são conteúdo: ficam de fora.
+const paginas = listarHtml(DIST)
+  .map((arquivo) => ({ arquivo, html: readFileSync(arquivo, "utf8") }))
+  .filter(({ html }) => !/<meta[^>]*http-equiv="refresh"/i.test(html))
+  .map(({ arquivo, html }) => ({
     rota: rotaDe(arquivo),
     html,
     noindex: /<meta[^>]*name="robots"[^>]*noindex/i.test(html),
-  }
-})
+  }))
 const rotas = new Set(paginas.map((p) => p.rota))
 const sitemap = existsSync(join(DIST, "sitemap-0.xml"))
   ? [

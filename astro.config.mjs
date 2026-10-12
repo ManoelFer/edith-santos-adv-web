@@ -15,6 +15,9 @@ const foraDoSitemap = ["/obrigado/"]
 export default defineConfig({
   site: "https://edithsantos.adv.br",
   trailingSlash: "always",
+  // Só vale no `yarn dev` e no `yarn preview` (e vira meta refresh no build): na
+  // Cloudflare quem manda é o public/_redirects, com 301 de verdade.
+  redirects: { "/beneficios/": "/beneficios-do-inss/" },
   // CSP em <meta> com hash de cada script e estilo inline.
   // frame-ancestors não funciona em <meta>: fica no public/_headers.
   security: {
