@@ -75,7 +75,7 @@ export const site = {
   },
 
   nav: [
-    { label: "Atuação", href: "/#atuacao" },
+    { label: "Atuação", href: "/#triagem" },
     { label: "Atendimento", href: "/#atendimento" },
     { label: "Fases", href: "/#fases" },
     { label: "Sobre", href: "/#sobre" },
@@ -85,7 +85,7 @@ export const site = {
   ] satisfies LinkNav[],
 
   institucional: [
-    { label: "Áreas de atuação", href: "/#atuacao" },
+    { label: "Áreas de atuação", href: "/#triagem" },
     { label: "Política de Privacidade", href: "/politica-de-privacidade/" },
     { label: "Termos de uso", href: "/termos-de-uso/" },
   ] satisfies LinkNav[],

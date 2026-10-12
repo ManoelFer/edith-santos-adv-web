@@ -21,6 +21,7 @@ const {
   class: className,
   "aria-label": ariaLabel,
 } = Astro.props
+const temFundo = Astro.slots.has("fundo")
 ---
 
 <section
@@ -29,6 +30,7 @@ const {
   data-reveal={reveal ? "" : undefined}
   class:list={[
     "relative border-b border-ink/8",
+    temFundo && "isolate",
     tone === "alt" && "bg-page-alt",
     glow && "overflow-hidden",
     reveal &&
@@ -36,6 +38,8 @@ const {
   ]}
 >
   {glow && <Glow variant={glow} />}
+  {/* Timbre de fundo, irmão do contêiner: posiciona-se pela largura da seção. */}
+  <slot name="fundo" />
   <Container class:list={["relative py-12 md:py-20 lg:py-28", className]}>
     <slot />
   </Container>

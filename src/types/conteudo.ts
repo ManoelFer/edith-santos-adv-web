@@ -1,21 +1,9 @@
-import type { ImageMetadata } from "astro"
-
 import type { EventoConversao } from "@typings/analytics"
 
-/** Card com título e descrição curta (situações, credenciais, etapas). */
-export interface Topico {
+/** Card com título e descrição curta (credenciais, etapas). */
+interface Topico {
   titulo: string
   descricao: string
-}
-
-export interface Area extends Topico {
-  /** Ilustração do topo do card (SVG próprio). */
-  imagem: ImageMetadata
-  /**
-   * Páginas em /beneficios/<slug>/ (o link só aparece se estiver publicada).
-   * A primeira é o "Saiba mais" do card; as outras entram como "Veja também".
-   */
-  slugs?: string[]
 }
 
 /** Link exibido junto de um item (contato oficial, consulta externa). */
