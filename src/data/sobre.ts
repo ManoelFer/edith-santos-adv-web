@@ -13,7 +13,7 @@ export interface CartaoSobre {
 }
 
 export const sobreIntro = {
-  eyebrow: "Sobre a advogada",
+  eyebrow: "Sobre mim",
   titulo: "Conhecimento jurídico, atendimento humano e respeito à sua história",
   texto:
     "Por trás de cada questão previdenciária, existe uma história que merece ser ouvida com atenção, respeito e responsabilidade.",

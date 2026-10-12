@@ -4,7 +4,7 @@ export const faq: FaqItem[] = [
   {
     pergunta: "Entrar em contato me obriga a contratar?",
     resposta:
-      "Não. O contato serve para a advogada entender o seu caso e explicar os próximos passos. Você decide com calma se quer seguir.",
+      "Não. O contato serve para eu entender o seu caso e explicar os próximos passos. Você decide com calma se quer seguir.",
   },
   {
     pergunta: "Preciso ir até o escritório?",
