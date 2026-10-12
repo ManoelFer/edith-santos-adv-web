@@ -1,7 +1,7 @@
 ---
 title: "Aposentadoria por idade: você tem direito?"
 description: "Aposentadoria por idade do INSS pede idade mínima e tempo de contribuição, na cidade ou no campo. Veja os sinais e agende uma análise do seu caso."
-h1: "Aposentadoria por idade: será que chegou a sua hora?"
+h1: "Aposentadoria por idade: será que você já pode pedir?"
 eyebrow: "Aposentadoria"
 resumo: "A aposentadoria por idade é paga pelo INSS a quem atinge a idade mínima e tem tempo de contribuição, na cidade ou no campo. Quem parou de contribuir pode ter direito."
 beneficio: "idade"
