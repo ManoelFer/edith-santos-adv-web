@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets"
+
+import monograma from "@assets/logo-monograma.png"
 import BeneficioCard from "@components/common/BeneficioCard.astro"
 import CtaWhatsApp from "@components/common/CtaWhatsApp.astro"
 import Section from "@components/common/Section.astro"
@@ -30,6 +33,22 @@ const schema = breadcrumbSchema([
   schemas={[schema]}
 >
   <Section reveal={false} glow="hero">
+    {/* Timbre de fundo: monograma da logo, como na seção Sobre. */}
+    <div
+      slot="fundo"
+      class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      aria-hidden="true"
+    >
+      <Image
+        src={monograma}
+        alt=""
+        width={640}
+        densities={[1, 2]}
+        format="webp"
+        loading="lazy"
+        class="absolute -top-8 -right-24 h-auto w-80 opacity-5 md:-top-12 md:-right-20 md:w-112 lg:right-0 lg:w-160"
+      />
+    </div>
     <SectionHeading
       as="h1"
       eyebrow="Benefícios do INSS"
