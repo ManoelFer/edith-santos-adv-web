@@ -6,7 +6,7 @@ import type { EventoConversao } from "@typings/analytics"
 type Props = {
   href?: string
   type?: "button" | "submit"
-  variant?: "primary" | "outline"
+  variant?: "primary" | "outline" | "whatsapp"
   size?: "md" | "lg"
   /** Ocupa toda a largura do pai. */
   block?: boolean
@@ -31,6 +31,8 @@ const {
 const variants = {
   primary:
     "border-primary bg-primary font-semibold text-page hover:border-primary-hover hover:bg-primary-hover hover:text-page hover:shadow-lg hover:shadow-primary/20",
+  whatsapp:
+    "border-whatsapp bg-whatsapp font-semibold text-ink-strong hover:border-whatsapp-hover hover:bg-whatsapp-hover hover:text-ink-strong hover:shadow-lg hover:shadow-whatsapp/20",
   outline:
     "border-ink/25 font-medium text-ink hover:border-ink/50 hover:bg-ink/5 hover:text-ink",
 } as const

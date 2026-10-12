@@ -1,5 +1,4 @@
 ---
-import AvatarMini from "@components/common/AvatarMini.astro"
 import Button from "@components/common/Button.astro"
 import Icon from "@components/common/Icon.astro"
 import Logo from "@components/common/Logo.astro"
@@ -58,10 +57,11 @@ const { id } = Astro.props
         href={whatsappUrl()}
         size="lg"
         block
+        variant="whatsapp"
         event="whatsapp_click"
         data-menu-link
       >
-        <AvatarMini class="-ml-2" />
+        <Icon name="whatsapp" />
         Falar no WhatsApp
       </Button>
       <p class="mt-4 text-center text-sm break-words text-subtle">

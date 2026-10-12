@@ -13,6 +13,10 @@
   --color-primary: #c69c5d;
   --color-primary-hover: #d6b585;
 
+  /* Verde do WhatsApp (botão flutuante) */
+  --color-whatsapp: #1f7a4d;
+  --color-whatsapp-hover: #26925c;
+
   /* Texto, do mais forte ao mais apagado. `ink` também é a cor das bordas (com opacidade) */
   --color-ink-strong: #ffffff;
   --color-ink: #f4f1ec;
