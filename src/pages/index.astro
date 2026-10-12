@@ -10,6 +10,7 @@ import Fases from "@components/sections/Fases.astro"
 import Hero from "@components/sections/Hero.astro"
 import Situacoes from "@components/sections/Situacoes.astro"
 import Sobre from "@components/sections/Sobre.astro"
+import Triagem from "@components/sections/Triagem.astro"
 import { faq } from "@data/faq"
 import { site } from "@data/site"
 import BaseLayout from "@layouts/BaseLayout.astro"
@@ -22,6 +23,7 @@ import { faqPageSchema } from "@lib/schema"
   schemas={[faqPageSchema(faq)]}
 >
   <Hero />
+  <Triagem />
   <Situacoes />
   <Atuacao />
   <Atendimento />

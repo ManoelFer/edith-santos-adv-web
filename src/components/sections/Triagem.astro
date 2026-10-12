@@ -1,0 +1,139 @@
+---
+import Button from "@components/common/Button.astro"
+import Section from "@components/common/Section.astro"
+import SectionHeading from "@components/common/SectionHeading.astro"
+import { beneficiosPublicados, urlBeneficio } from "@lib/beneficios"
+import { whatsappUrl } from "@lib/whatsapp"
+
+// Cada opção leva à página do benefício (se estiver publicada) e ao WhatsApp
+// com a mensagem já pronta. Sem dado sensível e sem dizer "você tem direito".
+const opcoes = [
+  {
+    rotulo: "O INSS negou meu pedido",
+    slug: "revisao-de-beneficio",
+    assunto: "um pedido negado pelo INSS",
+  },
+  {
+    rotulo: "Meu benefício foi cortado",
+    slug: "auxilio-doenca",
+    assunto: "um benefício cortado pelo INSS",
+  },
+  {
+    rotulo: "Quero saber quando posso me aposentar",
+    slug: "planejamento-previdenciario",
+    assunto: "quando posso me aposentar",
+  },
+  {
+    rotulo: "Perdi meu cônjuge ou familiar",
+    slug: "pensao-por-morte",
+    assunto: "pensão por morte",
+  },
+  {
+    rotulo: "Idoso ou com deficiência e renda baixa",
+    slug: "bpc-loas",
+    assunto: "BPC / LOAS",
+  },
+  {
+    rotulo: "Estou grávida ou tive filho",
+    slug: "salario-maternidade",
+    assunto: "salário-maternidade",
+  },
+]
+
+const publicados = new Set((await beneficiosPublicados()).map(({ id }) => id))
+const itens = opcoes.map(({ rotulo, slug, assunto }) => ({
+  rotulo,
+  assunto,
+  pagina: publicados.has(slug) ? urlBeneficio(slug) : "",
+  whatsapp: whatsappUrl(
+    `Olá, vim pelo site e gostaria de agendar uma análise do meu caso sobre ${assunto}.`,
+  ),
+}))
+---
+
+<Section id="triagem" aria-label="Escolha a sua situação">
+  <div data-triagem class="mx-auto max-w-3xl">
+    <SectionHeading
+      align="center"
+      size="md"
+      eyebrow="Comece por aqui"
+      title="Qual é a sua situação?"
+      lead="Toque na opção mais parecida com o seu caso. Não precisa informar documentos nem dados de saúde."
+    />
+
+    <fieldset class="mt-8 grid gap-3 sm:grid-cols-2">
+      <legend class="sr-only">Situação</legend>
+      {itens.map((item, i) => (
+        <label class="relative cursor-pointer">
+          <input type="radio" name="situacao" value={i} class="peer sr-only" />
+          <span class="flex min-h-14 items-center rounded-sm border border-ink/20 px-4 py-3 text-base text-ink-soft transition-colors peer-checked:border-primary peer-checked:bg-primary/12 peer-checked:text-ink peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary hover:border-ink/45">
+            {item.rotulo}
+          </span>
+        </label>
+      ))}
+    </fieldset>
+
+    <div
+      data-triagem-resultado
+      hidden
+      aria-live="polite"
+      class="mt-5 rounded-md border border-ink/10 border-l-2 border-l-primary bg-surface-2 p-5 md:p-6"
+    >
+      <p class="mb-4 text-ink-soft">
+        Cada caso é diferente. Veja uma explicação geral ou peça a análise do
+        seu histórico.
+      </p>
+      <div class="grid gap-2.5 sm:flex sm:flex-wrap sm:gap-3.5">
+        <Button
+          href="#"
+          event="whatsapp_click"
+          data-origem="triagem"
+          data-triagem-whatsapp
+        >
+          Agendar análise do meu caso
+        </Button>
+        <Button href="#" variant="outline" data-triagem-pagina hidden>
+          Entender esse assunto
+        </Button>
+      </div>
+    </div>
+    <script
+      type="application/json"
+      id="triagem-dados"
+      set:html={JSON.stringify(itens)}
+    ></script>
+  </div>
+</Section>
+
+<script>
+  interface Item {
+    pagina: string
+    whatsapp: string
+  }
+
+  const bloco = document.querySelector<HTMLElement>("[data-triagem]")
+  const dados = document.getElementById("triagem-dados")
+  if (bloco && dados?.textContent) {
+    const itens: Item[] = JSON.parse(dados.textContent)
+    const resultado = bloco.querySelector<HTMLElement>(
+      "[data-triagem-resultado]",
+    )
+    const whatsapp = bloco.querySelector<HTMLAnchorElement>(
+      "[data-triagem-whatsapp]",
+    )
+    const pagina = bloco.querySelector<HTMLAnchorElement>(
+      "[data-triagem-pagina]",
+    )
+
+    bloco.addEventListener("change", (e) => {
+      const alvo = e.target
+      if (!(alvo instanceof HTMLInputElement)) return
+      const item = itens[Number(alvo.value)]
+      if (!item || !resultado || !whatsapp || !pagina) return
+      whatsapp.href = item.whatsapp
+      pagina.hidden = !item.pagina
+      if (item.pagina) pagina.href = item.pagina
+      resultado.hidden = false
+    })
+  }
+</script>
