@@ -128,9 +128,11 @@
 /*
  * Pilha de cartões da seção Confiança: só fixa (`sticky`) quando a altura da
  * tela comporta o cartão. Com zoom de texto alto a altura útil encolhe e os
- * cartões voltam ao fluxo normal.
+ * cartões voltam ao fluxo normal. Limite baixo de propósito: no celular a barra
+ * do navegador some e volta ao rolar, a altura oscila e, perto do limite, o
+ * sticky ligava e desligava (cartões tremendo).
  */
-@custom-variant empilha (@media (min-height: 38rem));
+@custom-variant empilha (@media (min-height: 30rem));
 
 /*
  * Topo do cartão fixado: abaixo do Header (72px no celular, 96px no desktop),
