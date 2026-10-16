@@ -101,4 +101,10 @@ export function registrarConversaoWhatsApp() {
     page_title: "Clique WhatsApp",
     send_to: site.googleAds.id,
   })
+  // Ação de conversão "Clique no WhatsApp" (evento, não página virtual).
+  // beacon: o envio sobrevive à saída da página para o WhatsApp.
+  gtag("event", "conversion", {
+    send_to: site.googleAds.conversaoWhatsAppId,
+    transport_type: "beacon",
+  })
 }

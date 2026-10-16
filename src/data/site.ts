@@ -66,6 +66,8 @@ export const site = {
     conversaoId: "AW-18480818483",
     // Evento "Contato": formulário enviado, disparado na página /obrigado.
     conversaoContatoId: "AW-18480818483/40lICMXBtIkdELPSq-xE",
+    // Evento "Clique no WhatsApp": disparado no clique em qualquer botão de WhatsApp.
+    conversaoWhatsAppId: "AW-18480818483/RnuCCJHJnp4dELPSq-xE",
   },
 
   features: {
