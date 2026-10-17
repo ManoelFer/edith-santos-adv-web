@@ -1,22 +1,7 @@
-import type { EventoConversao } from "@typings/analytics"
-
-/** Card com título e descrição curta (credenciais, etapas). */
+/** Card com título e descrição curta (etapas). */
 interface Topico {
   titulo: string
   descricao: string
-}
-
-/** Link exibido junto de um item (contato oficial, consulta externa). */
-interface LinkTopico {
-  label: string
-  href: string
-  evento?: EventoConversao
-}
-
-export interface Credencial extends Topico {
-  links?: LinkTopico[]
-  /** Dica de alerta (golpe): ganha o ícone e o destaque de aviso. */
-  alerta?: boolean
 }
 
 export interface Etapa extends Topico {
