@@ -10,7 +10,7 @@ interface ConfigAnalytics {
   script: string
 }
 
-const whatsappNumero = "5564984474053"
+const whatsappNumero = "5562984952677"
 
 /** Até onde o atendimento chega. Base dos textos de atendimento do site. */
 const abrangencia = "em todo o Brasil e para brasileiros no exterior"
@@ -29,8 +29,8 @@ export const site = {
   area: "Direito Previdenciário",
 
   // NAP: mesmo formato do Perfil da Empresa no Google e das redes
-  telefone: "(64) 98447-4053",
-  telefoneE164: "+5564984474053",
+  telefone: "(62) 98495-2677",
+  telefoneE164: "+5562984952677",
   whatsappNumero,
   whatsapp: `https://wa.me/${whatsappNumero}`,
   email: "edith.advocacia24@gmail.com",
