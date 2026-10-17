@@ -27,7 +27,7 @@ const opcoes = [
   },
   {
     rotulo: "Meu benefício foi cortado",
-    tema: "Auxílio por incapacidade temporária",
+    tema: "Auxílio por incapacidade temporária (antigo auxílio-doença)",
     slug: "auxilio-doenca",
     assunto: "um benefício cortado pelo INSS",
     descricao:
@@ -35,7 +35,7 @@ const opcoes = [
   },
   {
     rotulo: "Doença me impede de trabalhar",
-    tema: "Auxílio ou aposentadoria por incapacidade",
+    tema: "Auxílio ou aposentadoria por incapacidade (antigos auxílio-doença e aposentadoria por invalidez)",
     slug: "auxilio-doenca",
     assunto: "incapacidade para o trabalho por doença",
     descricao:
@@ -43,7 +43,7 @@ const opcoes = [
   },
   {
     rotulo: "Quero saber quando me aposentar",
-    tema: "Planejamento previdenciário",
+    tema: "Planejamento previdenciário (saber quando se aposentar)",
     slug: "planejamento-previdenciario",
     assunto: "quando posso me aposentar",
     descricao:
@@ -67,7 +67,7 @@ const opcoes = [
   },
   {
     rotulo: "Idoso ou com deficiência e renda baixa",
-    tema: "BPC / LOAS",
+    tema: "BPC / LOAS (benefício para idoso e pessoa com deficiência)",
     slug: "bpc-loas",
     assunto: "BPC / LOAS",
     descricao:
@@ -101,7 +101,7 @@ const opcoes = [
 
 // Aparência do chip, igual para as opções e para o link "todos os benefícios".
 const classesChip = [
-  "relative flex h-full min-h-14 items-center overflow-hidden rounded-sm border border-ink/20 px-3 py-2 text-base leading-snug text-ink-soft",
+  "relative flex h-full min-h-14 items-center overflow-hidden rounded-sm border border-ink/40 px-3 py-2 text-base leading-snug text-ink-soft",
   "transition duration-300 ease-suave",
   "hover:-translate-y-0.5 hover:border-primary/60 hover:bg-primary/6 hover:text-ink hover:shadow-lg hover:shadow-primary/10",
   "motion-safe:active:scale-98",
@@ -165,10 +165,7 @@ const itens = opcoes.map(({ rotulo, tema, slug, assunto, descricao }) => {
     >
       <legend class="sr-only">Situação</legend>
       {itens.map((item) => (
-        <label
-          data-chip
-          class="group relative cursor-pointer will-change-transform"
-        >
+        <label data-chip class="group relative cursor-pointer">
           <input
             type="radio"
             name="situacao"
@@ -180,18 +177,28 @@ const itens = opcoes.map(({ rotulo, tema, slug, assunto, descricao }) => {
             cresce na base ao passar o mouse e fica fixa no chip marcado. O reflexo (before:) começa fora do chip à esquerda e vai
             até depois da borda direita (300% da própria largura).
           -->
-          <span class:list={[...classesChip, classesLinha]}>{item.rotulo}</span>
+          <span
+            class:list={[...classesChip, classesLinha, "justify-between gap-2"]}
+          >
+            {item.rotulo}
+            <span
+              aria-hidden="true"
+              class="flex size-5 flex-none items-center justify-center rounded-full border border-ink/40 text-transparent transition duration-300 ease-suave group-has-checked:border-primary group-has-checked:bg-primary group-has-checked:text-page [&>svg]:size-3"
+            >
+              <Icon name="check" />
+            </span>
+          </span>
         </label>
       ))}
       <a
         data-chip
         href={urlBeneficios}
-        class="group relative block will-change-transform focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        class="group relative block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         <span
           class:list={[
             ...classesChip,
-            "justify-between gap-2 border-dashed border-primary/50 text-primary",
+            "justify-between gap-2 border-dashed border-primary/60 text-primary",
           ]}
         >
           Visualizar todos os benefícios
@@ -245,54 +252,6 @@ const itens = opcoes.map(({ rotulo, tema, slug, assunto, descricao }) => {
     ></script>
   </div>
 </Section>
-
-<script>
-  // Cartas em movimento: os chips chegam de baixo, inclinados e menores, e
-  // assentam conforme a rolagem, uma única vez: ao rolar para cima eles não
-  // saem de novo (o progresso só avança). Cada coluna assenta um pouco
-  // depois da anterior, o que cria o efeito de cascata diagonal.
-  const grade = document.querySelector<HTMLElement>("[data-triagem-chips]")
-  const reduzido = matchMedia("(prefers-reduced-motion: reduce)")
-  if (grade && !reduzido.matches) {
-    const chips = [...grade.querySelectorAll<HTMLElement>("[data-chip]")]
-    const maximo = chips.map(() => 0)
-    let agendado = false
-
-    const atualizar = () => {
-      agendado = false
-      const colunas =
-        getComputedStyle(grade).gridTemplateColumns.split(" ").length
-      const topo = grade.getBoundingClientRect().top
-      const altura = innerHeight
-      chips.forEach((chip, i) => {
-        // offsetTop ignora transform: a posição não oscila com a animação
-        const centro = topo + chip.offsetTop + chip.offsetHeight / 2
-        const inicio = 0.96 - (i % colunas) * 0.04
-        const fim = inicio - 0.3
-        const bruto = (inicio - centro / altura) / (inicio - fim)
-        maximo[i] = Math.max(maximo[i] ?? 0, Math.min(1, Math.max(0, bruto)))
-        const p = maximo[i] ?? 0
-        const suave = 1 - (1 - p) ** 3
-        const resto = 1 - suave
-        chip.style.opacity = String(0.15 + 0.85 * suave)
-        chip.style.transform =
-          resto < 0.001
-            ? ""
-            : `perspective(800px) translateY(${resto * 64}px) rotateX(${resto * 26}deg) scale(${0.9 + 0.1 * suave})`
-      })
-    }
-    const pedir = () => {
-      if (agendado) return
-      agendado = true
-      requestAnimationFrame(atualizar)
-    }
-
-    grade.style.transformStyle = "preserve-3d"
-    addEventListener("scroll", pedir, { passive: true })
-    addEventListener("resize", pedir)
-    atualizar()
-  }
-</script>
 
 <script>
   interface Item {
