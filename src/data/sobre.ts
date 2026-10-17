@@ -19,6 +19,16 @@ export const sobreIntro = {
     "Por trás de cada questão previdenciária, existe uma história que merece ser ouvida com atenção, respeito e responsabilidade.",
 }
 
+/** Resumo dos 3 cartões, só para o celular (um retrato e texto breve). */
+export const sobreResumo = {
+  titulo: "Quem é Edith Santos?",
+  foto: "sobre-01-sem-fundo",
+  alt: `Retrato de ${site.nomeCompleto}, advogada previdenciária, de vestido preto e colar dourado`,
+  paragrafos: [
+    `Sou ${site.nomeCompleto}, cristã, casada e advogada previdenciária em Goiás (${site.oab}), pós-graduada em Aposentadoria Especial. Há 5 anos e 8 meses, atuo com ética, dedicação e estudo constante, buscando explicar com clareza os direitos e as possibilidades previstas em lei.`,
+  ],
+}
+
 // TODO(cliente): confirmar se "5 anos e 8 meses" ainda vale na data da publicação.
 export const sobreCartoes: CartaoSobre[] = [
   {

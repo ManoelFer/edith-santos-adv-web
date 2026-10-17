@@ -4,7 +4,7 @@ import { Image, Picture } from "astro:assets"
 
 import monograma from "@assets/logo-monograma.png"
 import Eyebrow from "@components/common/Eyebrow.astro"
-import { sobreCartoes, sobreIntro } from "@data/sobre"
+import { sobreCartoes, sobreIntro, sobreResumo } from "@data/sobre"
 
 // Fotos: `sobre-01-conhecimento`, `sobre-02-acolhimento` e
 // `sobre-03-responsabilidade` (.jpg, .png ou .webp) em src/assets/sobre/.
@@ -17,6 +17,7 @@ const fotoDe = (nome: string) =>
   Object.entries(fotos).find(
     ([caminho]) => /\/([^/]+)\.\w+$/.exec(caminho)?.[1] === nome,
   )?.[1].default
+const fotoResumo = fotoDe(sobreResumo.foto)
 ---
 
 <!-- Sem `overflow`, `transform` nem `contain` nos ancestrais do pino: quebram o sticky. -->
@@ -47,7 +48,33 @@ const fotoDe = (nome: string) =>
     </header>
   </div>
 
-  <div data-sobre-palco class="group relative">
+  <!-- Celular: retrato em largura total, à esquerda, com o resumo dos 3 cartões à direita. Do `md` em diante vale o palco com rolagem horizontal. -->
+  <div class="mx-auto flex max-w-xl items-center md:hidden">
+    <div class="aspect-6/11 w-11/20 flex-none self-end overflow-hidden mask-b-from-90% mask-l-from-90% mask-r-from-75%">
+      {fotoResumo && (
+        <Picture
+          src={fotoResumo}
+          alt={sobreResumo.alt}
+          formats={["avif"]}
+          fallbackFormat="webp"
+          widths={[480, 720, 960]}
+          sizes="(min-width: 576px) 330px, 92vw"
+          loading="lazy"
+          class="size-full object-cover object-[75%_50%]"
+        />
+      )}
+    </div>
+    <div class="relative -ml-8 flex flex-1 flex-col gap-3 py-8 pr-4 pl-2 text-base text-ink-soft sm:pr-6">
+      <h3 class="font-serif text-2xl leading-display font-normal text-balance text-ink-strong">
+        {sobreResumo.titulo}
+      </h3>
+      {sobreResumo.paragrafos.map((p) => (
+        <p>{p}</p>
+      ))}
+    </div>
+  </div>
+
+  <div data-sobre-palco class="group relative hidden md:block">
     <div
       data-pino
       class="flex flex-col justify-center gap-4 overflow-x-clip group-data-preso:sticky"
