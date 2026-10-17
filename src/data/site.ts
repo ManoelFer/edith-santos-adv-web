@@ -78,8 +78,8 @@ export const site = {
 
   nav: [
     { label: "Atuação", href: "/#triagem" },
-    { label: "Atendimento", href: "/#atendimento" },
     { label: "Sobre", href: "/#sobre" },
+    { label: "Atendimento", href: "/#atendimento" },
     { label: "Avaliações", href: "/#avaliacoes" },
     { label: "Dúvidas", href: "/#duvidas" },
   ] satisfies LinkNav[],
